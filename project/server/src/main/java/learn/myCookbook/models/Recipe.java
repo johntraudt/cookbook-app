@@ -18,9 +18,6 @@ public class Recipe {
     private List<RecipeTag> tags;
     private List<Review> reviews;
 
-    public Recipe() {
-    }
-
     public int getRecipeId() {
         return recipeId;
     }
