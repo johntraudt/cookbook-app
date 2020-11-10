@@ -255,6 +255,22 @@ CREATE TABLE IF NOT EXISTS `mycookbook`.`recipe_ingredient` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `mycookbook`.`step`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mycookbook`.`step` (
+  `recipe_id` INT NOT NULL,
+  `step_number` INT NOT NULL,
+  `text` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`recipe_id`, `step_number`),
+  CONSTRAINT `FK_recipe_step`
+    FOREIGN KEY (`recipe_id`)
+    REFERENCES `mycookbook`.`recipe` (`recipe_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
