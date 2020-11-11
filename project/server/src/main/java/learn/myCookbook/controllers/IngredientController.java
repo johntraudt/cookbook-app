@@ -1,5 +1,7 @@
 package learn.myCookbook.controllers;
 
+import learn.myCookbook.domain.IngredientService;
+import learn.myCookbook.domain.Result;
 import learn.myCookbook.models.Ingredient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
