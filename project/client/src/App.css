@@ -1,0 +1,97 @@
+header {
+    background-color: rgb(38, 42, 58);
+    color: white;
+}
+
+footer {
+    background-color: rgb(38, 42, 58);
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 2em;
+}
+
+.subtitle {
+    background-color: rgb(204, 245, 255);
+    font-size: 1.5em;
+    color: rgb(38, 42, 58);
+    padding: .25em;
+    font-weight: 600;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.banner {
+    position: relative;
+}
+
+.center-overlay {
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    padding-right: 100;
+}
+
+.center {
+    margin: auto;
+  }
+
+.md-form.mt-0{
+    width:700px;
+    display:flex;
+  }
+  
+.material-icons.mdc-button__icon{
+    position: absolute;
+    padding-top: 6px;
+    padding-left: 6px;
+    color: rgb(116, 116, 116) !important;
+}
+  
+.mdc-button__icon + input{
+    padding-left: 32px;
+    padding-bottom: 10px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.star-checked {
+    color: rgb(219, 88, 0);
+}
+
+.star-unchecked {
+    color: rgb(255, 199, 153);
+}
+
+.custom-card {
+    max-width: 18rem;
+    margin: 0 auto;
+    outline-color: white;
+}
+
+.card-title {
+    padding: 0;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-text {
+    margin-bottom: 8px;
+}
+
+.full-body {
+    min-height: 84vh;
+    overflow: hidden;
+    display: block;
+    position: relative;
+}
