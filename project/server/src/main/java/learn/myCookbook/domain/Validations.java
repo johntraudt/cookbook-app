@@ -6,4 +6,6 @@ public class Validations {
         return value == null || value.isBlank();
     }
 
+    // TODO: custom validations from database
+
 }

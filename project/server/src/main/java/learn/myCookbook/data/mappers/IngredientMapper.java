@@ -10,7 +10,10 @@ public class IngredientMapper implements RowMapper<Ingredient> {
 
     @Override
     public Ingredient mapRow(ResultSet resultSet, int i) throws SQLException {
-        return null;
+        Ingredient ingredient = new Ingredient();
+        ingredient.setIngredientId(resultSet.getInt("ingredient_id"));
+        ingredient.setName(resultSet.getString("name"));
+        return ingredient;
     }
 
 }
