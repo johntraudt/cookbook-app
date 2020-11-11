@@ -7,6 +7,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mycookbook
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mycookbook
+-- -----------------------------------------------------
 DROP DATABASE IF EXISTS `mycookbook`;
 CREATE DATABASE IF NOT EXISTS `mycookbook` DEFAULT CHARACTER SET utf8 ;
 USE `mycookbook` ;
@@ -71,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook`.`recipe` (
   `date` DATE NOT NULL,
   `was_updated` TINYINT(1) NOT NULL,
   `calories` INT NULL,
+  `image_link` VARCHAR(100) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`recipe_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
@@ -134,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook`.`review` (
   `review_id` INT NOT NULL AUTO_INCREMENT,
   `rating` INT NOT NULL,
   `comment` VARCHAR(45) NULL,
+  `date` VARCHAR(45) NOT NULL,
   `user_id` INT NOT NULL,
   `recipe_id` INT NOT NULL,
   PRIMARY KEY (`review_id`),
@@ -312,20 +318,20 @@ values
     (3, 'noah.mitchelson', 'password');
     
 insert into recipe
-	(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, calories, user_id)
+	(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, calories, image_link, user_id)
 values
-	(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, null, 1),
-    (2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1000, 3),
-    (3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 200, 3);
+	(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, null, ' ', 1),
+    (2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1000, ' ', 3),
+    (3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 200, ' ', 3);
     
 insert into review
-	(review_id, rating, `comment`, user_id, recipe_id)
+	(review_id, rating, `comment`, `date`, user_id, recipe_id)
 values
-	(1, 5, 'Very nice!', 1, 1),
-    (2, 4, 'Pretty good.', 1, 2),
-    (3, 3, 'Just okay.', 1, 3),
-    (4, 3, null, 3, 1),
-    (5, 4, null, 3, 2);
+	(1, 5, 'Very nice!', '2020-11-01', 1, 1),
+    (2, 4, 'Pretty good.', '2020-11-11', 1, 2),
+    (3, 3, 'Just okay.', '2020-11-05', 1, 3),
+    (4, 3, null, '2020-11-09', 3, 1),
+    (5, 4, null, '2020-11-09', 3, 2);
     
 insert into cookbook
 	(cookbook_id, `name`, is_private, user_id)
@@ -426,3 +432,5 @@ values
     (11, 4, 1, 3, 9, 1),
     (12, 5, 0.5, 3, 10, null),
     (13, 6, 1, 3, 11, null);
+    
+    
