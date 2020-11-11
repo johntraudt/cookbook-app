@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Recipe {
     private int recipeId;
+    private int userId;
+    private User user;
     private String name;
     private int prepTimeInMinutes;
     private int servings;
@@ -24,6 +26,22 @@ public class Recipe {
 
     public void setRecipeId(int recipeId) {
         this.recipeId = recipeId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
