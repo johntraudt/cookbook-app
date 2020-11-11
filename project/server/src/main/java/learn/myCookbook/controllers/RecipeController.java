@@ -20,15 +20,15 @@ public class RecipeController {
         this.service = service;
     }
 
-//    @GetMapping
-//    public List<Recipe> findAll() {
-//        return service.findAll();
-//    }
+    @GetMapping
+    public List<Recipe> findAll() {
+        return service.findAll();
+    }
 
-//    @GetMapping("/{recipeId}")
-//    public Recipe findById(@PathVariable int recipeId) {
-//        return service.findById(recipeId);
-//    }
+    @GetMapping("/{recipeId}")
+    public Recipe findById(@PathVariable int recipeId) {
+        return service.findById(recipeId);
+    }
 
 //    @PostMapping
 //    public ResponseEntity<Object> add(@RequestBody Recipe recipe) {
