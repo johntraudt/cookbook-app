@@ -39,25 +39,25 @@ public class UserController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Object> update(@PathVariable int userId, @RequestBody User user) {
-        if (userId != user.getUserId()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+//    @PutMapping("/{userId}")
+//    public ResponseEntity<Object> update(@PathVariable int userId, @RequestBody User user) {
+//        if (userId != user.getUserId()) {
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//        }
+//
+//        Result<User> result = service.update(user);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//
+//        return ErrorResponse.build(result);
+//    }
 
-        Result<User> result = service.update(user);
-        if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return ErrorResponse.build(result);
-    }
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteById(@PathVariable int userId) {
-        if (service.deleteById(userId)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+//    @DeleteMapping("/{userId}")
+//    public ResponseEntity<Void> deleteById(@PathVariable int userId) {
+//        if (service.deleteById(userId)) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 }

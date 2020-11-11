@@ -19,5 +19,13 @@ public class UserService {
         return repository.findAll();
     }
 
+    public User findById(int userId) {
+        return repository.findById(userId);
+    }
+
+//    public Result<User> add(User user) {
+//        Result<User>
+//    }
+
 
 }

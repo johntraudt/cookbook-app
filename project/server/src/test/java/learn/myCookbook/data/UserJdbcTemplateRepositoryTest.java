@@ -28,7 +28,7 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindJohn() {
-        
+
     }
 
 }
