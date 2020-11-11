@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -48,34 +49,10 @@ public class UserJdbcTemplateRepository implements UserRepository {
         return user;
     }
 
-    private void addRole(User user) {
-        final String sql = "select ur.user_role_id, ur.name " +
-                "from user_role ur " +
-                "join user u on u.user_role_id = ur.user_role_id " +
-                "where u.user_id = ?;";
-
-        UserRole userRole = jdbcTemplate.query(sql, new UserRoleMapper(), user.getUserId())
-                .stream()
-                .findFirst().orElse(null);
-        user.setRole(userRole);
-    }
-
-    private void addLogin(User user) {
-        final String sql = "select l.user_name, l.password_hash " +
-                "from login l " +
-                "join user u on u.user_id = l.user_id " +
-                "where u.user_id = ?;";
-
-        Login login = jdbcTemplate.query(sql, new LoginMapper(), user.getUserId())
-                .stream()
-                .findFirst().orElse(null);
-        user.setUserName(login.getUserName());
-    }
-
     @Override
     public User add(User user) {
         final String sql = "insert into `user` (first_name, last_name, email, user_role_id) "
-                + "values (?,?,?,?,?);";
+                + "values (?,?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -109,7 +86,32 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(int userId) {
         return false;
+    }
+
+    private void addRole(User user) {
+        final String sql = "select ur.user_role_id, ur.name " +
+                "from user_role ur " +
+                "join user u on u.user_role_id = ur.user_role_id " +
+                "where u.user_id = ?;";
+
+        UserRole userRole = jdbcTemplate.query(sql, new UserRoleMapper(), user.getUserId())
+                .stream()
+                .findFirst().orElse(null);
+        user.setRole(userRole);
+    }
+
+    private void addLogin(User user) {
+        final String sql = "select l.user_name, l.password_hash " +
+                "from login l " +
+                "join user u on u.user_id = l.user_id " +
+                "where u.user_id = ?;";
+
+        Login login = jdbcTemplate.query(sql, new LoginMapper(), user.getUserId())
+                .stream()
+                .findFirst().orElse(null);
+        user.setUserName(login.getUserName());
     }
 }

@@ -1,5 +1,7 @@
 package learn.myCookbook.models;
 
+//import learn.myCookbook.models.enumerations.MeasurementType;
+
 public class RecipeIngredient {
     private int recipeIngredientId;
     private int recipeId;
@@ -8,7 +10,7 @@ public class RecipeIngredient {
     private Ingredient ingredient;
     private int ingredientListIndex;
     private double quantity;
-    private MeasurementUnit measurementUnit;
+//    private MeasurementType measurementType;
 
     public int getRecipeIngredientId() {
         return recipeIngredientId;
@@ -66,11 +68,11 @@ public class RecipeIngredient {
         this.quantity = quantity;
     }
 
-    public MeasurementUnit getMeasurementUnit() {
-        return measurementUnit;
-    }
-
-    public void setMeasurementUnit(MeasurementUnit measurementUnit) {
-        this.measurementUnit = measurementUnit;
-    }
+//    public MeasurementType getMeasurementType() {
+//        return measurementType;
+//    }
+//
+//    public void setMeasurementType(MeasurementType measurementType) {
+//        this.measurementType = measurementType;
+//    }
 }
