@@ -1,7 +1,11 @@
 package learn.myCookbook.data;
 
+import learn.myCookbook.data.mappers.LoginMapper;
 import learn.myCookbook.data.mappers.UserMapper;
+import learn.myCookbook.data.mappers.UserRoleMapper;
+import learn.myCookbook.models.Login;
 import learn.myCookbook.models.User;
+import learn.myCookbook.models.UserRole;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -22,21 +26,50 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        final String sql = "select user_id, first_name, last_name, email "
+        final String sql = "select user_id, first_name, last_name, email, user_role_id "
                 + "from user limit 1000";
         return jdbcTemplate.query(sql, new UserMapper());
     }
 
     @Override
     public User findById(int userId) {
-        final String sql = "select user_id, first_name, last_name, email "
-                + "from user limit 1000 "
+        final String sql = "select user_id, first_name, last_name, email, user_role_id "
+                + "from user "
                 + "where user_id = ?;";
 
         User user = jdbcTemplate.query(sql, new UserMapper(), userId).stream()
                 .findFirst().orElse(null);
 
+        if (user != null) {
+            addLogin(user);
+            addRole(user);
+        }
+
         return user;
+    }
+
+    private void addRole(User user) {
+        final String sql = "select ur.user_role_id, ur.name " +
+                "from user_role ur " +
+                "join user u on u.user_role_id = ur.user_role_id " +
+                "where u.user_id = ?;";
+
+        UserRole userRole = jdbcTemplate.query(sql, new UserRoleMapper(), user.getUserId())
+                .stream()
+                .findFirst().orElse(null);
+        user.setRole(userRole);
+    }
+
+    private void addLogin(User user) {
+        final String sql = "select l.user_name, l.password_hash " +
+                "from login l " +
+                "join user u on u.user_id = l.user_id " +
+                "where u.user_id = ?;";
+
+        Login login = jdbcTemplate.query(sql, new LoginMapper(), user.getUserId())
+                .stream()
+                .findFirst().orElse(null);
+        user.setUserName(login.getUserName());
     }
 
     @Override

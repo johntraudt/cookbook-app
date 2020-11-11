@@ -1,6 +1,6 @@
 package learn.myCookbook.models;
 
-import learn.myCookbook.models.enumerations.UserRole;
+import learn.myCookbook.models.UserRole;
 
 public class User {
     private int userId;
