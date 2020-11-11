@@ -54,13 +54,12 @@ public class IngredientJdbcTemplateRepository implements IngredientRepository {
 
     @Override
     public Ingredient add(Ingredient ingredient) {
-        final String sql = "insert into ingredient (ingredient_id, `name`) " +
-                "values (?,?);";
+        final String sql = "insert into ingredient (`name`) " +
+                "values (?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, ingredient.getIngredientId());
             ps.setString(1, ingredient.getName());
             return ps;
         }, keyHolder);
@@ -80,7 +79,8 @@ public class IngredientJdbcTemplateRepository implements IngredientRepository {
                 "where ingredient_id = ?;";
 
         return jdbcTemplate.update(sql,
-                ingredient.getName()) > 0;
+                ingredient.getName(),
+                ingredient.getIngredientId()) > 0;
     }
 
     @Override
