@@ -10,7 +10,14 @@ public class RecipeIngredientMapper implements RowMapper<RecipeIngredient> {
 
     @Override
     public RecipeIngredient mapRow(ResultSet resultSet, int i) throws SQLException {
-        return null;
+        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        recipeIngredient.setRecipeIngredientId(resultSet.getInt("recipe_ingredient_id"));
+        recipeIngredient.setRecipeId(resultSet.getInt("recipe_id"));
+        recipeIngredient.setIngredientId(resultSet.getInt("ingredient_id"));
+        recipeIngredient.setIngredientListIndex(resultSet.getInt("ingredient_list_index"));
+        recipeIngredient.setQuantity(resultSet.getDouble("quantity"));
+        return recipeIngredient;
     }
+
 
 }
