@@ -7,13 +7,13 @@ import java.util.List;
 public interface IngredientRepository {
     List<Ingredient> findAll();
 
-    Ingredient findById();
+    Ingredient findById(int ingredientId);
 
-    Ingredient findByName();
+    Ingredient findByName(String name);
 
     Ingredient add(Ingredient ingredient);
 
     boolean update(Ingredient ingredient);
 
-    boolean deleteById(Ingredient ingredient);
+    boolean deleteById(int ingredientId);
 }
