@@ -11,6 +11,7 @@ public class Recipe {
     private User user;
     private String name;
     private int prepTimeInMinutes;
+    private int cookTimeInMinutes;
     private int servings;
     private LocalDate date;
     private boolean wasUpdated;
@@ -58,6 +59,14 @@ public class Recipe {
 
     public void setPrepTimeInMinutes(int prepTimeInMinutes) {
         this.prepTimeInMinutes = prepTimeInMinutes;
+    }
+
+    public int getCookTimeInMinutes() {
+        return cookTimeInMinutes;
+    }
+
+    public void setCookTimeInMinutes(int cookTimeInMinutes) {
+        this.cookTimeInMinutes = cookTimeInMinutes;
     }
 
     public int getServings() {
