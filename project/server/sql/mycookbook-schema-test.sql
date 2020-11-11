@@ -5,15 +5,13 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mycookbook_test
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema mycookbook_test
+-- Database mycookbook_test
 -- -----------------------------------------------------
 DROP DATABASE IF EXISTS `mycookbook_test`;
 CREATE DATABASE IF NOT EXISTS `mycookbook_test` DEFAULT CHARACTER SET utf8 ;
-USE `mycookbook_test` ;
+use `mycookbook_test`;
+
+
 
 -- -----------------------------------------------------
 -- Table `mycookbook_test`.`user_role`
@@ -75,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe` (
   `date` DATE NOT NULL,
   `was_updated` TINYINT(1) NOT NULL,
   `calories` INT NULL,
-  `image_link` VARCHAR(100) NOT NULL,
+  `image_link` VARCHAR(1024) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`recipe_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
@@ -290,6 +288,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+
 delimiter //
 create procedure set_known_good_state()
 begin
@@ -334,12 +333,12 @@ begin
 		(4, 'irina.cudo', 'password');
 		
 	insert into recipe
-		(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, calories, image_link, user_id)
+		(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, calories, user_id, image_link)
 	values
-		(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, null, ' ', 1),
-		(2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1000, ' ', 3),
-		(3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 200, ' ', 3),
-		(4, 'test recipe', 2, 0, 1, '2020-09-10', 0, null, ' ', 3);
+		(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, null, 1, 'https://ih1.redbubble.net/image.362317170.4069/st,small,507x507-pad,600x600,f8f8f8.jpg'),
+		(2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1000, 3, 'https://pbs.twimg.com/profile_images/1322780097452146688/-VTzV1Xa.jpg'),
+		(3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 200, 3, 'https://friendlystock.com/wp-content/uploads/2019/06/6-cute-dinosaur-presenting-cartoon-clipart.jpg'),
+		(4, 'test recipe', 2, 0, 1, '2020-09-10', 0, null, 3, 'https://pbs.twimg.com/media/EmiZojrW4AAx8We.jpg');
 		
 	insert into review
 		(review_id, rating, `comment`, `date`, user_id, recipe_id)
