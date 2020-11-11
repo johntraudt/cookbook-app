@@ -30,14 +30,14 @@ public class UserController {
         return service.findById(userId);
     }
 
-    @PostMapping
-    public ResponseEntity<Object> add(@RequestBody User user) {
-        Result<User> result = service.add(user);
-        if (result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-        }
-        return ErrorResponse.build(result);
-    }
+//    @PostMapping
+//    public ResponseEntity<Object> add(@RequestBody User user) {
+//        Result<User> result = service.add(user);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+//        }
+//        return ErrorResponse.build(result);
+//    }
 
 //    @PutMapping("/{userId}")
 //    public ResponseEntity<Object> update(@PathVariable int userId, @RequestBody User user) {
