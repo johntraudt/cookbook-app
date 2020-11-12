@@ -12,7 +12,6 @@ CREATE DATABASE IF NOT EXISTS `mycookbook_test` DEFAULT CHARACTER SET utf8 ;
 use `mycookbook_test`;
 
 
-
 -- -----------------------------------------------------
 -- Table `mycookbook_test`.`user_role`
 -- -----------------------------------------------------
@@ -66,12 +65,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe` (
   `recipe_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(95) NOT NULL,
   `prep_time` INT NOT NULL,
   `cook_time` INT NOT NULL,
   `servings` INT NOT NULL,
   `date` DATE NOT NULL,
   `was_updated` TINYINT(1) NOT NULL,
+  `is_featured` TINYINT(1) NOT NULL,
   `calories` INT NULL,
   `image_link` VARCHAR(1022) NOT NULL,
   `user_id` INT NOT NULL,
@@ -238,7 +238,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe_ingredient` (
   `recipe_ingredient_id` INT NOT NULL AUTO_INCREMENT,
   `ingredient_list_index` INT NOT NULL,
-  `quantity` DECIMAL(5,2) NULL,
+  `numerator` INT NULL,
+  `denominator` INT NULL,
   `recipe_id` INT NOT NULL,
   `ingredient_id` INT NOT NULL,
   `measurement_unit_id` INT NULL,
@@ -289,6 +290,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
+
 delimiter //
 create procedure set_known_good_state()
 begin
@@ -333,12 +335,12 @@ begin
 		(4, 'irina.cudo', 'password');
 		
 	insert into recipe
-		(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, calories, user_id, image_link)
+		(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, is_featured, calories, user_id, image_link)
 	values
-		(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, null, 1, 'https://ih1.redbubble.net/image.362317170.4069/st,small,507x507-pad,600x600,f8f8f8.jpg'),
-		(2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1000, 3, 'https://pbs.twimg.com/profile_images/1322780097452146688/-VTzV1Xa.jpg'),
-		(3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 200, 3, 'https://friendlystock.com/wp-content/uploads/2019/06/6-cute-dinosaur-presenting-cartoon-clipart.jpg'),
-		(4, 'test recipe', 2, 0, 1, '2020-09-10', 0, null, 3, 'https://pbs.twimg.com/media/EmiZojrW4AAx8We.jpg');
+		(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, 1, null, 1, 'https://ih1.redbubble.net/image.362317170.4069/st,small,507x507-pad,600x600,f8f8f8.jpg'),
+		(2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1, 1000, 3, 'https://pbs.twimg.com/profile_images/1322780097452146688/-VTzV1Xa.jpg'),
+		(3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 1, 200, 3, 'https://friendlystock.com/wp-content/uploads/2019/06/6-cute-dinosaur-presenting-cartoon-clipart.jpg'),
+		(4, 'test recipe', 2, 0, 1, '2020-09-10', 0, 1, null, 3, 'https://pbs.twimg.com/media/EmiZojrW4AAx8We.jpg');
 		
 	insert into review
 		(review_id, rating, `comment`, `date`, user_id, recipe_id)
@@ -437,21 +439,21 @@ begin
 		(12, 'test ingredient');
 		
 	insert into recipe_ingredient
-		(recipe_ingredient_id, ingredient_list_index, quantity, recipe_id, ingredient_id, measurement_unit_id)
+		(recipe_ingredient_id, ingredient_list_index, numerator, denominator, recipe_id, ingredient_id, measurement_unit_id)
 	values
-		(1, 1, 1, 1, 1, null),
-		(2, 1, 8, 2, 2, null),
-		(3, 2, 0.5, 2, 3, 1),
-		(4, 3, null, 2, 4, null),
-		(5, 4, null, 2, 5, null),
-		(6, 5, 2, 2, 6, 1),
-		(7, 6, 0.5, 2, 7, 1),
-		(8, 1, 0.5, 3, 1, 2),
-		(9, 2, 8, 3, 7, 3),
-		(10, 3, 2, 3, 8, null),
-		(11, 4, 1, 3, 9, 1),
-		(12, 5, 0.5, 3, 10, null),
-		(13, 6, 1, 3, 11, null);
+		(1, 1, 1, 1, 1, 1, null),
+		(2, 1, 8, 1, 2, 2, null),
+		(3, 2, 1, 2, 2, 3, 1),
+		(4, 3, null, null, 2, 4, null),
+		(5, 4, null, null, 2, 5, null),
+		(6, 5, 2, 1, 2, 6, 1),
+		(7, 6, 1, 2, 2, 7, 1),
+		(8, 1, 1, 2, 3, 1, 2),
+		(9, 2, 8, 1, 3, 7, 3),
+		(10, 3, 2, 1, 3, 8, null),
+		(11, 4, 1, 1, 3, 9, 1),
+		(12, 5, 1, 2, 3, 10, null),
+		(13, 6, 1, 1, 3, 11, null);
 end//
 delimiter ;
 
