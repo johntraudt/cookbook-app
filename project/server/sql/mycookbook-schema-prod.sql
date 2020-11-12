@@ -12,6 +12,7 @@ CREATE DATABASE IF NOT EXISTS `mycookbook` DEFAULT CHARACTER SET utf8 ;
 use `mycookbook`;
 
 
+
 -- -----------------------------------------------------
 -- Table `mycookbook`.`user_role`
 -- -----------------------------------------------------
@@ -238,8 +239,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mycookbook`.`recipe_ingredient` (
   `recipe_ingredient_id` INT NOT NULL AUTO_INCREMENT,
   `ingredient_list_index` INT NOT NULL,
-  `numerator` INT NULL,
-  `denominator` INT NULL,
+  `quantity` VARCHAR(45) NULL,
   `recipe_id` INT NOT NULL,
   `ingredient_id` INT NOT NULL,
   `measurement_unit_id` INT NULL,
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook`.`direction` (
   `direction_number` INT NOT NULL,
   `text` VARCHAR(500) NOT NULL,
   PRIMARY KEY (`direction_id`),
-  UNIQUE INDEX `recipe_id_direction_number` (`recipe_id` ASC, `direction_number` ASC) VISIBLE,
+  UNIQUE INDEX `recipe_id_step_number` (`recipe_id` ASC, `direction_number` ASC) VISIBLE,
   CONSTRAINT `FK_recipe_direction`
     FOREIGN KEY (`recipe_id`)
     REFERENCES `mycookbook`.`recipe` (`recipe_id`)
@@ -287,7 +287,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 
 
@@ -411,20 +410,20 @@ values
     (11, 'roma tomato');
     
 insert into recipe_ingredient
-	(recipe_ingredient_id, ingredient_list_index, numerator, denominator, recipe_id, ingredient_id, measurement_unit_id)
+	(recipe_ingredient_id, ingredient_list_index, quantity, recipe_id, ingredient_id, measurement_unit_id)
 values
-	(1, 1, 1, 1, 1, 1, null),
-    (2, 1, 8, 1, 2, 2, null),
-    (3, 2, 1, 2, 2, 3, 1),
-    (4, 3, null, null, 2, 4, null),
-    (5, 4, null, null, 2, 5, null),
-    (6, 5, 2, 1, 2, 6, 1),
-    (7, 6, 1, 2, 2, 7, 1),
-    (8, 1, 1, 2, 3, 1, 2),
-    (9, 2, 8, 1, 3, 7, 3),
-    (10, 3, 2, 1, 3, 8, null),
-    (11, 4, 1, 1, 3, 9, 1),
-    (12, 5, 1, 2, 3, 10, null),
-    (13, 6, 1, 1, 3, 11, null);
+	(1, 1, '1', 1, 1, null),
+    (2, 1, '8', 2, 2, null),
+    (3, 2, '1/2', 2, 3, 1),
+    (4, 3, null, 2, 4, null),
+    (5, 4, null, 2, 5, null),
+    (6, 5, '2', 2, 6, 1),
+    (7, 6, '1/2', 2, 7, 1),
+    (8, 1, '1/2', 3, 1, 2),
+    (9, 2, '8', 3, 7, 3),
+    (10, 3, '2', 3, 8, null),
+    (11, 4, '1', 3, 9, 1),
+    (12, 5, '1/2', 3, 10, null),
+    (13, 6, '1', 3, 11, null);
     
     
