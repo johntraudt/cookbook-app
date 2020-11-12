@@ -20,44 +20,44 @@ public class ReviewController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Review> findAll() {
-        return service.findAll();
-    }
+//    @GetMapping
+//    public List<Review> findAll() {
+//        return service.findAll();
+//    }
 
-    @GetMapping("/{reviewId}")
-    public Review findById(@PathVariable int reviewId) {
-        return service.findById(reviewId);
-    }
+//    @GetMapping("/{reviewId}")
+//    public Review findById(@PathVariable int reviewId) {
+//        return service.findById(reviewId);
+//    }
 
-    @PostMapping
-    public ResponseEntity<Object> add(@RequestBody Review review) {
-        Result<Review> result = service.add(review);
-        if (result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-        }
-        return ErrorResponse.build(result);
-    }
+//    @PostMapping
+//    public ResponseEntity<Object> add(@RequestBody Review review) {
+//        Result<Review> result = service.add(review);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+//        }
+//        return ErrorResponse.build(result);
+//    }
 
-    @PutMapping("/{reviewId}")
-    public ResponseEntity<Object> update(@PathVariable int reviewId, @RequestBody Review review) {
-        if (reviewId != review.getReviewId()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+//    @PutMapping("/{reviewId}")
+//    public ResponseEntity<Object> update(@PathVariable int reviewId, @RequestBody Review review) {
+//        if (reviewId != review.getReviewId()) {
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//        }
+//
+//        Result<Review> result = service.update(review);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//
+//        return ErrorResponse.build(result);
+//    }
 
-        Result<Review> result = service.update(review);
-        if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return ErrorResponse.build(result);
-    }
-
-    @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Void> deleteById(@PathVariable int reviewId) {
-        if (service.deleteById(reviewId)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+//    @DeleteMapping("/{reviewId}")
+//    public ResponseEntity<Void> deleteById(@PathVariable int reviewId) {
+//        if (service.deleteById(reviewId)) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 }
