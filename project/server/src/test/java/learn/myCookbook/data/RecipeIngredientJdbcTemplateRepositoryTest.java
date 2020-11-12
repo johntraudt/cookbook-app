@@ -78,7 +78,6 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setRecipeIngredientId(0);
         recipeIngredient.setIngredientListIndex(10);
-        recipeIngredient.setNumerator(3);
         recipeIngredient.setRecipeId(2);
         recipeIngredient.setIngredientId(3);
         recipeIngredient.setMeasurementUnitId(1);
@@ -93,13 +92,12 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setRecipeIngredientId(3);
         recipeIngredient.setIngredientListIndex(2);
-        recipeIngredient.setNumerator(3);
         recipeIngredient.setRecipeId(2);
         recipeIngredient.setIngredientId(3);
         recipeIngredient.setMeasurementUnitId(1);
 
         assertTrue(repository.update(recipeIngredient));
-        assertTrue(repository.findById(3).getNumerator() > 2);
+//        assertTrue(repository.findById(3).getNumerator() > 2);
     }
 
     @Test
@@ -107,7 +105,6 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         RecipeIngredient missing = new RecipeIngredient();
         missing.setRecipeIngredientId(999);
         missing.setIngredientListIndex(2);
-        missing.setNumerator(3);
         missing.setRecipeId(2);
         missing.setIngredientId(3);
         missing.setMeasurementUnitId(1);
