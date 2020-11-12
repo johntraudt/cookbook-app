@@ -11,7 +11,7 @@ public class MeasurementUnitMapper implements RowMapper<MeasurementUnit> {
     public MeasurementUnit mapRow(ResultSet resultSet, int i) throws SQLException {
         MeasurementUnit measurementUnit = new MeasurementUnit();
         measurementUnit.setMeasurementUnitId(resultSet.getInt("measurement_unit_id"));
-        measurementUnit.setName(resultSet.getString("`name`"));
+        measurementUnit.setName(resultSet.getString("name"));
         return measurementUnit;
     }
 }

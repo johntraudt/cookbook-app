@@ -5,11 +5,13 @@ import learn.myCookbook.models.MeasurementUnit;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
 public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRepository{
     private final JdbcTemplate jdbcTemplate;
 
@@ -19,7 +21,7 @@ public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRep
 
     @Override
     public List<MeasurementUnit> findAll() {
-        final String sql = "select measurement_unit_id, `name` " +
+        final String sql = "select measurement_unit_id, name " +
                 "from measurement_unit limit 1000;";
 
         return jdbcTemplate.query(sql, new MeasurementUnitMapper());
@@ -27,7 +29,7 @@ public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRep
 
     @Override
     public MeasurementUnit findById(int measurementUnitId) {
-        final String sql = "select measurement_unit_id, `name` " +
+        final String sql = "select measurement_unit_id, name " +
                 "from measurement_unit where measurement_unit_id = ?;";
 
         return jdbcTemplate.query(sql, new MeasurementUnitMapper(), measurementUnitId)
@@ -38,8 +40,8 @@ public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRep
 
     @Override
     public MeasurementUnit findByName(String name) {
-        final String sql = "select measurement_unit_id, `name` " +
-                "from measurement_unit where `name` = ?;";
+        final String sql = "select measurement_unit_id, name " +
+                "from measurement_unit where name = ?;";
 
         return jdbcTemplate.query(sql, new MeasurementUnitMapper(), name)
                 .stream()
@@ -49,7 +51,7 @@ public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRep
 
     @Override
     public MeasurementUnit add(MeasurementUnit measurementUnit) {
-        final String sql = "insert into measurement_unit (`name`) " +
+        final String sql = "insert into measurement_unit (name) " +
                 "values (?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -69,7 +71,7 @@ public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRep
     @Override
     public boolean update(MeasurementUnit measurementUnit) {
         final String sql = "update measurement_unit set " +
-                "`name` = ? " +
+                "name = ? " +
                 "where measurement_unit_id = ?";
         return jdbcTemplate.update(sql,
                 measurementUnit.getName(),

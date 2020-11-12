@@ -1,6 +1,7 @@
 package learn.myCookbook.data;
 
 import learn.myCookbook.models.Ingredient;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,12 @@ public class IngredientJdbcTemplateRepositoryTest {
         assertTrue(repository.update(ingredient));
         assertEquals("spud", repository.findById(2).getName());
         assertNull(repository.findByName("russet potato"));
+    }
+
+    @Test
+    void shouldNotUpdateMissing() {
+        Ingredient missing = new Ingredient(999, "missing ingredient");
+        assertFalse(repository.update(missing));
     }
 
     @Test
