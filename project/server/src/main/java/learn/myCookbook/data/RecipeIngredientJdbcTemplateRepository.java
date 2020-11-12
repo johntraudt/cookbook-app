@@ -63,7 +63,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
         final String sql = "insert into recipe_ingredient " +
                 "(recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id) " +
                 "values " +
-                "(?, ?, ?, ?, ?, ?);";
+                "(?, ?, ?, ?, ?, ?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -74,7 +74,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
             ps.setInt(4, recipeIngredient.getIngredientListIndex());
             ps.setInt(5, recipeIngredient.getNumerator());
             ps.setInt(6, recipeIngredient.getDenominator());
-            ps.setInt(7, recipeIngredient.getMeasurementUnit().getMeasurementUnitId());
+            ps.setInt(7, recipeIngredient.getMeasurementUnitId());
             return ps;
         }, keyHolder);
 

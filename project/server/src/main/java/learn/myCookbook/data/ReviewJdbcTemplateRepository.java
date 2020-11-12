@@ -45,7 +45,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     public List<Review> findByUserId(int userId) {
         final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
                 "from review where user_id = ? " +
-                "sort by date desc;";
+                "order by date desc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), userId);
     }
@@ -54,7 +54,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     public List<Review> findByRecipId(int recipeId) {
         final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
-                "sort by date desc;";
+                "order by date desc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
     }
@@ -63,7 +63,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     public List<Review> findByRecipeIdRatingDesc(int recipeId) {
         final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
-                "sort by rating desc;";
+                "order by rating desc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
     }
@@ -72,7 +72,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     public List<Review> findByRecipeIdRatingAsc(int recipeId) {
         final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
-                "sort by rating asc;";
+                "order by rating asc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
     }
@@ -128,7 +128,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
         final String sql = "delete from review " +
                 "where review_id = ?";
 
-        return jdbcTemplate.update(sql, new ReviewMapper(), reviewId) > 0;
+        return jdbcTemplate.update(sql, reviewId) > 0;
     }
 
     @Override
@@ -136,6 +136,6 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
         final String sql = "delete from review " +
                 "where recipe_id = ?";
 
-        return jdbcTemplate.update(sql, new ReviewMapper(), recipeId) > 0;
+        return jdbcTemplate.update(sql, recipeId) > 0;
     }
 }

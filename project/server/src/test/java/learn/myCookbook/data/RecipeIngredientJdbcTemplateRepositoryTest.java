@@ -76,6 +76,16 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
     @Test
     void shouldAdd() {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
+        recipeIngredient.setRecipeIngredientId(0);
+        recipeIngredient.setIngredientListIndex(10);
+        recipeIngredient.setNumerator(3);
+        recipeIngredient.setRecipeId(2);
+        recipeIngredient.setIngredientId(3);
+        recipeIngredient.setMeasurementUnitId(1);
+
+        recipeIngredient = repository.add(recipeIngredient);
+        assertNotNull(recipeIngredient);
+        assertTrue(recipeIngredient.getRecipeIngredientId() > 10);
     }
 
     @Test
@@ -103,6 +113,12 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         missing.setMeasurementUnitId(1);
 
         assertFalse(repository.update(missing));
+    }
+
+    @Test
+    void shouldDelete() {
+        assertTrue(repository.deleteById(8));
+        assertFalse(repository.deleteById(8));
     }
 
 
