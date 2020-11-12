@@ -1,9 +1,6 @@
 package learn.myCookbook.data;
 
-import learn.myCookbook.data.mappers.DirectionMapper;
-import learn.myCookbook.data.mappers.RecipeMapper;
-import learn.myCookbook.data.mappers.RecipeTagMapper;
-import learn.myCookbook.data.mappers.ReviewMapper;
+import learn.myCookbook.data.mappers.*;
 import learn.myCookbook.models.Recipe;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -24,7 +21,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public List<Recipe> findAll() {
 
-        final String sql = "select recipe_id, name, prep_time, cook_time, servings, date, was_updated, calories, image_link, user_id " +
+        final String sql = "select recipe_id, name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe limit 1000;";
 
         return jdbcTemplate.query(sql, new RecipeMapper());
@@ -33,7 +30,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public Recipe findById(int recipeId) {
 
-        final String sql = "select recipe_id, name, prep_time, cook_time, servings, date, was_updated, calories, image_link, user_id " +
+        final String sql = "select recipe_id, name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe " +
                 "where recipe_id = ?;";
 
@@ -46,9 +43,17 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
             addReviews(recipe);
             addDirections(recipe);
             addTags(recipe);
+            addIngredients(recipe);
         }
 
         return recipe;
+    }
+
+    private void addIngredients(Recipe recipe) {
+        final String sql = "";
+
+        var ingredients = jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipe.getRecipeId());
+        recipe.setIngredients(ingredients);
     }
 
     private void addTags(Recipe recipe) {
