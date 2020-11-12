@@ -8,6 +8,7 @@ public class RecipeIngredient {
     private Ingredient ingredient;
     private int ingredientListIndex;
     private double quantity;
+    private int measurementUnitId;
     private MeasurementUnit measurementUnit;
 
     public int getRecipeIngredientId() {
@@ -64,6 +65,14 @@ public class RecipeIngredient {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+    public int getMeasurementUnitId() {
+        return measurementUnitId;
+    }
+
+    public void setMeasurementUnitId(int measurementUnitId) {
+        this.measurementUnitId = measurementUnitId;
     }
 
     public MeasurementUnit getMeasurementUnit() {

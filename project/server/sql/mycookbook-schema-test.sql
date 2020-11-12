@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe` (
   `date` DATE NOT NULL,
   `was_updated` TINYINT(1) NOT NULL,
   `calories` INT NULL,
-  `image_link` VARCHAR(1024) NOT NULL,
+  `image_link` VARCHAR(1022) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`recipe_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
@@ -266,16 +266,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mycookbook_test`.`step`
+-- Table `mycookbook_test`.`direction`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mycookbook_test`.`step` (
-  `step_id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `mycookbook_test`.`direction` (
+  `direction_id` INT NOT NULL AUTO_INCREMENT,
   `recipe_id` INT NOT NULL,
-  `step_number` INT NOT NULL,
+  `direction_number` INT NOT NULL,
   `text` VARCHAR(500) NOT NULL,
-  PRIMARY KEY (`step_id`),
-  UNIQUE INDEX `recipe_id_step_number` (`recipe_id` ASC, `step_number` ASC) VISIBLE,
-  CONSTRAINT `FK_recipe_step`
+  PRIMARY KEY (`direction_id`),
+  UNIQUE INDEX `recipe_id_direction_number` (`recipe_id` ASC, `direction_number` ASC) VISIBLE,
+  CONSTRAINT `FK_recipe_direction`
     FOREIGN KEY (`recipe_id`)
     REFERENCES `mycookbook_test`.`recipe` (`recipe_id`)
     ON DELETE NO ACTION
@@ -297,7 +297,7 @@ begin
     delete from review;
 	delete from cookbook_recipe;
     delete from cookbook;
-    delete from step;
+    delete from direction;
     delete from recipe_recipe_tag;
     delete from recipe_tag;
     delete from recipe_tag_category;
@@ -364,8 +364,8 @@ begin
 		(4, 2, 2),
 		(5, 2, 3);
 		
-	insert into step
-		(step_id, recipe_id, step_number, `text`)
+	insert into direction
+		(direction_id, recipe_id, direction_number, `text`)
 	values
 		(1, 1, 1, 'Buy an entire chicken'),
 		(2, 1, 2, 'Bake the entire chicken for 20 minutes'),
@@ -440,12 +440,12 @@ begin
 		(recipe_ingredient_id, ingredient_list_index, quantity, recipe_id, ingredient_id, measurement_unit_id)
 	values
 		(1, 1, 1, 1, 1, null),
-		(2, 2, 8, 2, 2, null),
-		(3, 3, 0.5, 2, 3, 1),
-		(4, 4, null, 2, 4, null),
-		(5, 5, null, 2, 5, null),
-		(6, 6, 2, 2, 6, 1),
-		(7, 7, 0.5, 2, 7, 1),
+		(2, 1, 8, 2, 2, null),
+		(3, 2, 0.5, 2, 3, 1),
+		(4, 3, null, 2, 4, null),
+		(5, 4, null, 2, 5, null),
+		(6, 5, 2, 2, 6, 1),
+		(7, 6, 0.5, 2, 7, 1),
 		(8, 1, 0.5, 3, 1, 2),
 		(9, 2, 8, 3, 7, 3),
 		(10, 3, 2, 3, 8, null),
