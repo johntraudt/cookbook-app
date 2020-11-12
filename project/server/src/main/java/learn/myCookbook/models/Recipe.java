@@ -1,7 +1,5 @@
 package learn.myCookbook.models;
 
-import learn.myCookbook.models.enumerations.RecipeTag;
-
 import java.time.LocalDate;
 import java.util.List;
 
