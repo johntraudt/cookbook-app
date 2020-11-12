@@ -74,6 +74,11 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldAdd() {
+        RecipeIngredient recipeIngredient = new RecipeIngredient();
+    }
+
+    @Test
     void shouldUpdate() {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setRecipeIngredientId(3);
@@ -89,7 +94,18 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
 
     @Test
     void shouldNotUpdateMissing() {
+        RecipeIngredient missing = new RecipeIngredient();
+        missing.setRecipeIngredientId(999);
+        missing.setIngredientListIndex(2);
+        missing.setNumerator(3);
+        missing.setRecipeId(2);
+        missing.setIngredientId(3);
+        missing.setMeasurementUnitId(1);
 
+        assertFalse(repository.update(missing));
     }
+
+
+
 }
 

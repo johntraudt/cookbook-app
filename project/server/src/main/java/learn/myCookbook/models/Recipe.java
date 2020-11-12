@@ -13,6 +13,7 @@ public class Recipe {
     private int servings;
     private LocalDate date;
     private boolean wasUpdated;
+    private boolean isFeatured;
     private String imageLink;
     private List<RecipeIngredient> ingredients;
     private List<Direction> directions;
@@ -89,6 +90,14 @@ public class Recipe {
 
     public void setWasUpdated(boolean wasUpdated) {
         this.wasUpdated = wasUpdated;
+    }
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
     }
 
     public String getImageLink() {
