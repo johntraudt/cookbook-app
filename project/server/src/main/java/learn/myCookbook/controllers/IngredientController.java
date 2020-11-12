@@ -20,15 +20,20 @@ public class IngredientController {
         this.service = service;
     }
 
-//    @GetMapping
-//    public List<Ingredient> findAll() {
-//        return service.findAll();
-//    }
+    @GetMapping
+    public List<Ingredient> findAll() {
+        return service.findAll();
+    }
 
-//    @GetMapping("/{ingredientId}")
-//    public Ingredient findById(@PathVariable int ingredientId) {
-//        return service.findById(ingredientId);
-//    }
+    @GetMapping("/{ingredientId}")
+    public Ingredient findById(@PathVariable int ingredientId) {
+        return service.findById(ingredientId);
+    }
+
+    @GetMapping("/name/{name}")
+    public Ingredient findByName(@PathVariable String name) {
+        return  service.findByName(name);
+    }
 
 //    @PostMapping
 //    public ResponseEntity<Object> add(@RequestBody Ingredient ingredient) {

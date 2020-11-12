@@ -20,15 +20,15 @@ public class ReviewController {
         this.service = service;
     }
 
-//    @GetMapping
-//    public List<Review> findAll() {
-//        return service.findAll();
-//    }
+    @GetMapping
+    public List<Review> findAll() {
+        return service.findAll();
+    }
 
-//    @GetMapping("/{reviewId}")
-//    public Review findById(@PathVariable int reviewId) {
-//        return service.findById(reviewId);
-//    }
+    @GetMapping("/{reviewId}")
+    public Review findById(@PathVariable int reviewId) {
+        return service.findById(reviewId);
+    }
 
 //    @PostMapping
 //    public ResponseEntity<Object> add(@RequestBody Review review) {
