@@ -8,17 +8,17 @@ function Home() {
 
     const [recipes, setRecipes] = useState([]);
 
-    const featuredRecipes = async () => {
+    const featuredRecipes = () => {
         fetch('http://localhost:8080/api/recipe') 
             .then(response => response.json())
-            .then(data => {
+            .then((data) => {
                 setRecipes(data);
             });
     }
     
     useEffect(() => {
-        featuredRecipes()
-    },[]);
+        featuredRecipes();
+    }, []);
 
     return (
         <div className="container full-body">
@@ -28,6 +28,7 @@ function Home() {
                         <div className="row">
                             <div className="col-3"></div>
                             <div className="col-6">
+                                
                                 <SearchBar className="home-search"/>
                                 <Link to='/categories'>
                                     <button className="btn btn-light btn-lg mt-1">Categories</button>
@@ -43,23 +44,33 @@ function Home() {
             <div className="subtitle text-center divider">
                 This Week's Featured Recipes:
             </div>
-            {/* {recipes.map(recipe => (
-                <div className="col-4">
-                    <SquareCard recipe />
+            
+            <div className="d-flex flex-wrap justify-content-center">
+            {recipes.map(recipe => (
+                <div className="col-4" id={recipe.recipeId}>
+                    <SquareCard recipe={recipe} />
                 </div>
-            ))} */}
-            <div className="card-grid">
-                <div className="row mt-4 mb-4">
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
+            ))}
+            {recipes.map(recipe => (
+                <div className="col-4" id={recipe.recipeId}>
+                    <SquareCard recipe={recipe} />
                 </div>
-                <div className="row mt-4 mb-4">
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                </div>
+            ))}
             </div>
+
+
+            {/* <div className="card-grid">
+                <div className="row mt-4 mb-4">
+                    <div className="col-4"><SquareCard/></div>
+                    <div className="col-4"><SquareCard/></div>
+                    <div className="col-4"><SquareCard/></div>
+                </div>
+                <div className="row mt-4 mb-4">
+                    <div className="col-4"><SquareCard/></div>
+                    <div className="col-4"><SquareCard/></div>
+                    <div className="col-4"><SquareCard/></div>
+                </div>
+            </div> */}
 
         </div>
     );

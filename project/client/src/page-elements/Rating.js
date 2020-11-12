@@ -7,11 +7,11 @@ export default function Rating ({detailed}) {
     function starRating() {
         return (
             <div>
-                <span class="fa fa-star star-checked"></span>
-                <span class="fa fa-star star-checked"></span>
-                <span class="fa fa-star star-checked"></span>
-                <span class="fa fa-star star-checked"></span>
-                <span class="fa fa-star star-unchecked"></span>
+                <span className="fa fa-star star-checked"></span>
+                <span className="fa fa-star star-checked"></span>
+                <span className="fa fa-star star-checked"></span>
+                <span className="fa fa-star star-checked"></span>
+                <span className="fa fa-star star-unchecked"></span>
             </div>
         )
     } 

@@ -2,6 +2,7 @@ package learn.myCookbook.data;
 
 import learn.myCookbook.data.mappers.DirectionMapper;
 import learn.myCookbook.data.mappers.RecipeMapper;
+import learn.myCookbook.data.mappers.RecipeTagMapper;
 import learn.myCookbook.data.mappers.ReviewMapper;
 import learn.myCookbook.models.Recipe;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -44,9 +45,21 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
             recipe.setUser(userRepository.findById(recipe.getUserId()));
             addReviews(recipe);
             addDirections(recipe);
+            addTags(recipe);
         }
 
         return recipe;
+    }
+
+    private void addTags(Recipe recipe) {
+        final String sql = "select rt.recipe_tag_id, rt.name, rt.recipe_tag_category_id " +
+                "from recipe_tag rt " +
+                "join recipe_recipe_tag rrt on rrt.recipe_tag_id = rt.recipe_tag_id " +
+                "join recipe r on r.recipe_id = rrt.recipe_id " +
+                "where r.recipe_id = ?;";
+
+        var tags = jdbcTemplate.query(sql, new RecipeTagMapper(), recipe.getRecipeId());
+        recipe.setTags(tags);
     }
 
     private void addDirections(Recipe recipe) {

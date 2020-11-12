@@ -1,14 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function SearchBar() {
+    const [search, setSearch] = useState();
+
+    const history = useHistory(); 
+
+    const searchAction = (event) => {
+        
+        // history.push(`/{search}`)
+    }
+
     return (
         <div>
-            <form>
+            <form onSubmit={searchAction()}>
                 <div className="text-left">
-                    <i class="material-icons mdc-button__icon" for="searchBar">search</i>
+                    <i className="material-icons mdc-button__icon">search</i>
                 </div>
-                <i class="material-icons mdc-button__icon hidden" for="searchBar">search</i>
-                <input class="form-control" type="text" id="searchBar" placeholder="Search" aria-label="Search"></input>
+                <i className="material-icons mdc-button__icon hidden">search</i>
+                <input className="form-control" type="text" placeholder="Search" value={search}></input> 
             </form>
         </div>
     );
