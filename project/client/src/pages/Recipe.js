@@ -1,11 +1,32 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Rating from '../page-elements/Rating'
+import { useLocation } from 'react-router-dom'
 
 export default function Recipe() {
+
+    const [recipe, setRecipe] = useState();
+    
+    const location = useLocation();
+    
+    useEffect(() => {
+        const getRecipe = () => {
+            fetch(`http://localhost:8080/api${location.pathname}`) 
+                .then(response => response.json())
+                .then((data) => {
+                    setRecipe(data);
+                });
+        }
+        getRecipe()
+    }, [location.pathname]);
+
+    if(!recipe) {
+        return null;
+    }
+
     return (
         <div className="container full-body">
             <div className="text-center"> 
-                <h2 className="display-3">Thai Panang</h2>
+                <h2 className="display-3">{recipe.name}</h2>
                 <Rating detailed/>
                 <div className="row">
                     <div className="col-2"></div>
@@ -43,7 +64,7 @@ export default function Recipe() {
                                             <li>1 green bell pepper sliced into thin strips</li>
                                             <li>3 carrots sliced </li>
                                         </ul>
-                                        <h4>Instructions</h4>
+                                        <h4>Directions</h4>
                                         <ol>
                                             <li>If you’d like to serve rice with your curry (optional): Bring a large pot of water to boil. Add the rinsed rice and continue boiling for 30 minutes, reducing heat as necessary to prevent overflow. Remove from heat, drain the rice and return the rice to pot. Cover and let the rice rest for 10 minutes or longer, until you’re ready to serve. Just before serving, season the rice to taste with salt and fluff it with a fork.</li>
                                             <li>To make the curry, warm a large skillet with deep sides over medium heat. Once it’s hot, add the 1 tablespoon olive oil. Add the 1 small white onion, chopped and 1 tsp of salt and cook, stirring often, until the onion has softened and is turning translucent, about 5 minutes.</li>
