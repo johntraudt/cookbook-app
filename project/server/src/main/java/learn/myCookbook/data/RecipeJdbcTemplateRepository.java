@@ -11,9 +11,11 @@ import java.util.List;
 public class RecipeJdbcTemplateRepository implements RecipeRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserJdbcTemplateRepository userRepository;
 
-    public RecipeJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public RecipeJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserJdbcTemplateRepository userRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,8 +34,12 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
                 "from recipe " +
                 "where recipe_id = ?;";
 
-        return jdbcTemplate.query(sql, new RecipeMapper(), recipeId)
+        Recipe recipe = jdbcTemplate.query(sql, new RecipeMapper(), recipeId)
                 .stream()
                 .findFirst().orElse(null);
+
+        recipe.setUser(userRepository.findById(recipe.getUserId()));
+
+        return recipe;
     }
 }
