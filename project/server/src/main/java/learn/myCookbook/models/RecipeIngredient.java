@@ -7,8 +7,6 @@ public class RecipeIngredient {
     private Recipe recipe;
     private Ingredient ingredient;
     private int ingredientListIndex;
-    private int numerator;
-    private int denominator;
     private int measurementUnitId;
     private MeasurementUnit measurementUnit;
 
@@ -58,22 +56,6 @@ public class RecipeIngredient {
 
     public void setIngredientListIndex(int ingredientListIndex) {
         this.ingredientListIndex = ingredientListIndex;
-    }
-
-    public int getNumerator() {
-        return numerator;
-    }
-
-    public void setNumerator(int numerator) {
-        this.numerator = numerator;
-    }
-
-    public int getDenominator() {
-        return denominator;
-    }
-
-    public void setDenominator(int denominator) {
-        this.denominator = denominator;
     }
 
     public int getMeasurementUnitId() {
