@@ -78,13 +78,13 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setRecipeIngredientId(3);
         recipeIngredient.setIngredientListIndex(2);
-        recipeIngredient.setQuantity(2);
+        recipeIngredient.setNumerator(3);
         recipeIngredient.setRecipeId(2);
         recipeIngredient.setIngredientId(3);
         recipeIngredient.setMeasurementUnitId(1);
 
         assertTrue(repository.update(recipeIngredient));
-        assertTrue(repository.findById(3).getQuantity() > 1);
+        assertTrue(repository.findById(3).getNumerator() > 2);
     }
 
     @Test

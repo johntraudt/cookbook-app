@@ -21,6 +21,7 @@ public class RecipeMapper implements RowMapper<Recipe> {
         recipe.setServings(resultSet.getInt("servings"));
         recipe.setDate(resultSet.getDate("date").toLocalDate());
         recipe.setWasUpdated(resultSet.getBoolean("was_updated"));
+        recipe.setFeatured(resultSet.getBoolean("is_featured"));
         recipe.setImageLink(resultSet.getString("image_link"));
 
 //        UserMapper userMapper = new UserMapper();

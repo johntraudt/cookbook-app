@@ -21,7 +21,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public List<RecipeIngredient> findAll() {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, quantity, measurement_unit_id " +
+        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
                 "from recipe_ingredient limit 1000;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper());
@@ -29,7 +29,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public List<RecipeIngredient> findByRecipeId(int recipeId) {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, quantity, measurement_unit_id " +
+        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
                 "from recipe_ingredient where recipe_id = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeId);
@@ -37,7 +37,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public RecipeIngredient findById(int recipeIngredientId) {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, quantity, measurement_unit_id " +
+        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
                 "from recipe_ingredient where recipe_ingredient_id = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeIngredientId)
@@ -48,7 +48,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public RecipeIngredient findByRecipeIdAndIndex(int recipeId, int ingredientListIndex) {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, quantity, measurement_unit_id " +
+        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
                 "from recipe_ingredient where recipe_id = ? " +
                 "and ingredient_list_index = ?;";
 
@@ -61,19 +61,20 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
     @Override
     public RecipeIngredient add(RecipeIngredient recipeIngredient) {
         final String sql = "insert into recipe_ingredient " +
-                "(recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, quantity, measurement_unit_id) " +
+                "(recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id) " +
                 "values " +
                 "(?, ?, ?, ?, ?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, recipeIngredient.getRecipeIngredientId()); //ri id
-            ps.setInt(2, recipeIngredient.getRecipeId()); //r id
-            ps.setInt(3, recipeIngredient.getIngredientId()); //i id
-            ps.setInt(4, recipeIngredient.getIngredientListIndex()); //ingredient list index
-            ps.setDouble(5, recipeIngredient.getQuantity()); //quantity
-            ps.setInt(6, recipeIngredient.getMeasurementUnit().getMeasurementUnitId()); //mu id
+            ps.setInt(1, recipeIngredient.getRecipeIngredientId());
+            ps.setInt(2, recipeIngredient.getRecipeId());
+            ps.setInt(3, recipeIngredient.getIngredientId());
+            ps.setInt(4, recipeIngredient.getIngredientListIndex());
+            ps.setInt(5, recipeIngredient.getNumerator());
+            ps.setInt(6, recipeIngredient.getDenominator());
+            ps.setInt(7, recipeIngredient.getMeasurementUnit().getMeasurementUnitId());
             return ps;
         }, keyHolder);
 
@@ -91,15 +92,17 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
                 "recipe_id = ?, " +
                 "ingredient_id = ?, " +
                 "ingredient_list_index = ?, " +
-                "quantity = ?, " +
+                "numerator = ?, " +
+                "denominator = ?, " +
                 "measurement_unit_id = ? " +
                 "where recipe_ingredient_id = ?;";
 
-        return jdbcTemplate.update(sql, new RecipeIngredientMapper(),
+        return jdbcTemplate.update(sql,
                 recipeIngredient.getRecipeId(),
                 recipeIngredient.getIngredientId(),
                 recipeIngredient.getIngredientListIndex(),
-                recipeIngredient.getQuantity(),
+                recipeIngredient.getNumerator(),
+                recipeIngredient.getDenominator(),
                 recipeIngredient.getMeasurementUnitId(),
                 recipeIngredient.getRecipeIngredientId()) > 0;
     }
@@ -109,7 +112,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
         final String sql = "delete from recipe_ingredient " +
                 "where recipe_ingredient_id = ?;";
 
-        return jdbcTemplate.update(sql, new RecipeIngredientMapper(), recipeIngredientId) > 0;
+        return jdbcTemplate.update(sql,  recipeIngredientId) > 0;
     }
 
     @Override
