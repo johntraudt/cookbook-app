@@ -16,11 +16,12 @@ public class ReviewMapper implements RowMapper<Review> {
         if (resultSet.getString("comment") != null) {
             review.setComment(resultSet.getString("comment"));
         }
+
+        review.setDate(resultSet.getDate("date").toLocalDate());
+
         review.setUserId(resultSet.getInt("user_id"));
         review.setRecipeId(resultSet.getInt("recipe_id"));
 
-        // TODO bug: no date field in review table
-        // review.setDate(resultSet.getDate("date").toLocalDate());
 
         return review;
     }

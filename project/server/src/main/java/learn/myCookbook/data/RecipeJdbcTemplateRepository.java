@@ -1,6 +1,8 @@
 package learn.myCookbook.data;
 
+import learn.myCookbook.data.mappers.DirectionMapper;
 import learn.myCookbook.data.mappers.RecipeMapper;
+import learn.myCookbook.data.mappers.ReviewMapper;
 import learn.myCookbook.models.Recipe;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -38,8 +40,32 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
                 .stream()
                 .findFirst().orElse(null);
 
-        recipe.setUser(userRepository.findById(recipe.getUserId()));
+        if (recipe != null) {
+            recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+            addDirections(recipe);
+        }
 
         return recipe;
+    }
+
+    private void addDirections(Recipe recipe) {
+        final String sql = "select d.direction_id, d.recipe_id, d.direction_number, d.text " +
+                "from direction d " +
+                "join recipe r on r.recipe_id = d.recipe_id " +
+                "where r.recipe_id = ?;";
+
+        var directions = jdbcTemplate.query(sql, new DirectionMapper(), recipe.getRecipeId());
+        recipe.setDirections(directions);
+    }
+
+    private void addReviews(Recipe recipe) {
+        final String sql = "select re.review_id, re.rating, re.comment, re.date, re.user_id, re.recipe_id " +
+                "from review re " +
+                "join recipe r on r.recipe_id = re.recipe_id " +
+                "where r.recipe_id = ?;";
+
+        var reviews = jdbcTemplate.query(sql, new ReviewMapper(), recipe.getRecipeId());
+        recipe.setReviews(reviews);
     }
 }

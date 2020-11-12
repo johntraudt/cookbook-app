@@ -17,7 +17,7 @@ public class Recipe {
     private boolean wasUpdated;
     private String imageLink;
     private List<RecipeIngredient> ingredients;
-    private List<String> directions;
+    private List<Direction> directions;
     private List<RecipeTag> tags;
     private List<Review> reviews;
 
@@ -109,11 +109,11 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public List<String> getDirections() {
+    public List<Direction> getDirections() {
         return directions;
     }
 
-    public void setDirections(List<String> directions) {
+    public void setDirections(List<Direction> directions) {
         this.directions = directions;
     }
 
