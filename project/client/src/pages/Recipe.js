@@ -4,7 +4,9 @@ import { useLocation } from 'react-router-dom'
 
 export default function Recipe() {
 
-    const [recipe, setRecipe] = useState();
+    const [recipe, setRecipe] = useState({
+        name:""
+    });
     
     const location = useLocation();
     
@@ -19,9 +21,9 @@ export default function Recipe() {
         getRecipe()
     }, [location.pathname]);
 
-    if(!recipe) {
-        return null;
-    }
+    // if(!recipe) {
+    //     return null;
+    // }
 
     return (
         <div className="container full-body">
@@ -32,10 +34,11 @@ export default function Recipe() {
                     <div className="col-2"></div>
                     <div className="col-8">
                         <div className="row justify-content-md-center">
-                            <div className="mr-2 ml-2">User: Noah Mitchelson</div>
-                            <div className="mr-2 ml-2">Updated: 11/9/2020</div>
-                            <div className="mr-2 ml-2">Prep Time: 30 minutes</div>
-                            <div className="mr-2 ml-2">Servings: 4</div>
+                            <div className="mr-2 ml-2">User: {recipe.user}</div>
+                            <div className="mr-2 ml-2">{recipe.wasUpdated ? 'Posted': 'Edited'}: {recipe.date}</div>
+                            <div className="mr-2 ml-2">Prep Time: {recipe.prepTimeInMinutes}</div>
+                            <div className="mr-2 ml-2">Cook Time: {recipe.cookTimeInMinutes}</div>
+                            <div className="mr-2 ml-2">Servings: {recipe.servings}</div>
                             <div className="mr-2 ml-2">Categories: Thai</div>
                             <div className="card border-white">
                                 <img className="card-img-top p-2" src="https://www.alphafoodie.com/wp-content/uploads/2019/05/Thai-Green-Curry.jpeg" alt="Curry"></img>

@@ -1,10 +1,11 @@
 header {
-    background-color: rgb(38, 42, 58);
+    /* background-color: rgb(40, 90, 43); */
+    background-color: #44474b;
     color: white;
 }
 
 footer {
-    background-color: rgb(38, 42, 58);
+    background-color: #44474b;
     color: white;
     position: relative;
     bottom: 0;
@@ -13,7 +14,7 @@ footer {
 }
 
 .subtitle {
-    background-color: #c5fbff;
+    background-color: #96c94a;
     font-size: 1.5em;
     color: rgb(38, 42, 58);
     padding: .25em;
