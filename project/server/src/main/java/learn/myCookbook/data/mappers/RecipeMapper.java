@@ -12,15 +12,21 @@ public class RecipeMapper implements RowMapper<Recipe> {
     public Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
         Recipe recipe= new Recipe();
         recipe.setRecipeId(resultSet.getInt("recipe_id"));
+
         recipe.setUserId(resultSet.getInt("user_id"));
+
         recipe.setName(resultSet.getString("name"));
         recipe.setPrepTimeInMinutes(resultSet.getInt("prep_time"));
         recipe.setCookTimeInMinutes(resultSet.getInt("cook_time"));
         recipe.setServings(resultSet.getInt("servings"));
         recipe.setDate(resultSet.getDate("date").toLocalDate());
         recipe.setWasUpdated(resultSet.getBoolean("was_updated"));
-        //FIXME: add image link to database
         recipe.setImageLink(resultSet.getString("image_link"));
+
+//        UserMapper userMapper = new UserMapper();
+//        recipe.setUser(userMapper.mapRow(resultSet, i));
+
+
         return recipe;
     }
 }
