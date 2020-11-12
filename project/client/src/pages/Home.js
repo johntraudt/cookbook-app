@@ -6,16 +6,19 @@ import SquareCard from '../page-elements/SquareCard';
 
 function Home() {
 
+    const [recipes, setRecipes] = useState([]);
+
+    const featuredRecipes = async () => {
+        fetch('http://localhost:8080/api/recipe') 
+            .then(response => response.json())
+            .then(data => {
+                setRecipes(data);
+            });
+    }
+    
     useEffect(() => {
         featuredRecipes()
     },[]);
-
-    const featuredRecipes = async () => {
-        fetch('http://localhost:8080/recipes/featured')
-            .then(response => response.json())
-            .then(data => {
-            })
-    }
 
     return (
         <div className="container full-body">
@@ -37,9 +40,14 @@ function Home() {
                 <img className="img-fluid" src={banner} alt="Homepage banner with various fresh ingredients"/>
             </div>
 
-            <div className="subtitle text-center">
+            <div className="subtitle text-center divider">
                 This Week's Featured Recipes:
             </div>
+            {/* {recipes.map(recipe => (
+                <div className="col-4">
+                    <SquareCard recipe />
+                </div>
+            ))} */}
             <div className="card-grid">
                 <div className="row mt-4 mb-4">
                     <div className="col-4"><SquareCard/></div>

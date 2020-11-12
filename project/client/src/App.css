@@ -13,7 +13,7 @@ footer {
 }
 
 .subtitle {
-    background-color: rgb(204, 245, 255);
+    background-color: #c5fbff;
     font-size: 1.5em;
     color: rgb(38, 42, 58);
     padding: .25em;
@@ -39,10 +39,6 @@ a:visited {
     width: 100%;
     padding-right: 100;
 }
-
-.center {
-    margin: auto;
-  }
 
 .md-form.mt-0{
     width:700px;
@@ -90,8 +86,16 @@ a:visited {
 }
 
 .full-body {
-    min-height: 84vh;
+    min-height: 79vh;
     overflow: hidden;
     display: block;
     position: relative;
+}
+
+.expand {
+    width: 20em;
+}
+
+.divider {
+    background-color: rgb(242, 255, 253);
 }
