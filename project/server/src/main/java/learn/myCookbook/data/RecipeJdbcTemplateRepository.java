@@ -49,8 +49,28 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
         return recipe;
     }
 
+    @Override
+    public Recipe add(Recipe recipe) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Recipe recipe) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(int recipeId) {
+        return false;
+    }
+
     private void addIngredients(Recipe recipe) {
-        final String sql = "";
+        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.name, mu.name 'mName' " +
+                "from recipe_ingredient ri " +
+                "join recipe r on r.recipe_id = ri.recipe_id " +
+                "join ingredient i on i.ingredient_id = ri.ingredient_id " +
+                "left join measurement_unit mu on mu.measurement_unit_id = ri.measurement_unit_id " +
+                "where r.recipe_id = ?;";
 
         var ingredients = jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipe.getRecipeId());
         recipe.setIngredients(ingredients);

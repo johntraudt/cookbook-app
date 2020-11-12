@@ -72,9 +72,7 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
             ps.setInt(2, recipeIngredient.getRecipeId());
             ps.setInt(3, recipeIngredient.getIngredientId());
             ps.setInt(4, recipeIngredient.getIngredientListIndex());
-            ps.setInt(5, recipeIngredient.getNumerator());
-            ps.setInt(6, recipeIngredient.getDenominator());
-            ps.setInt(7, recipeIngredient.getMeasurementUnitId());
+            ps.setInt(5, recipeIngredient.getMeasurementUnitId());
             return ps;
         }, keyHolder);
 
@@ -92,8 +90,6 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
                 "recipe_id = ?, " +
                 "ingredient_id = ?, " +
                 "ingredient_list_index = ?, " +
-                "numerator = ?, " +
-                "denominator = ?, " +
                 "measurement_unit_id = ? " +
                 "where recipe_ingredient_id = ?;";
 
@@ -101,8 +97,6 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
                 recipeIngredient.getRecipeId(),
                 recipeIngredient.getIngredientId(),
                 recipeIngredient.getIngredientListIndex(),
-                recipeIngredient.getNumerator(),
-                recipeIngredient.getDenominator(),
                 recipeIngredient.getMeasurementUnitId(),
                 recipeIngredient.getRecipeIngredientId()) > 0;
     }

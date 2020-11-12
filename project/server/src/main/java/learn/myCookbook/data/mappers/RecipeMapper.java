@@ -12,9 +12,7 @@ public class RecipeMapper implements RowMapper<Recipe> {
     public Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
         Recipe recipe= new Recipe();
         recipe.setRecipeId(resultSet.getInt("recipe_id"));
-
         recipe.setUserId(resultSet.getInt("user_id"));
-
         recipe.setName(resultSet.getString("name"));
         recipe.setPrepTimeInMinutes(resultSet.getInt("prep_time"));
         recipe.setCookTimeInMinutes(resultSet.getInt("cook_time"));
@@ -23,10 +21,6 @@ public class RecipeMapper implements RowMapper<Recipe> {
         recipe.setWasUpdated(resultSet.getBoolean("was_updated"));
         recipe.setFeatured(resultSet.getBoolean("is_featured"));
         recipe.setImageLink(resultSet.getString("image_link"));
-
-//        UserMapper userMapper = new UserMapper();
-//        recipe.setUser(userMapper.mapRow(resultSet, i));
-
 
         return recipe;
     }
