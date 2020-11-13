@@ -42,8 +42,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
                 .findFirst().orElse(null);
 
         if (user != null) {
-            addLogin(user);
-            addRole(user);
+            setLogin(user);
+            setRole(user);
         }
 
         return user;
@@ -51,8 +51,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     @Override
     public User add(User user) {
-        final String sql = "insert into `user` (first_name, last_name, email, is_active, user_role_id) "
-                + "values (?,?,?,?,?);";
+        final String sql = "insert into `user` (first_name, last_name, email, user_role_id) "
+                + "values (?,?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -60,11 +60,10 @@ public class UserJdbcTemplateRepository implements UserRepository {
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getEmail());
-            ps.setBoolean(4, user.isActive());
-            ps.setInt(5, user.getUserRoleId());
+            ps.setInt(4, user.getUserRoleId());
             return ps;
         }, keyHolder);
-        if (rowsAffected <= 0) {
+        if (rowsAffected <= 0 && addLogin(user)) {
             return null;
         }
         user.setUserId(keyHolder.getKey().intValue());
@@ -90,11 +89,15 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     @Override
     @Transactional
-    public boolean deleteById(int userId) {
-        return false;
+    public boolean deactivateById(int userId) {
+        final String sql = "update user set " +
+                "is_active = ? " +
+                "where user_id = ? ";
+
+        return jdbcTemplate.update(sql, 0, userId) > 0;
     }
 
-    private void addRole(User user) {
+    private void setRole(User user) {
         final String sql = "select ur.user_role_id, ur.user_role_name " +
                 "from user_role ur " +
                 "join user u on u.user_role_id = ur.user_role_id " +
@@ -106,8 +109,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
         user.setRole(userRole);
     }
 
-    private void addLogin(User user) {
-        final String sql = "select l.user_name, l.password_hash " +
+    private void setLogin(User user) {
+        final String sql = "select l.user_id, l.user_name, l.password_hash " +
                 "from login l " +
                 "join user u on u.user_id = l.user_id " +
                 "where u.user_id = ?;";
@@ -116,5 +119,12 @@ public class UserJdbcTemplateRepository implements UserRepository {
                 .stream()
                 .findFirst().orElse(null);
         user.setUserName(login.getUserName());
+    }
+
+    private boolean addLogin(User user) {
+        final String sql = "insert into login (user_id, user_name, password_hash) " +
+                "values (?,?);";
+
+        return jdbcTemplate.update(sql, user.getUserId(), user.getUserName(), user.getPasswordHash()) > 0;
     }
 }

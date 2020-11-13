@@ -86,6 +86,8 @@ class UserJdbcTemplateRepositoryTest {
         user.setFirstName("Test");
         user.setLastName("Testerson");
         user.setEmail("test@email.com");
+        user.setUserName("another placeholder");
+        user.setPasswordHash("password123");
         user.setUserRoleId(1);
         return user;
     }

@@ -1,6 +1,8 @@
 package learn.myCookbook.models;
 
 public class UserRole {
+    public final int number_of_user_roles = 2;
+
     private int userRoleId;
     private String name;
 

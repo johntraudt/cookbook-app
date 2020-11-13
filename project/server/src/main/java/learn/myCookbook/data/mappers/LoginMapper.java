@@ -11,6 +11,7 @@ public class LoginMapper implements RowMapper<Login> {
     @Override
     public Login mapRow(ResultSet resultSet, int i) throws SQLException {
         Login login = new Login();
+        login.setUserId(resultSet.getInt("user_id"));
         login.setUserName(resultSet.getString("user_name"));
         login.setPasswordHash(resultSet.getString("password_hash"));
         return login;

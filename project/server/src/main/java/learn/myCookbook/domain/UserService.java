@@ -78,6 +78,19 @@ public class UserService {
             result.addMessage("email is required.", ResultType.INVALID);
         }
 
+        if (Validations.isNullOrBlank(user.getUserName())) {
+            result.addMessage("username is required", ResultType.INVALID);
+        }
+
+        if (Validations.isNullOrBlank(user.getPasswordHash())) {
+            result.addMessage("password is required", ResultType.INVALID);
+        }
+
+
+        /*
+        private UserRole role;
+        private int userRoleId;
+         */
         return result;
     }
 

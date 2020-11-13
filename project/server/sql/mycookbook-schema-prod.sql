@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook`.`review` (
   `review_id` INT NOT NULL AUTO_INCREMENT,
   `rating` INT NOT NULL,
   `comment` VARCHAR(45) NULL,
-  `date` DATE NOT NULL,
+  `review_date` DATE NOT NULL,
   `user_id` INT NOT NULL,
   `recipe_id` INT NOT NULL,
   PRIMARY KEY (`review_id`),
@@ -318,7 +318,7 @@ values
     (3, 'garden salad', 15, 0, 2, '2020-11-03', 0, 1, 200, 3, 'https://friendlystock.com/wp-content/uploads/2019/06/6-cute-dinosaur-presenting-cartoon-clipart.jpg');
     
 insert into review
-	(review_id, rating, `comment`, `date`, user_id, recipe_id)
+	(review_id, rating, `comment`, review_date, user_id, recipe_id)
 values
 	(1, 5, 'Very nice!', '2020-11-01', 1, 1),
     (2, 4, 'Pretty good.', '2020-11-11', 1, 2),
