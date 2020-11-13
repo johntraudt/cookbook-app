@@ -65,7 +65,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addIngredients(Recipe recipe) {
-        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.name, mu.name 'mName' " +
+        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.quantity, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.name, mu.name 'mName' " +
                 "from recipe_ingredient ri " +
                 "join recipe r on r.recipe_id = ri.recipe_id " +
                 "join ingredient i on i.ingredient_id = ri.ingredient_id " +

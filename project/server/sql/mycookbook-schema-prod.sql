@@ -175,6 +175,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mycookbook`.`recipe_tag` (
   `recipe_tag_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `image_link` VARCHAR(1022) NOT NULL,
   `recipe_tag_category_id` INT NULL,
   PRIMARY KEY (`recipe_tag_id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
@@ -365,15 +366,15 @@ values
     (3, 'COOKIN_METHOD');
 
 insert into recipe_tag
-	(recipe_tag_id, `name`, recipe_tag_category_id)
+	(recipe_tag_id, `name`, recipe_tag_category_id, image_link)
 values
-	(1, 'CHICKEN', null),
-    (2, 'HEARTY', null),
-    (3, 'SALAD', 2),
-    (4, 'AMERICAN', 1),
-    (5, 'COLD', null),
-    (6, 'NO_COOKING_REQUIRED', 3),
-    (7, 'OVEN_BAKED', 3);
+	(1, 'CHICKEN', null, 'https://pbs.twimg.com/media/Empjp0BXIAkTCvA?format=jpg&name=large'),
+    (2, 'HEARTY', null, 'https://64.media.tumblr.com/4d2f6d0c3e29990123bda22166fe8e86/1220ce887d7a24a9-52/s1280x1920/1642bbc597a807ba47ec68450284de3a1725fb87.png'),
+    (3, 'SALAD', 2, 'https://pbs.twimg.com/media/Emom_kfXEAAE6on?format=jpg&name=large'),
+    (4, 'AMERICAN', 1, 'https://ih1.redbubble.net/image.1031152073.5216/flat,750x1000,075,f.jpg'),
+    (5, 'COLD', null, 'https://cdn.drawception.com/drawings/95033/qpjM9xr2aw.png'),
+    (6, 'NO_COOKING_REQUIRED', 3, 'https://media.tenor.com/images/125366f064f15bb3b1bcc91fbb3bc83f/tenor.png'),
+    (7, 'OVEN_BAKED', 3, 'https://www.mommyhighfive.com/wp-content/uploads/2020/05/Disney-Toy-Story-Rex-Dinosaur-e1592020175282.jpg');
     
 insert into recipe_recipe_tag
 	(recipe_recipe_tag_id, recipe_id, recipe_tag_id)
