@@ -307,7 +307,7 @@ begin
     delete from ingredient;
     delete from measurement_unit;
     delete from recipe;
-    delete from `user`;
+    delete from user;
     delete from user_role;
     
     
@@ -343,7 +343,7 @@ begin
 		(4, 'test recipe', 2, 0, 1, '2020-09-10', 0, 1, null, 3, 'https://pbs.twimg.com/media/EmiZojrW4AAx8We.jpg');
 		
 	insert into review
-		(review_id, rating, `comment`, review_date, user_id, recipe_id)
+		(review_id, rating, `comment`, `review_date`, user_id, recipe_id)
 	values
 		(1, 5, 'Very nice!', '2020-11-01', 1, 1),
 		(2, 4, 'Pretty good.', '2020-11-11', 1, 2),

@@ -28,6 +28,9 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
     void shouldFindAll() {
         List<RecipeIngredient> all = repository.findAll();
         assertNotNull(all);
+        for (RecipeIngredient ri : all) {
+            System.out.println(ri.getRecipeIngredientId());
+        }
         assertTrue(all.size() >= 10);
     }
 

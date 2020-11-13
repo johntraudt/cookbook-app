@@ -92,7 +92,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     private void addRole(User user) {
-        final String sql = "select ur.user_role_id, ur.name " +
+        final String sql = "select ur.user_role_id, ur.user_role_name " +
                 "from user_role ur " +
                 "join user u on u.user_role_id = ur.user_role_id " +
                 "where u.user_id = ?;";

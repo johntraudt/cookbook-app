@@ -21,10 +21,11 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public List<RecipeIngredient> findAll() {
-        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
+        final String sql = "select " +
+                "ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id, i.ingredient_name, mu.measurement_unit_name " +
                 "from recipe_ingredient ri " +
                 "join ingredient i on ri.ingredient_id = i.ingredient_id " +
-                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "left join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
                 "limit 1000;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper());
@@ -32,10 +33,10 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public List<RecipeIngredient> findByRecipeId(int recipeId) {
-        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
+        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id, i.ingredient_name, mu.measurement_unit_name " +
                 "from recipe_ingredient ri " +
                 "join ingredient i on ri.ingredient_id = i.ingredient_id " +
-                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "left join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
                 "where recipe_id = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeId);
@@ -43,10 +44,11 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public RecipeIngredient findById(int recipeIngredientId) {
-        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
-                "from recipe_ingredient " +
+        final String sql = "select " +
+                "ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id, i.ingredient_name, mu.measurement_unit_name " +
+                "from recipe_ingredient ri " +
                 "join ingredient i on ri.ingredient_id = i.ingredient_id " +
-                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "left join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
                 "where recipe_ingredient_id = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeIngredientId)
@@ -57,11 +59,12 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public RecipeIngredient findByRecipeIdAndIndex(int recipeId, int ingredientListIndex) {
-        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
-                "from recipe_ingredient where recipe_id = ? " +
+        final String sql = "select " +
+                "ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id, i.ingredient_name, mu.measurement_unit_name " +
+                "from recipe_ingredient ri " +
                 "join ingredient i on ri.ingredient_id = i.ingredient_id " +
-                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
-                "and ingredient_list_index = ?;";
+                "left join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "where ri.recipe_id = ? and ri.ingredient_list_index = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeId, ingredientListIndex)
                 .stream()
