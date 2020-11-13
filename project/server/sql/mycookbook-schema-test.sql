@@ -92,13 +92,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`cookbook` (
   `cookbook_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
   `is_private` TINYINT(1) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`cookbook_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `cookbook_id_UNIQUE` (`cookbook_id` ASC) VISIBLE,
-  UNIQUE INDEX `user_id_name_UNIQUE` (`user_id` ASC, `name` ASC) VISIBLE,
+  UNIQUE INDEX `user_id_title_UNIQUE` (`user_id` ASC, `title` ASC) VISIBLE,
   UNIQUE INDEX `cookbook_id_recipe_id_UNIQUE` (`cookbook_id` ASC, `user_id` ASC) VISIBLE,
   CONSTRAINT `FK_user_cookbook`
     FOREIGN KEY (`user_id`)
@@ -352,10 +352,11 @@ begin
 		(5, 4, null, '2020-11-09', 3, 2);
 		
 	insert into cookbook
-		(cookbook_id, `name`, is_private, user_id)
+		(cookbook_id, title, is_private, user_id)
 	values
 		(1, 'Assorted Recipes', 0, 1),
-		(2, 'A Good Meal', 1, 2);
+		(2, 'A Good Meal', 1, 2),
+        (3, 'Test Cookbook', 1, 2);
 		
 	insert into cookbook_recipe
 		(cookbook_recipe_id, cookbook_id, recipe_id)
