@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Header from './page-elements/Header';
 import Footer from './page-elements/Footer';
 import Recipe from './pages/Recipe';
+import Results from './pages/Results';
 
 
 import './App.css'
@@ -19,6 +20,7 @@ function App() {
           <Route path="/categories" component={Categories}/>
           <Route path="/login" component={Login}/>
           <Route path="/recipe" component={Recipe}/>
+          <Route path="/results" component={Results}/>
         </Switch>
         <Footer />
       </div>

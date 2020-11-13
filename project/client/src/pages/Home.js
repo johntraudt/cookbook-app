@@ -51,11 +51,6 @@ function Home() {
                     <SquareCard recipe={recipe} />
                 </div>
             ))}
-            {recipes.map(recipe => (
-                <div className="col-4" id={recipe.recipeId}>
-                    <SquareCard recipe={recipe} />
-                </div>
-            ))}
             </div>
 
 
