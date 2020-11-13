@@ -58,6 +58,8 @@ public class UserService {
         return result;
     }
 
+
+
     private Result<User> validate(User user) {
         // TODO: userRoleId
         Result<User> result = new Result<>();
@@ -95,5 +97,7 @@ public class UserService {
         return result;
     }
 
-
+    public boolean deactivateById(int userId) {
+        return repository.deactivateById(userId);
+    }
 }

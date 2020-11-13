@@ -63,10 +63,12 @@ public class UserJdbcTemplateRepository implements UserRepository {
             ps.setInt(4, user.getUserRoleId());
             return ps;
         }, keyHolder);
-        if (rowsAffected <= 0 && addLogin(user)) {
+        if (rowsAffected <= 0) {
             return null;
         }
         user.setUserId(keyHolder.getKey().intValue());
+        addLogin(user);
+
         return user;
     }
 
@@ -123,7 +125,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     private boolean addLogin(User user) {
         final String sql = "insert into login (user_id, user_name, password_hash) " +
-                "values (?,?);";
+                "values (?,?,?);";
 
         return jdbcTemplate.update(sql, user.getUserId(), user.getUserName(), user.getPasswordHash()) > 0;
     }
