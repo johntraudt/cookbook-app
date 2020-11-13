@@ -20,6 +20,10 @@ function Home() {
         featuredRecipes();
     }, []);
 
+    if(!recipes) {
+        return null;
+    }
+
     return (
         <div className="container full-body">
             <div className="banner">
@@ -41,7 +45,7 @@ function Home() {
                 <img className="img-fluid" src={banner} alt="Homepage banner with various fresh ingredients"/>
             </div>
 
-            <div className="subtitle text-center divider">
+            <div className="subtitle text-center">
                 This Week's Featured Recipes:
             </div>
             
@@ -52,21 +56,6 @@ function Home() {
                 </div>
             ))}
             </div>
-
-
-            {/* <div className="card-grid">
-                <div className="row mt-4 mb-4">
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                </div>
-                <div className="row mt-4 mb-4">
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                    <div className="col-4"><SquareCard/></div>
-                </div>
-            </div> */}
-
         </div>
     );
 }

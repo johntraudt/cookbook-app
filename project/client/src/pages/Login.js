@@ -15,7 +15,7 @@ function Login() {
                             </div>
                             <div>
                                 <label className="pr-3">Password: </label>
-                                <input className="m-1 expand" type='text' placeholder="Password"></input>
+                                <input className="m-1 expand" type='password' placeholder="Password"></input>
                             </div>
                         </div>
 
