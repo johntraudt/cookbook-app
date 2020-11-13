@@ -21,7 +21,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public List<Recipe> findAll() {
 
-        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, recipe_date, was_updated, is_featured, calories, image_link, user_id " +
+        final String sql = "select recipe_id, user_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe limit 1000;";
 
         return jdbcTemplate.query(sql, new RecipeMapper());
@@ -30,7 +30,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public Recipe findById(int recipeId) {
 
-        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, recipe_date, was_updated, is_featured, calories, image_link, user_id " +
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe " +
                 "where recipe_id = ?;";
 
@@ -65,7 +65,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addIngredients(Recipe recipe) {
-        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.quantity, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.name, mu.name 'measurement_unit_ame' " +
+        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.quantity, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.ingredient_name, mu.measurement_unit_name " +
                 "from recipe_ingredient ri " +
                 "join recipe r on r.recipe_id = ri.recipe_id " +
                 "join ingredient i on i.ingredient_id = ri.ingredient_id " +
@@ -98,7 +98,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addReviews(Recipe recipe) {
-        final String sql = "select re.review_id, re.rating, re.comment, re.review_date, re.user_id, re.recipe_id " +
+        final String sql = "select re.review_id, re.rating, re.comment, re.date, re.user_id, re.recipe_id " +
                 "from review re " +
                 "join recipe r on r.recipe_id = re.recipe_id " +
                 "where r.recipe_id = ?;";
