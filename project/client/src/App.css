@@ -1,20 +1,20 @@
 body {
     font-family: Georgia, 'Times New Roman', Times, serif ;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(245, 244, 234);
 }
 
 header, .btn-secondary {
-    background-color: #f1f1f1;
-    color: black;
+    background-color: #944739;
+    color: rgb(233, 233, 233);
 }
 
 .btn-secondary:hover, .btn-secondary:active {
-    background-color: #d8d8d8;
+    background-color: #d1d1d1;
     color: black;
 }
 
 footer {
-    background-color: #e7da65;
+    background-color: #be8d65;
     color: rgb(19, 32, 28);
     position: relative;
     bottom: 0;
@@ -23,7 +23,7 @@ footer {
 }
 
 .subtitle {
-    background-color: #c7f34d;
+    background-color: #fff6a7;
     font-size: 1.5em;
     color: rgb(32, 32, 32);
     padding: .25em;
@@ -35,12 +35,17 @@ a:link {
 }
 
 a:visited {
-    color: rgb(16, 22, 20);
+    color: rgb(243, 242, 231);
     text-decoration: none;
 }
 
 .banner {
     position: relative;
+}
+
+.card {
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
 }
 
 .center-overlay {

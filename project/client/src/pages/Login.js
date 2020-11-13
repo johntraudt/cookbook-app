@@ -32,7 +32,7 @@ function Login() {
                     </div>
                 </form>
                 <h4 className="m-5">
-                    Build A Cookbook: You gateway to home cooking
+                    Build A Cookbook: Your gateway to home cooking
                 </h4>  
             </div>
         </div>
