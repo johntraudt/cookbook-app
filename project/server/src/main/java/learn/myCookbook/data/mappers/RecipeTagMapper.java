@@ -13,7 +13,7 @@ public class RecipeTagMapper implements RowMapper<RecipeTag> {
         RecipeTag recipeTag = new RecipeTag();
         recipeTag.setRecipeTagId(resultSet.getInt("recipe_tag_id"));
         recipeTag.setName(resultSet.getString("name"));
-        recipeTag.setImageLink(resultSet.getString("image_link"));
+        recipeTag.setImageLink(resultSet.getString("tag_image_link"));
 
         if (resultSet.getInt("recipe_tag_category_id") != 0) {
             recipeTag.setRecipeTagCategoryId(resultSet.getInt("recipe_tag_category_id"));

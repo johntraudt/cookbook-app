@@ -175,7 +175,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe_tag` (
   `recipe_tag_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `image_link` VARCHAR(1022) NOT NULL,
+  `tag_image_link` VARCHAR(1022) NOT NULL,
   `recipe_tag_category_id` INT NULL,
   PRIMARY KEY (`recipe_tag_id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
@@ -391,7 +391,7 @@ begin
 		(4, 'TEST_CATEGORY');
 
 	insert into recipe_tag
-		(recipe_tag_id, `name`, recipe_tag_category_id, image_link)
+		(recipe_tag_id, `name`, recipe_tag_category_id, tag_image_link)
 	values
 		(1, 'CHICKEN', null, 'https://pbs.twimg.com/media/Empjp0BXIAkTCvA?format=jpg&name=large'),
 		(2, 'HEARTY', null, 'https://64.media.tumblr.com/4d2f6d0c3e29990123bda22166fe8e86/1220ce887d7a24a9-52/s1280x1920/1642bbc597a807ba47ec68450284de3a1725fb87.png'),

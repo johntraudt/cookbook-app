@@ -77,7 +77,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addTags(Recipe recipe) {
-        final String sql = "select rt.recipe_tag_id, rt.name, rt.recipe_tag_category_id " +
+        final String sql = "select rt.recipe_tag_id, rt.name, rt.tag_image_link, rt.recipe_tag_category_id " +
                 "from recipe_tag rt " +
                 "join recipe_recipe_tag rrt on rrt.recipe_tag_id = rt.recipe_tag_id " +
                 "join recipe r on r.recipe_id = rrt.recipe_id " +
