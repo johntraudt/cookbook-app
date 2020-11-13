@@ -3,7 +3,12 @@ package learn.myCookbook.data;
 import learn.myCookbook.data.mappers.DirectionMapper;
 import learn.myCookbook.models.Direction;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 
 @Repository
 public class DirectionJdbcTemplateRepository implements DirectionRepository {
@@ -27,16 +32,38 @@ public class DirectionJdbcTemplateRepository implements DirectionRepository {
 
     @Override
     public Direction add(Direction direction) {
-        return null;
+
+        final String sql = "insert into direction (recipe_id, direction_number, `text`) " +
+                "values (?,?,?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, direction.getRecipeId());
+            ps.setInt(2, direction.getDirectionNumber());
+            ps.setString(3, direction.getText());
+            return ps;
+        }, keyHolder);
+        if (rowsAffected <= 0) {
+            return null;
+        }
+        direction.setDirectionId(keyHolder.getKey().intValue());
+        return direction;
     }
 
     @Override
     public boolean update(Direction direction) {
-        return false;
+        final String sql = "update direction set " +
+                "`text` = ? " +
+                "where direction_id = ?;";
+
+        return jdbcTemplate.update(sql,
+                direction.getText(),
+                direction.getDirectionId()) > 0;
     }
 
     @Override
     public boolean deleteById(int directionId) {
-        return false;
+        return jdbcTemplate.update("delete from direction where direction_id = ?;", directionId) > 0;
     }
 }
