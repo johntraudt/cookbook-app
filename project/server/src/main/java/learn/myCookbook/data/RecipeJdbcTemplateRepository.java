@@ -3,8 +3,13 @@ package learn.myCookbook.data;
 import learn.myCookbook.data.mappers.*;
 import learn.myCookbook.models.Recipe;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -51,17 +56,76 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
 
     @Override
     public Recipe add(Recipe recipe) {
-        return null;
+        final String sql = "insert into recipe (recipe_name, prep_time, cook_time, servings, `date`, was_updated, is_featured, calories, user_id, image_link) " +
+                "values (?,?,?,?,?,?,?,?,?,?);";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, recipe.getName());
+            ps.setInt(2, recipe.getPrepTimeInMinutes());
+            ps.setInt(3, recipe.getCookTimeInMinutes());
+            ps.setInt(4, recipe.getServings());
+            ps.setObject(5, recipe.getDate());
+            ps.setBoolean(6, recipe.isWasUpdated());
+            ps.setBoolean(7, recipe.isFeatured());
+            ps.setInt(8, recipe.getCalories());
+            ps.setInt(9, recipe.getUserId());
+            ps.setString(10, recipe.getImageLink());
+            return ps;
+        }, keyHolder);
+        if (rowsAffected <= 0) {
+            return null;
+        }
+        recipe.setRecipeId(keyHolder.getKey().intValue());
+        return recipe;
     }
 
     @Override
     public boolean update(Recipe recipe) {
-        return false;
+        final String sql = "update recipe set " +
+                "recipe_name = ?, " +
+                "prep_time = ?, " +
+                "cook_time = ?, " +
+                "servings = ?, " +
+                "`date` = ?, " +
+                "was_updated = ?, " +
+                "is_featured = ?, " +
+                "calories = ?, " +
+                "user_id = ?, " +
+                "image_link = ? " +
+                "where recipe_id = ?;";
+
+        return jdbcTemplate.update(sql,
+                recipe.getName(),
+                recipe.getPrepTimeInMinutes(),
+                recipe.getCookTimeInMinutes(),
+                recipe.getServings(),
+                recipe.getDate(),
+                recipe.isWasUpdated(),
+                recipe.isFeatured(),
+                recipe.getCalories(),
+                recipe.getUserId(),
+                recipe.getImageLink(),
+                recipe.getRecipeId()) > 0;
     }
 
     @Override
+    @Transactional
     public boolean deleteById(int recipeId) {
-        return false;
+        /*
+        delete from recipe_ingredient where recipe_id = 2;
+        delete from direction where recipe_id = 2;
+        delete from cookbook_recipe where recipe_id = 2;
+        delete from recipe_recipe_tag where recipe_id = 2;
+        delete from review where recipe_id = 2;
+        delete from recipe where recipe_id = 2;
+         */
+        jdbcTemplate.update("delete from recipe_ingredient where recipe_id = ?;", recipeId);
+        jdbcTemplate.update("delete from direction where recipe_id = ?;", recipeId);
+        jdbcTemplate.update("delete from cookbook_recipe where recipe_id = ?;", recipeId);
+        jdbcTemplate.update("delete from recipe_recipe_tag where recipe_id = ?;", recipeId);
+        jdbcTemplate.update("delete from review where recipe_id = ?;", recipeId);
+        return jdbcTemplate.update("delete from recipe where recipe_id = ?;", recipeId) > 0;
     }
 
     private void addIngredients(Recipe recipe) {
@@ -98,7 +162,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addReviews(Recipe recipe) {
-        final String sql = "select re.review_id, re.rating, re.comment, re.date, re.user_id, re.recipe_id " +
+        final String sql = "select re.review_id, re.rating, re.comment, re.review_date, re.user_id, re.recipe_id " +
                 "from review re " +
                 "join recipe r on r.recipe_id = re.recipe_id " +
                 "where r.recipe_id = ?;";

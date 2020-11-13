@@ -27,9 +27,9 @@ function Header() {
                             )
                         }
                         
-                        <div className="p-2 mt-1">
+                        <div className="p-2">
                             <Link to='/login'>
-                                <p className="right">Login</p>
+                                <div className="right btn-secondary p-2 pr-4 pl-4">Login</div>
                             </Link>
                         </div>
                     </div>

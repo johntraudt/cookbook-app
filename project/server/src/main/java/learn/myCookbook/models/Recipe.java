@@ -14,6 +14,7 @@ public class Recipe {
     private LocalDate date;
     private boolean wasUpdated;
     private boolean isFeatured;
+    private int calories;
     private String imageLink;
     private List<RecipeIngredient> ingredients;
     private List<Direction> directions;
@@ -98,6 +99,14 @@ public class Recipe {
 
     public void setFeatured(boolean featured) {
         isFeatured = featured;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     public String getImageLink() {

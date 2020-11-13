@@ -1,12 +1,21 @@
-header {
-    /* background-color: rgb(40, 90, 43); */
-    background-color: #44474b;
-    color: white;
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif ;
+    background-color: rgb(255, 255, 255);
+}
+
+header, .btn-secondary {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.btn-secondary:hover, .btn-secondary:active {
+    background-color: #d8d8d8;
+    color: black;
 }
 
 footer {
-    background-color: #44474b;
-    color: white;
+    background-color: #e7da65;
+    color: rgb(19, 32, 28);
     position: relative;
     bottom: 0;
     width: 100%;
@@ -14,9 +23,9 @@ footer {
 }
 
 .subtitle {
-    background-color: #96c94a;
+    background-color: #c7f34d;
     font-size: 1.5em;
-    color: rgb(38, 42, 58);
+    color: rgb(32, 32, 32);
     padding: .25em;
     font-weight: 600;
 }
@@ -26,7 +35,7 @@ a:link {
 }
 
 a:visited {
-    color: white;
+    color: rgb(16, 22, 20);
     text-decoration: none;
 }
 
@@ -102,10 +111,6 @@ footer {
     width: 20em;
 }
 
-.divider {
-    background-color: rgb(242, 255, 253);
-}
-
 .image{
     position:relative;
     overflow:hidden;
@@ -115,3 +120,31 @@ footer {
 .image img{
     position:absolute;
 }
+
+
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .accordion:hover {
+    background-color: #ccc;
+  }
+  
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+  }

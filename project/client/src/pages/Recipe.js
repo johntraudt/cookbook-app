@@ -37,6 +37,7 @@ export default function Recipe() {
     });
     
     const location = useLocation();
+
     
     useEffect(() => {
         const getRecipe = () => {
@@ -57,7 +58,7 @@ export default function Recipe() {
     return (
         <div className="container full-body text-center">
             <h2 className="display-3">{recipe.name}</h2>
-            <Rating detailed/>
+            <Rating detailed={true} reviews={recipe.reviews}/>
             <div className="row">
                 <div className="col-2"></div>
                 <div className="col-8">
@@ -68,7 +69,7 @@ export default function Recipe() {
                         <div className="mr-2 ml-2">Cook Time: {recipe.cookTimeInMinutes}</div>
                         <div className="mr-2 ml-2">Servings: {recipe.servings}</div>
 
-                        {                                    
+                        {
                         recipe.tags !== null && (
                             <div className="mr-2 ml-2">{`Tags:
                                 ${
