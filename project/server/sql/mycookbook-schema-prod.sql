@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook`.`user` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
+  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
   `user_role_id` INT NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,

@@ -27,14 +27,14 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        final String sql = "select user_id, first_name, last_name, email, user_role_id "
+        final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
                 + "from user limit 1000";
         return jdbcTemplate.query(sql, new UserMapper());
     }
 
     @Override
     public User findById(int userId) {
-        final String sql = "select user_id, first_name, last_name, email, user_role_id "
+        final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
                 + "from user "
                 + "where user_id = ?;";
 
@@ -51,8 +51,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     @Override
     public User add(User user) {
-        final String sql = "insert into `user` (first_name, last_name, email, user_role_id) "
-                + "values (?,?,?,?);";
+        final String sql = "insert into `user` (first_name, last_name, email, is_active, user_role_id) "
+                + "values (?,?,?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -60,7 +60,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getEmail());
-            ps.setInt(4, user.getUserRoleId());
+            ps.setBoolean(4, user.isActive());
+            ps.setInt(5, user.getUserRoleId());
             return ps;
         }, keyHolder);
         if (rowsAffected <= 0) {
@@ -75,13 +76,15 @@ public class UserJdbcTemplateRepository implements UserRepository {
         final String sql = "update user set " +
                 "first_name = ?, " +
                 "last_name = ?, " +
-                "email = ? " +
+                "email = ?, " +
+                "is_active = ? " +
                 "where user_id = ?;";
 
         return jdbcTemplate.update(sql,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
+                user.isActive(),
                 user.getUserId()) > 0;
     }
 
