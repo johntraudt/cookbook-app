@@ -13,8 +13,9 @@ public class DirectionService {
         this.repository = repository;
     }
 
-
     public Direction findByRecipeId(int recipeId) {
         return repository.findByRecipeId(recipeId);
     }
+
+
 }
