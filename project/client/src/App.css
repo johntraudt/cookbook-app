@@ -87,10 +87,15 @@ a:visited {
 }
 
 .full-body {
-    min-height: 79vh;
+    min-height: 100vh;
     overflow: hidden;
-    display: block;
     position: relative;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    height: 6rem;
 }
 
 .expand {
