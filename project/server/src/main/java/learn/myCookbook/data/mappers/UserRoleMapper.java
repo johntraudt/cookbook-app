@@ -12,7 +12,7 @@ public class UserRoleMapper implements RowMapper<UserRole> {
     public UserRole mapRow(ResultSet resultSet, int i) throws SQLException {
         UserRole userRole = new UserRole();
         userRole.setUserRoleId(resultSet.getInt("user_role_id"));
-        userRole.setName(resultSet.getString("name"));
+        userRole.setName(resultSet.getString("user_rale_name"));
         return userRole;
     }
 }

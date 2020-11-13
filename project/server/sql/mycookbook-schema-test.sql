@@ -18,9 +18,9 @@ use `mycookbook_test`;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`user_role` (
   `user_role_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `user_role_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`user_role_id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `user_role_name_UNIQUE` (`user_role_name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -66,7 +66,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe` (
   `recipe_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(95) NOT NULL,
+  `recipe_name` VARCHAR(95) NOT NULL,
   `prep_time` INT NOT NULL,
   `cook_time` INT NOT NULL,
   `servings` INT NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe` (
   `user_id` INT NOT NULL,
   PRIMARY KEY (`recipe_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-  UNIQUE INDEX `user_id_name_UNIQUE` (`name` ASC, `user_id` ASC) VISIBLE,
+  UNIQUE INDEX `user_id_recipe_name_UNIQUE` (`recipe_name` ASC, `user_id` ASC) VISIBLE,
   CONSTRAINT `FK_user_recipe`
     FOREIGN KEY (`user_id`)
     REFERENCES `mycookbook_test`.`user` (`user_id`)
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook_test`.`review` (
   `review_id` INT NOT NULL AUTO_INCREMENT,
   `rating` INT NOT NULL,
   `comment` VARCHAR(45) NULL,
-  `date` VARCHAR(45) NOT NULL,
+  `review_date` DATE NOT NULL,
   `user_id` INT NOT NULL,
   `recipe_id` INT NOT NULL,
   PRIMARY KEY (`review_id`),
@@ -163,9 +163,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe_tag_category` (
   `recipe_tag_category_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `recipe_tag_category_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`recipe_tag_category_id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `recipe_tag_category_name_UNIQUE` (`recipe_tag_category_name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -174,11 +174,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`recipe_tag` (
   `recipe_tag_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `recipe_tag_name` VARCHAR(45) NOT NULL,
   `tag_image_link` VARCHAR(1022) NOT NULL,
   `recipe_tag_category_id` INT NULL,
   PRIMARY KEY (`recipe_tag_id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `recipe_tag_name_UNIQUE` (`recipe_tag_name` ASC) VISIBLE,
   INDEX `recipe_tag_category_id_idx` (`recipe_tag_category_id` ASC) VISIBLE,
   CONSTRAINT `FK_recipe_tag_category_recipe_tag`
     FOREIGN KEY (`recipe_tag_category_id`)
@@ -217,9 +217,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`ingredient` (
   `ingredient_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `ingredient_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ingredient_id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `ingredient_name_UNIQUE` (`ingredient_name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -228,9 +228,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`measurement_unit` (
   `measurement_unit_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `measurement_unit_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`measurement_unit_id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `measurement_unit_name_UNIQUE` (`measurement_unit_name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -274,9 +274,9 @@ CREATE TABLE IF NOT EXISTS `mycookbook_test`.`direction` (
   `direction_id` INT NOT NULL AUTO_INCREMENT,
   `recipe_id` INT NOT NULL,
   `direction_number` INT NOT NULL,
-  `text` VARCHAR(500) NOT NULL,
+  `direction_text` VARCHAR(500) NOT NULL,
   PRIMARY KEY (`direction_id`),
-  UNIQUE INDEX `recipe_id_step_number` (`recipe_id` ASC, `direction_number` ASC) VISIBLE,
+  UNIQUE INDEX `recipe_id_direction_number` (`recipe_id` ASC, `direction_number` ASC) VISIBLE,
   CONSTRAINT `FK_recipe_direction`
     FOREIGN KEY (`recipe_id`)
     REFERENCES `mycookbook_test`.`recipe` (`recipe_id`)
@@ -313,7 +313,7 @@ begin
     
 
 	insert into user_role 
-		(user_role_id, `name`) 
+		(user_role_id, user_role_name) 
 	values
 		(1, 'USER'),
 		(2, 'MODERATOR');
@@ -335,7 +335,7 @@ begin
 		(4, 'irina.cudo', 'password');
 		
 	insert into recipe
-		(recipe_id, `name`, prep_time, cook_time, servings, `date`, was_updated, is_featured, calories, user_id, image_link)
+		(recipe_id, recipe_name, prep_time, cook_time, servings, `date`, was_updated, is_featured, calories, user_id, image_link)
 	values
 		(1, 'chick\'n', 25, 20, 4, '2020-10-31', 0, 1, null, 1, 'https://ih1.redbubble.net/image.362317170.4069/st,small,507x507-pad,600x600,f8f8f8.jpg'),
 		(2, 'mashed potatos', 25, 55, 5, '2020-09-21', 1, 1, 1000, 3, 'https://pbs.twimg.com/profile_images/1322780097452146688/-VTzV1Xa.jpg'),
@@ -343,7 +343,7 @@ begin
 		(4, 'test recipe', 2, 0, 1, '2020-09-10', 0, 1, null, 3, 'https://pbs.twimg.com/media/EmiZojrW4AAx8We.jpg');
 		
 	insert into review
-		(review_id, rating, `comment`, `date`, user_id, recipe_id)
+		(review_id, rating, `comment`, review_date, user_id, recipe_id)
 	values
 		(1, 5, 'Very nice!', '2020-11-01', 1, 1),
 		(2, 4, 'Pretty good.', '2020-11-11', 1, 2),
@@ -368,7 +368,7 @@ begin
 		(5, 2, 3);
 		
 	insert into direction
-		(direction_id, recipe_id, direction_number, `text`)
+		(direction_id, recipe_id, direction_number, direction_text)
 	values
 		(1, 1, 1, 'Buy an entire chicken'),
 		(2, 1, 2, 'Bake the entire chicken for 20 minutes'),
@@ -384,7 +384,7 @@ begin
 		(12, 3, 3, 'Add your preferred salad dressing to taste');
 		
 	insert into recipe_tag_category
-		(recipe_tag_category_id, `name`)
+		(recipe_tag_category_id, recipe_tag_category_name)
 	values
 		(1, 'ETHNICITY'),
 		(2, 'MEAL_TYPE'),
@@ -392,7 +392,7 @@ begin
 		(4, 'TEST_CATEGORY');
 
 	insert into recipe_tag
-		(recipe_tag_id, `name`, recipe_tag_category_id, tag_image_link)
+		(recipe_tag_id, recipe_tag_name, recipe_tag_category_id, tag_image_link)
 	values
 		(1, 'CHICKEN', null, 'https://pbs.twimg.com/media/Empjp0BXIAkTCvA?format=jpg&name=large'),
 		(2, 'HEARTY', null, 'https://64.media.tumblr.com/4d2f6d0c3e29990123bda22166fe8e86/1220ce887d7a24a9-52/s1280x1920/1642bbc597a807ba47ec68450284de3a1725fb87.png'),
@@ -416,7 +416,7 @@ begin
 		(8, 3, 6);
 		
 	insert into measurement_unit
-		(measurement_unit_id, `name`)
+		(measurement_unit_id, measurement_unit_name)
 	values
 		(1, 'CUP'),
 		(2, 'POUND'),
@@ -424,7 +424,7 @@ begin
 		(4, 'TEST_UNIT');
 		
 	insert into ingredient
-		(ingredient_id, `name`)
+		(ingredient_id, ingredient_name)
 	values
 		(1, 'chicken'),
 		(2, 'Russet potato'),

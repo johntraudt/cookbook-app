@@ -21,24 +21,33 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public List<RecipeIngredient> findAll() {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
-                "from recipe_ingredient limit 1000;";
+        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
+                "from recipe_ingredient ri " +
+                "join ingredient i on ri.ingredient_id = i.ingredient_id " +
+                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "limit 1000;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper());
     }
 
     @Override
     public List<RecipeIngredient> findByRecipeId(int recipeId) {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
-                "from recipe_ingredient where recipe_id = ?;";
+        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
+                "from recipe_ingredient ri " +
+                "join ingredient i on ri.ingredient_id = i.ingredient_id " +
+                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "where recipe_id = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeId);
     }
 
     @Override
     public RecipeIngredient findById(int recipeIngredientId) {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
-                "from recipe_ingredient where recipe_ingredient_id = ?;";
+        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
+                "from recipe_ingredient " +
+                "join ingredient i on ri.ingredient_id = i.ingredient_id " +
+                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
+                "where recipe_ingredient_id = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeIngredientId)
                 .stream()
@@ -48,8 +57,10 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
 
     @Override
     public RecipeIngredient findByRecipeIdAndIndex(int recipeId, int ingredientListIndex) {
-        final String sql = "select recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id " +
+        final String sql = "select ri.recipe_ingredient_id, ri.recipe_id, ri.ingredient_id, ri.ingredient_list_index, ri.quantity, ri.measurement_unit_id " +
                 "from recipe_ingredient where recipe_id = ? " +
+                "join ingredient i on ri.ingredient_id = i.ingredient_id " +
+                "join measurement_unit mu on ri.measurement_unit_id = mu.measurement_unit_id " +
                 "and ingredient_list_index = ?;";
 
         return jdbcTemplate.query(sql, new RecipeIngredientMapper(), recipeId, ingredientListIndex)
@@ -61,9 +72,9 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
     @Override
     public RecipeIngredient add(RecipeIngredient recipeIngredient) {
         final String sql = "insert into recipe_ingredient " +
-                "(recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, numerator, denominator, measurement_unit_id) " +
+                "(recipe_ingredient_id, recipe_id, ingredient_id, ingredient_list_index, quantity, measurement_unit_id) " +
                 "values " +
-                "(?, ?, ?, ?, ?, ?, ?);";
+                "(?, ?, ?, ?, ?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -72,7 +83,8 @@ public class RecipeIngredientJdbcTemplateRepository implements RecipeIngredientR
             ps.setInt(2, recipeIngredient.getRecipeId());
             ps.setInt(3, recipeIngredient.getIngredientId());
             ps.setInt(4, recipeIngredient.getIngredientListIndex());
-            ps.setInt(5, recipeIngredient.getMeasurementUnitId());
+            ps.setString(5, recipeIngredient.getQuantity());
+            ps.setInt(6, recipeIngredient.getMeasurementUnitId());
             return ps;
         }, keyHolder);
 

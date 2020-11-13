@@ -13,7 +13,7 @@ public class RecipeMapper implements RowMapper<Recipe> {
         Recipe recipe= new Recipe();
         recipe.setRecipeId(resultSet.getInt("recipe_id"));
         recipe.setUserId(resultSet.getInt("user_id"));
-        recipe.setName(resultSet.getString("name"));
+        recipe.setName(resultSet.getString("recipe_name"));
         recipe.setPrepTimeInMinutes(resultSet.getInt("prep_time"));
         recipe.setCookTimeInMinutes(resultSet.getInt("cook_time"));
         recipe.setServings(resultSet.getInt("servings"));

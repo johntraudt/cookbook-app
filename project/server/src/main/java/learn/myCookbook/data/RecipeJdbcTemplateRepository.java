@@ -21,7 +21,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public List<Recipe> findAll() {
 
-        final String sql = "select recipe_id, name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, recipe_date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe limit 1000;";
 
         return jdbcTemplate.query(sql, new RecipeMapper());
@@ -30,7 +30,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public Recipe findById(int recipeId) {
 
-        final String sql = "select recipe_id, name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, recipe_date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe " +
                 "where recipe_id = ?;";
 
@@ -65,7 +65,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addIngredients(Recipe recipe) {
-        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.quantity, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.name, mu.name 'mName' " +
+        final String sql = "select ri.recipe_ingredient_id, r.recipe_id, ri.quantity, ri.ingredient_id, ri.ingredient_list_index, mu.measurement_unit_id, i.name, mu.name 'measurement_unit_ame' " +
                 "from recipe_ingredient ri " +
                 "join recipe r on r.recipe_id = ri.recipe_id " +
                 "join ingredient i on i.ingredient_id = ri.ingredient_id " +
@@ -77,7 +77,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addTags(Recipe recipe) {
-        final String sql = "select rt.recipe_tag_id, rt.name, rt.tag_image_link, rt.recipe_tag_category_id " +
+        final String sql = "select rt.recipe_tag_id, rt.recipe_tag_name, rt.tag_image_link, rt.recipe_tag_category_id " +
                 "from recipe_tag rt " +
                 "join recipe_recipe_tag rrt on rrt.recipe_tag_id = rt.recipe_tag_id " +
                 "join recipe r on r.recipe_id = rrt.recipe_id " +
@@ -88,7 +88,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addDirections(Recipe recipe) {
-        final String sql = "select d.direction_id, d.recipe_id, d.direction_number, d.text " +
+        final String sql = "select d.direction_id, d.recipe_id, d.direction_number, d.direction_text " +
                 "from direction d " +
                 "join recipe r on r.recipe_id = d.recipe_id " +
                 "where r.recipe_id = ?;";
@@ -98,7 +98,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     private void addReviews(Recipe recipe) {
-        final String sql = "select re.review_id, re.rating, re.comment, re.date, re.user_id, re.recipe_id " +
+        final String sql = "select re.review_id, re.rating, re.comment, re.review_date, re.user_id, re.recipe_id " +
                 "from review re " +
                 "join recipe r on r.recipe_id = re.recipe_id " +
                 "where r.recipe_id = ?;";

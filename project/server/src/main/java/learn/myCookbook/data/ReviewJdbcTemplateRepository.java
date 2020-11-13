@@ -24,7 +24,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
 
     @Override
     public List<Review> findAll() {
-        final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review limit 1000;";
 
         return jdbcTemplate.query(sql, new ReviewMapper());
@@ -32,7 +32,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
 
     @Override
     public Review findById(int reviewId) {
-        final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where review_id = ?;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), reviewId)
@@ -43,25 +43,25 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
 
     @Override
     public List<Review> findByUserId(int userId) {
-        final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where user_id = ? " +
-                "order by date desc;";
+                "order by review_date desc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), userId);
     }
 
     @Override
-    public List<Review> findByRecipId(int recipeId) {
-        final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
+    public List<Review> findByRecipeId(int recipeId) {
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
-                "order by date desc;";
+                "order by review_date desc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
     }
 
     @Override
     public List<Review> findByRecipeIdRatingDesc(int recipeId) {
-        final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
                 "order by rating desc;";
 
@@ -70,7 +70,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
 
     @Override
     public List<Review> findByRecipeIdRatingAsc(int recipeId) {
-        final String sql = "select review_id, rating, comment, date, user_id, recipe_id " +
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
                 "order by rating asc;";
 
@@ -80,7 +80,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     @Override
     public Review add(Review review) {
         final String sql = "insert into review " +
-                "(review_id, rating, comment, date, user_id, recipe_id) " +
+                "(review_id, rating, comment, review_date, user_id, recipe_id) " +
                 "values " +
                 "(?, ?, ?, ?, ?, ?);";
 
@@ -109,7 +109,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
         final String sql = "update review set " +
                 "rating = ?, " +
                 "comment = ?, " +
-                "date = ?, " +
+                "review_date = ?, " +
                 "user_id = ?, " +
                 "recipe_id = ? " +
                 "where review_id = ?;";

@@ -17,7 +17,7 @@ public class ReviewMapper implements RowMapper<Review> {
             review.setComment(resultSet.getString("comment"));
         }
 
-        review.setDate(resultSet.getDate("date").toLocalDate());
+        review.setDate(resultSet.getDate("review_date").toLocalDate());
 
         review.setUserId(resultSet.getInt("user_id"));
         review.setRecipeId(resultSet.getInt("recipe_id"));

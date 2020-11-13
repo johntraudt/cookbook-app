@@ -13,7 +13,7 @@ public interface ReviewRepository {
     List<Review> findByUserId(int userId);
 
     //find by recipe sort by date desc
-    List<Review> findByRecipId(int recipeId);
+    List<Review> findByRecipeId(int recipeId);
 
     //find by recipe sort by low
     List<Review> findByRecipeIdRatingDesc(int recipeId);

@@ -23,14 +23,14 @@ public class IngredientJdbcTemplateRepository implements IngredientRepository {
 
     @Override
     public List<Ingredient> findAll() {
-        final String sql = "select ingredient_id, name " +
+        final String sql = "select ingredient_id, ingredient_name " +
                 "from ingredient limit 1000;";
         return jdbcTemplate.query(sql, new IngredientMapper());
     }
 
     @Override
     public Ingredient findById(int ingredientId) {
-        final String sql = "select ingredient_id, name " +
+        final String sql = "select ingredient_id, ingredient_name " +
                 "from ingredient " +
                 "where ingredient_id = ?;";
 
@@ -42,9 +42,9 @@ public class IngredientJdbcTemplateRepository implements IngredientRepository {
 
     @Override
     public Ingredient findByName(String name) {
-        final String sql = "select ingredient_id, name " +
+        final String sql = "select ingredient_id, ingredient_name " +
                 "from ingredient " +
-                "where `name` = ?;";
+                "where ingredient_name = ?;";
 
         return jdbcTemplate.query(sql, new IngredientMapper(), name)
                 .stream()
@@ -54,7 +54,7 @@ public class IngredientJdbcTemplateRepository implements IngredientRepository {
 
     @Override
     public Ingredient add(Ingredient ingredient) {
-        final String sql = "insert into ingredient (`name`) " +
+        final String sql = "insert into ingredient (ingredient_name) " +
                 "values (?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -75,7 +75,7 @@ public class IngredientJdbcTemplateRepository implements IngredientRepository {
     @Override
     public boolean update(Ingredient ingredient) {
         final String sql = "update ingredient set " +
-                "`name` = ? " +
+                "ingredient_name = ? " +
                 "where ingredient_id = ?;";
 
         return jdbcTemplate.update(sql,

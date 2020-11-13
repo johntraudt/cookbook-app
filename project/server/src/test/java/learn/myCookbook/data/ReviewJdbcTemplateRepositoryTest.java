@@ -53,7 +53,7 @@ public class ReviewJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldNotFindBYMissingUserId() {
+    void shouldNotFindByMissingUserId() {
         List<Review> empty = repository.findByUserId(999);
         assertNotNull(empty);
         assertEquals(0, empty.size());
@@ -61,7 +61,7 @@ public class ReviewJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByRecipeId() {
-        List<Review> list = repository.findByRecipId(1);
+        List<Review> list = repository.findByRecipeId(1);
         assertNotNull(list);
         assertEquals(4, list.get(0).getReviewId());
     }
@@ -82,7 +82,7 @@ public class ReviewJdbcTemplateRepositoryTest {
 
     @Test
     void shouldNotFindBYMissingRecipeId() {
-        List<Review> list = repository.findByRecipId(999);
+        List<Review> list = repository.findByRecipeId(999);
         assertNotNull(list);
         assertEquals(0, list.size());
 

@@ -12,7 +12,7 @@ public class IngredientMapper implements RowMapper<Ingredient> {
     public Ingredient mapRow(ResultSet resultSet, int i) throws SQLException {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientId(resultSet.getInt("ingredient_id"));
-        ingredient.setName(resultSet.getString("name"));
+        ingredient.setName(resultSet.getString("ingredient_name"));
         return ingredient;
     }
 

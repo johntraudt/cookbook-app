@@ -28,7 +28,7 @@ public class ReviewService {
     }
 
     public List<Review> findByRecipeId(int recipeId) {
-        return repository.findByRecipId(recipeId);
+        return repository.findByRecipeId(recipeId);
     }
 
     public List<Review> findByRecipeIdRatingDesc(int recipeId) {

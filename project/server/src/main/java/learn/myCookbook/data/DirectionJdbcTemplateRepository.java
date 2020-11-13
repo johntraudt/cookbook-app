@@ -21,7 +21,7 @@ public class DirectionJdbcTemplateRepository implements DirectionRepository {
 
     @Override
     public Direction findByRecipeId(int recipeId) {
-        final String sql = "select direction_id, recipe_id, direction_number, text " +
+        final String sql = "select direction_id, recipe_id, direction_number, direction_text " +
                 "from direction " +
                 "where recipe_id = ?;";
 
@@ -33,7 +33,7 @@ public class DirectionJdbcTemplateRepository implements DirectionRepository {
     @Override
     public Direction add(Direction direction) {
 
-        final String sql = "insert into direction (recipe_id, direction_number, `text`) " +
+        final String sql = "insert into direction (recipe_id, direction_number, direction_text) " +
                 "values (?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -54,7 +54,7 @@ public class DirectionJdbcTemplateRepository implements DirectionRepository {
     @Override
     public boolean update(Direction direction) {
         final String sql = "update direction set " +
-                "`text` = ? " +
+                "direction_text = ? " +
                 "where direction_id = ?;";
 
         return jdbcTemplate.update(sql,

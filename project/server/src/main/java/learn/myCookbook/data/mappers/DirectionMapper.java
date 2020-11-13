@@ -14,7 +14,7 @@ public class DirectionMapper implements RowMapper<Direction> {
         direction.setDirectionId(resultSet.getInt("direction_id"));
         direction.setRecipeId(resultSet.getInt("recipe_id"));
         direction.setDirectionNumber(resultSet.getInt("direction_number"));
-        direction.setText(resultSet.getString("text"));
+        direction.setText(resultSet.getString("direction_text"));
         return direction;
     }
 }

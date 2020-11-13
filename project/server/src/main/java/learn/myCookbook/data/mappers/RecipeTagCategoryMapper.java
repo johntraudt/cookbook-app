@@ -12,7 +12,7 @@ public class RecipeTagCategoryMapper implements RowMapper<RecipeTagCategory> {
     public RecipeTagCategory mapRow(ResultSet resultSet, int i) throws SQLException {
         RecipeTagCategory recipeTagCategory = new RecipeTagCategory();
         recipeTagCategory.setRecipeTagCategoryId(resultSet.getInt("recipe_tag_category_id"));
-        recipeTagCategory.setName(resultSet.getString("name"));
+        recipeTagCategory.setName(resultSet.getString("recipe_tag_category_name"));
         return recipeTagCategory;
     }
 }
