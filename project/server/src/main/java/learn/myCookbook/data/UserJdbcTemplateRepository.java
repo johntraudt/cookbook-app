@@ -136,6 +136,17 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
+    public boolean setUserNameEmail(int userId, String userName, String email) {
+        final String sql = "update user u, login l set " +
+                "l.user_name = ?, " +
+                "u.email = ? " +
+                "where u.user_id = l.user_id " +
+                "and u.user_id = ?;";
+
+        return jdbcTemplate.update(sql, userName, email, userId) > 0;
+    }
+
+    @Override
     @Transactional
     public boolean deactivateById(int userId) {
         final String sql = "update user set " +

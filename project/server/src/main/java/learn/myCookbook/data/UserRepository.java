@@ -20,5 +20,7 @@ public interface UserRepository {
 
     boolean update(User user);
 
+    boolean setUserNameEmail(int userId, String userName, String email);
+
     boolean deactivateById(int userId);
 }

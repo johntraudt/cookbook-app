@@ -41,11 +41,11 @@ public class UserService {
         }
 
         if (repository.findByEmail(user.getEmail()) != null) {
-            result.addMessage("That email is already taken", ResultType.INVALID);
+            result.addMessage("That email is already taken.", ResultType.INVALID);
         }
 
         if (repository.findByUserName(user.getUserName()) != null) {
-            result.addMessage("That username is already taken", ResultType.INVALID);
+            result.addMessage("That username is already taken.", ResultType.INVALID);
         }
 
         if (!result.isSuccess()) {
@@ -66,14 +66,17 @@ public class UserService {
         }
 
         if (user.getUserId() <= 0) {
-            result.addMessage("userId must be set for `update` operation.", ResultType.INVALID);
+            result.addMessage("User ID must be set for `update` operation.", ResultType.INVALID);
             return result;
         }
 
-        if (!repository.update(user)) {
-            String message =  String.format("userId: %s, not found.", user.getUserId());
-            result.addMessage(message, ResultType.INVALID);
+        result = checkDuplicateUserNameEmailOnUpdate(user);
+
+        if (!result.isSuccess()) {
+            return result;
         }
+
+        repository.update(user);
 
         return result;
     }
@@ -104,5 +107,32 @@ public class UserService {
         }
 
        return result;
+    }
+
+    private Result<User> checkDuplicateUserNameEmailOnUpdate(User user) {
+        Result<User> result = new Result<>();
+
+        String email = repository.findById(user.getUserId()).getEmail();
+        String userName = repository.findById(user.getUserId()).getUserName();
+
+        if (!repository.setUserNameEmail(user.getUserId(), "RESERVED", "RESERVED")) {
+            String message =  String.format("User ID: %s not found.", user.getUserId());
+            result.addMessage(message, ResultType.INVALID);
+            return result;
+        }
+
+        if (repository.findByEmail(user.getEmail()) != null) {
+            result.addMessage("That email is already taken.", ResultType.INVALID);
+        }
+
+        if (repository.findByUserName(user.getUserName()) != null) {
+            result.addMessage("That username is already taken.", ResultType.INVALID);
+        }
+
+        if (!result.isSuccess()) {
+            repository.setUserNameEmail(user.getUserId(), email, userName);
+        }
+
+        return result;
     }
 }

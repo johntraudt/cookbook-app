@@ -15,6 +15,8 @@ public interface CookbookRepository {
 
     List<Cookbook> findPublicByUserId(int userId);
 
+    Cookbook findByUserIdAndTitle(int userId, String title);
+
     List<Cookbook> findAllByRecipeId(int recipeId);
 
     List<Cookbook> findPublicByRecipeId(int recipeId);

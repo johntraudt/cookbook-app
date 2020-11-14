@@ -97,6 +97,13 @@ public class CookbookService {
             return result;
         }
 
+        if (cookbook.getCookbookId() <= 0) {
+            result.addMessage("Cookbook ID must be set for update", ResultType.INVALID);
+            return result;
+        }
+
+        result = checkDuplicateTitleOnUpdate(cookbook);
+
         if (!repository.update(cookbook)) {
             result.addMessage("Could not find that cookbook.", ResultType.INVALID);
         }
@@ -144,11 +151,26 @@ public class CookbookService {
 
         return result;
     }
+
+    private Result<Cookbook> checkDuplicateTitleOnUpdate(Cookbook cookbook) {
+        Result<Cookbook> result = new Result<>();
+
+        String email = repository.findById(user.getUserId()).getEmail();
+
+        if (!repository.setTitle(cookbook.getCookbookId(), "RESERVED")) {
+            String message =  String.format("Cookbook ID: %s not found.", cookbook.getCookbookId());
+            result.addMessage(message, ResultType.INVALID);
+            return result;
+        }
+
+        if (repository.findBy(user.getEmail()) != null) {
+            result.addMessage("That email is already taken.", ResultType.INVALID);
+        }
+
+        if (!result.isSuccess()) {
+            repository.setUserNameEmail(user.getUserId(), email, userName);
+        }
+
+        return result;
+    }
 }
-    /*
-    Cookbook add(Cookbook cookbook);
-
-    boolean update(Cookbook cookbook);
-
-    boolean deleteById(int cookbookId);
-     */
