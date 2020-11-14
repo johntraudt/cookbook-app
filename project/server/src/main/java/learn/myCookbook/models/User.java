@@ -4,19 +4,40 @@ import learn.myCookbook.models.UserRole;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class User {
+
+    @Min(value = 0, message = "User id must not be negative.")
     private int userId;
+
+    @NotNull(message = "Username is required.")
+    @NotBlank(message = "Username is required.")
     private String userName;
+
+    @NotNull(message = "Email is required.")
+    @NotBlank(message = "Email is required.")
     private String email;
+
     private boolean isActive;
+
+    @NotNull(message = "Password is required.")
+    @NotBlank(message = "Password is required.")
     private String passwordHash;
+
+    @NotNull(message = "First name is required.")
+    @NotBlank(message = "First name is required.")
     private String firstName;
+
+    @NotNull(message = "Last name is required.")
+    @NotBlank(message = "Last name is required.")
     private String lastName;
+
     private UserRole role;
 
-    @Min(value = 1)
-    @Max(value = UserRole.NUMBER_OF_USER_ROLES)
+    @Min(value = 1, message = "Invalid user role id.")
+    @Max(value = UserRole.NUMBER_OF_USER_ROLES, message = "invalid user role id.")
     private int userRoleId;
 
 

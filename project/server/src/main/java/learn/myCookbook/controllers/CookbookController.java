@@ -1,6 +1,7 @@
 package learn.myCookbook.controllers;
 
 import learn.myCookbook.domain.CookbookService;
+import learn.myCookbook.domain.Result;
 import learn.myCookbook.models.Cookbook;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,5 +50,10 @@ public class CookbookController {
     @GetMapping("/title/{titleId}/public")
     public List<Cookbook> findPublicByTitle(@PathVariable String title) {
         return service.findPublicByTitle(title);
+    }
+
+    @PostMapping
+    public Result<Cookbook> add(@RequestBody Cookbook cookbook) {
+        return service.add(cookbook);
     }
 }

@@ -87,6 +87,15 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository{
     }
 
     @Override
+    public boolean titleTakenForUser(int userId, String title) {
+        final String sql = "select cookbook_id, title, is_private, user_id " +
+                "from cookbook where user_id = ? " +
+                "and title = ?;";
+
+        return jdbcTemplate.query(sql, new CookbookMapper(), userId, title).size() > 0;
+    }
+
+    @Override
     public Cookbook add(Cookbook cookbook) {
         final String sql = "insert into cookbook " +
                 "(cookbook_id, title, is_private, user_id) " +

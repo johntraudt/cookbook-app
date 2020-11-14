@@ -1,14 +1,28 @@
 package learn.myCookbook.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Cookbook {
+
+    @Min(value = 0, message = "Cookbook id must not be negative.")
     private int cookbookId;
+
+    @NotNull(message = "Title is required.")
+    @NotBlank(message = "Title is required.")
     private String title;
+
     private boolean isPrivate;
+
+    @Min(value = 0, message = "User id must not be negative.")
     private int userId;
+
     private User user;
     private List<Recipe> recipes;
+
+
 
     public int getCookbookId() {
         return cookbookId;

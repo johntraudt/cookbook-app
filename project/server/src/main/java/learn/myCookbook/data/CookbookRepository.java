@@ -20,6 +20,8 @@ public interface CookbookRepository {
 
     List<Cookbook> findPublicByTitle(String title);
 
+    boolean titleTakenForUser(int userId, String title);
+
     Cookbook add(Cookbook cookbook);
 
     boolean update(Cookbook cookbook);

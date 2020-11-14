@@ -6,6 +6,10 @@ public class Validations {
         return value == null || value.isBlank();
     }
 
-    // TODO: custom validations from database
-
+//    public static Result<?> validateInputs(Object obj, Class c) {
+//        obj = (c) obj;
+//
+//        Result<c> result = new Result<>();
+//        System.out.println(obj.getClass());
+//    }
 }

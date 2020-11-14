@@ -106,6 +106,16 @@ public class CookbookJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldShowTitleTakenForUser() {
+        assertTrue(repository.titleTakenForUser(1, "Assorted Recipes"));
+    }
+
+    @Test
+    void shouldSHowTitleAvailableForUser() {
+        assertFalse(repository.titleTakenForUser(1, "Available Title"));
+    }
+
+    @Test
     void shouldAdd() {
         Cookbook cookbook = new Cookbook();
         cookbook.setCookbookId(0);

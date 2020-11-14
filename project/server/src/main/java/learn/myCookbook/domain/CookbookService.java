@@ -1,17 +1,26 @@
 package learn.myCookbook.domain;
 
 import learn.myCookbook.data.CookbookRepository;
+import learn.myCookbook.data.UserRepository;
 import learn.myCookbook.models.Cookbook;
+import learn.myCookbook.models.User;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CookbookService {
     private final CookbookRepository repository;
+    private final UserRepository userRepository;
 
-    public CookbookService(CookbookRepository repository) {
+    public CookbookService(CookbookRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     public List<Cookbook> findAll() {
@@ -40,6 +49,53 @@ public class CookbookService {
 
     public List<Cookbook> findPublicByTitle(String title) {
         return repository.findPublicByTitle(title);
+    }
+
+    public Result<Cookbook> add(Cookbook cookbook) {
+        Result<Cookbook> result = validate(cookbook);
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        if (repository.titleTakenForUser(cookbook.getUserId(), cookbook.getTitle())) {
+            result.addMessage("You've already used that title.", ResultType.INVALID);
+        }
+
+        if (userRepository.findById(cookbook.getUserId()) == null) {
+            result.addMessage("Could not find that user.", ResultType.INVALID);
+        }
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        cookbook = repository.add(cookbook);
+        result.setPayload(cookbook);
+        return result;
+    }
+
+    //helper methods
+
+    private Result<Cookbook> validate(Cookbook cookbook) {
+        Result<Cookbook> result = new Result<>();
+        if (cookbook == null) {
+            result.addMessage("Cookbook cannot be null.", ResultType.INVALID);
+            return result;
+        }
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Cookbook>> violations = validator.validate(cookbook);
+
+        if (!violations.isEmpty()) {
+            for (ConstraintViolation<Cookbook> violation : violations) {
+                result.addMessage(violation.getMessage(), ResultType.INVALID);
+            }
+            return result;
+        }
+
+        return result;
     }
 }
     /*
