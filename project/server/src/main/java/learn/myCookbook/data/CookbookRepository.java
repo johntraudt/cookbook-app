@@ -15,6 +15,8 @@ public interface CookbookRepository {
 
     List<Cookbook> findPublicByUserId(int userId);
 
+    Cookbook findByUserIdAndTitle(int userId, String title);
+
     List<Cookbook> findAllByRecipeId(int recipeId);
 
     List<Cookbook> findPublicByRecipeId(int recipeId);
@@ -32,6 +34,8 @@ public interface CookbookRepository {
     boolean insertRecipeById(int cookBookId, int recipeId);
 
     boolean update(Cookbook cookbook);
+
+    boolean setTitle(int cookbookId, String title);
 
     boolean deleteById(int cookbookId);
 

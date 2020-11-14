@@ -70,6 +70,13 @@ public class CookbookJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindByUserIdAndTitle() {
+        Cookbook cookbook = repository.findByUserIdAndTitle(1, "Assorted Recipes");
+        assertNotNull(cookbook);
+        assertEquals(1, cookbook.getCookbookId());
+    }
+
+    @Test
     void shouldFindAllByRecipeId() {
         List<Cookbook> list = repository.findAllByRecipeId(2);
         assertNotNull(list);

@@ -68,6 +68,20 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
     }
 
     @Override
+    public Cookbook findByUserIdAndTitle(int userId, String title) {
+        final String sql = "select c.cookbook_id, c.title, c.is_private, c.user_id, u.user_id, u.first_name, u.last_name, u.email, u.is_active, u.user_role_id " +
+                "from cookbook c " +
+                "join user u on c.user_id = u.user_id " +
+                "where c.user_id = ? " +
+                "and c.title = ?;";
+
+        return jdbcTemplate.query(sql, new CookbookMapper(), userId, title)
+                .stream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public List<Cookbook> findAllByRecipeId(int recipeId) {
         final String sql = "select c.cookbook_id, c.title, c.is_private, c.user_id, " +
                 "u.user_id, u.first_name, u.last_name, u.email, u.is_active, u.user_role_id " +
@@ -182,6 +196,15 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
                 cookbook.isPrivate(),
                 cookbook.getUserId(),
                 cookbook.getCookbookId()) > 0;
+    }
+
+    @Override
+    public boolean setTitle(int cookbookId, String title) {
+        final String sql = "update cookbook set " +
+                "title = ? " +
+                "where cookbook_id = ?;";
+
+        return jdbcTemplate.update(sql, title, cookbookId) > 0;
     }
 
     @Override
