@@ -5,8 +5,10 @@ import learn.myCookbook.domain.Result;
 import learn.myCookbook.models.Recipe;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,14 +32,13 @@ public class RecipeController {
         return service.findById(recipeId);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Object> add(@RequestBody Recipe recipe) {
-//        Result<Recipe> result = service.add(recipe);
-//        if (result.isSuccess()) {
-//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-//        }
-//        return ErrorResponse.build(result);
-//    }
+    @PostMapping
+    public ResponseEntity<Object> add(@RequestBody @Valid Recipe recipe, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(recipe, HttpStatus.CREATED);
+    }
 
 //    @PutMapping("/{recipeId}")
 //    public ResponseEntity<Object> update(@PathVariable int recipeId, @RequestBody Recipe recipe) {
