@@ -21,7 +21,7 @@ function Home() {
     }, []);
 
     if(!recipes) {
-        return null;
+        return (<h1 className="container text-center">Data Not Found</h1>);
     }
 
     return (
@@ -51,9 +51,11 @@ function Home() {
             
             <div className="d-flex flex-wrap justify-content-center">
             {recipes.map(recipe => (
+                recipe.featured === true && (
                 <div className="col-4" id={recipe.recipeId}>
                     <SquareCard recipe={recipe} />
                 </div>
+                )
             ))}
             </div>
         </div>

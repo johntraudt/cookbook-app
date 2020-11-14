@@ -9,9 +9,9 @@ function Header() {
 
 
     return (
-        <header>
+        <header className="shadow">
             <div className="container">
-                <div className="row">
+                <div className="row p-1">
                     <div className={location.pathname !== '/' ? "row mr-auto ml-3": "row mr-auto ml-3"} >
                         <Link to='/' >
                             <h1>BUILD A COOKBOOK</h1>
@@ -38,9 +38,15 @@ function Header() {
             <div className="subtitle">
                 <div className="container">
                     <div className="d-flex justify-content-around">
-                        <div>MyCookbooks</div>
-                        <div>Recipe Of The Day</div>
-                        <div>Show Me The Money</div>
+                        <Link className="dark" to='/notfound'>
+                            <div>MyCookbooks</div>
+                        </Link>
+                        <Link className="dark" to='/notfound'>
+                            <div>Recipe Of The Day</div>
+                        </Link>
+                        <Link className="dark" to='/random'>
+                            <div>Show Me The Money</div>
+                        </Link>
                     </div>
                 </div>
             </div>
