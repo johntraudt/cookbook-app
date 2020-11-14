@@ -41,19 +41,18 @@ public class RecipeController {
         return new ResponseEntity<>(recipe, HttpStatus.CREATED);
     }
 
-//    @PutMapping("/{recipeId}")
-//    public ResponseEntity<Object> update(@PathVariable int recipeId, @RequestBody Recipe recipe) {
-//        if (recipeId != recipe.getRecipeId()) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//        Result<Recipe> result = service.update(recipe);
-//        if (result.isSuccess()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//
-//        return ErrorResponse.build(result);
-//    }
+    @PutMapping("/{recipeId}")
+    public ResponseEntity<Object> update(@PathVariable int recipeId, @RequestBody @Valid Recipe recipe, BindingResult result) {
+        if (recipeId != recipe.getRecipeId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        service.update(recipe);
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     @DeleteMapping("/{recipeId}")
     public ResponseEntity<Void> deleteById(@PathVariable int recipeId) {

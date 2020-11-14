@@ -42,11 +42,41 @@ public class RecipeService {
             return result;
         }
 
+        if (recipe.getRecipeId() != 0) {
+            result.addMessage("recipeId cannot be set for `add` operation", ResultType.INVALID);
+            return result;
+        }
+
         result.setPayload(repository.add(recipe));
         return result;
     }
 
+    public Result<Recipe> update(Recipe recipe) {
+        Result<Recipe> result = new Result<>();
 
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Recipe>> violations = validator.validate(recipe);
+
+        if (!violations.isEmpty()) {
+            for (ConstraintViolation<Recipe> violation : violations) {
+                result.addMessage(violation.getMessage(), ResultType.INVALID);
+            }
+            return result;
+        }
+
+        if (recipe.getRecipeId() <= 0) {
+            result.addMessage("recipeId must be set for `update` operation", ResultType.INVALID);
+            return result;
+        }
+
+        if (!repository.update(recipe)) {
+            String msg = String.format("recipeId: %s, not found", recipe.getRecipeId());
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+
+        return result;
+    }
 
     public boolean deleteById(int recipeId) {
         return repository.deleteById(recipeId);
