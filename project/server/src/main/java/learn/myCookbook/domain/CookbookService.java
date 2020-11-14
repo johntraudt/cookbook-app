@@ -1,8 +1,10 @@
 package learn.myCookbook.domain;
 
 import learn.myCookbook.data.CookbookRepository;
+import learn.myCookbook.data.RecipeRepository;
 import learn.myCookbook.data.UserRepository;
 import learn.myCookbook.models.Cookbook;
+import learn.myCookbook.models.Recipe;
 import learn.myCookbook.models.User;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import java.util.Set;
 public class CookbookService {
     private final CookbookRepository repository;
     private final UserRepository userRepository;
+    private final RecipeRepository recipeRepository;
 
-    public CookbookService(CookbookRepository repository, UserRepository userRepository) {
+    public CookbookService(CookbookRepository repository, UserRepository userRepository, RecipeRepository recipeRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     public List<Cookbook> findAll() {
@@ -51,6 +55,10 @@ public class CookbookService {
         return repository.findPublicByTitle(title);
     }
 
+    public List<Recipe> findRecipesByCookBookId(int cookbookId) {
+        return repository.findRecipesByCookBookId(cookbookId);
+    }
+
     public Result<Cookbook> add(Cookbook cookbook) {
         Result<Cookbook> result = validate(cookbook);
 
@@ -62,10 +70,6 @@ public class CookbookService {
             result.addMessage("You've already used that title.", ResultType.INVALID);
         }
 
-        if (userRepository.findById(cookbook.getUserId()) == null) {
-            result.addMessage("Could not find that user.", ResultType.INVALID);
-        }
-
         if (!result.isSuccess()) {
             return result;
         }
@@ -73,6 +77,46 @@ public class CookbookService {
         cookbook = repository.add(cookbook);
         result.setPayload(cookbook);
         return result;
+    }
+
+    public boolean insertRecipeById(int cookbookId, int recipeId) {
+        if (repository.findById(cookbookId) == null ||
+                recipeRepository.findById(recipeId) == null ||
+                repository.recipeIsInCookbook(cookbookId, recipeId)) {
+
+            return false;
+        }
+
+        return repository.insertRecipeById(cookbookId, recipeId);
+    }
+
+    public Result<Cookbook> update(Cookbook cookbook) {
+        Result<Cookbook> result = validate(cookbook);
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        if (!repository.update(cookbook)) {
+            result.addMessage("Could not find that cookbook.", ResultType.INVALID);
+        }
+
+        return result;
+    }
+
+    public boolean removeRecipeById(int cookbookId, int recipeId) {
+        if (repository.findById(cookbookId) == null ||
+                recipeRepository.findById(recipeId) == null ||
+                !repository.recipeIsInCookbook(cookbookId, recipeId)) {
+
+            return false;
+        }
+
+        return repository.removeRecipeById(cookbookId, recipeId);
+    }
+
+    public boolean deleteById(int cookbookId) {
+        return repository.deleteById(cookbookId);
     }
 
     //helper methods
@@ -92,7 +136,10 @@ public class CookbookService {
             for (ConstraintViolation<Cookbook> violation : violations) {
                 result.addMessage(violation.getMessage(), ResultType.INVALID);
             }
-            return result;
+        }
+
+        if (userRepository.findById(cookbook.getUserId()) == null) {
+            result.addMessage("Could not find that user.", ResultType.INVALID);
         }
 
         return result;

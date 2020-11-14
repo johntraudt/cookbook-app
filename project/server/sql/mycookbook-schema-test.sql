@@ -322,10 +322,10 @@ begin
 	insert into `user`
 		(user_id, first_name, last_name, email, user_role_id)
 	values
-		(1, 'John', 'Traudt', 'john@traudt.com', 1, 1),
-		(2, 'Devon', 'Burwell', 'devon@burwell.com', 1, 1),
-		(3, 'Noah', 'Mitchelson', 'noah@mitchelson.com', 1, 2),
-		(4, 'Irina', 'Cudo', 'irina@cuod.com', 1, 1);
+		(1, 'John', 'Traudt', 'john@traudt.com', 1),
+		(2, 'Devon', 'Burwell', 'devon@burwell.com', 1),
+		(3, 'Noah', 'Mitchelson', 'noah@mitchelson.com', 2),
+		(4, 'Irina', 'Cudo', 'irina@cuod.com', 1);
 		
 	insert into login
 		(user_id, user_name, password_hash)

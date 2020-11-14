@@ -1,6 +1,7 @@
 package learn.myCookbook.data;
 
 import learn.myCookbook.models.Cookbook;
+import learn.myCookbook.models.Recipe;
 
 import java.util.List;
 
@@ -20,11 +21,19 @@ public interface CookbookRepository {
 
     List<Cookbook> findPublicByTitle(String title);
 
+    List<Recipe> findRecipesByCookBookId(int cookbookId);
+
     boolean titleTakenForUser(int userId, String title);
 
+    boolean recipeIsInCookbook(int cookbookId, int recipeId);
+
     Cookbook add(Cookbook cookbook);
+
+    boolean insertRecipeById(int cookBookId, int recipeId);
 
     boolean update(Cookbook cookbook);
 
     boolean deleteById(int cookbookId);
+
+    boolean removeRecipeById(int cookBookId, int recipeId);
 }

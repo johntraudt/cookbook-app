@@ -1,31 +1,73 @@
 @url = http://localhost:8080/api/cookbook
 
+### findAll()
+
 GET {{url}} HTTP/1.1
 
-###
+### findById(1)
 
 GET {{url}}/1 HTTP/1.1
 
-###
+### findAllByUserId(1) <--- all cookbooks by this user
 
 GET {{url}}/user/1/all HTTP/1.1
 
-###
+### findPublicByUserId(1) <--- public cookbooks by this user
 
 GET {{url}}/user/1/public HTTP/1.1
 
-###
+### findAllByRecipeId(2) <--- all cookbooks containting this recipe
 
 GET {{url}}/recipe/2/all HTTP/1.1
 
-###
+### findPublicByRecipeId(2) <--- public cookbooks containting this recipe
 
 GET {{url}}/recipe/2/public HTTP/1.1
 
-###
+### findPublicByTitle() <--- idk how to make this work with spaces
 
-GET {{url}}/title/Assorted+Recipes/public HTTP/1.1
+GET {{url}}/title/Assorted_Recipes/public HTTP/1.1
 
-###
+### findRecipesByCookbookId(2)
 
-^^that one doesnt work, spaces are weird in urls
+GET {{url}}/2/recipes HTTP/1.1
+
+### add()
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+   "cookbookId": 0,
+    "title": "New Cookbook",
+    "userId": 2,
+    "user": null,
+    "recipes": null,
+    "private": false
+}
+
+### insertRecipeById(cookbookId, recipeId)
+
+PUT {{url}}/2/1 HTTP/1.1
+
+### updateCookbookById(3)
+
+PUT {{url}}/3 HTTP/1.1
+Content-Type: application/json
+
+{
+   "cookbookId": 3,
+    "title": "Updated Cookbook",
+    "userId": 2,
+    "user": null,
+    "recipes": null,
+    "private": false
+}
+
+### deleteCookBookById(3)
+
+DELETE {{url}}/3 HTTP/1.1
+
+### removeRecipeById(cookbookId, recipeId)
+
+DELETE {{url}}/2/1 HTTP/1.1

@@ -14,6 +14,10 @@ public class CookbookMapper implements RowMapper<Cookbook> {
         cookbook.setTitle(resultSet.getString("title"));
         cookbook.setPrivate(resultSet.getBoolean("is_private"));
         cookbook.setUserId(resultSet.getInt("user_id"));
+
+        UserMapper userMapper = new UserMapper();
+        cookbook.setUser(userMapper.mapRow(resultSet, i));
+
         return cookbook;
     }
 }
