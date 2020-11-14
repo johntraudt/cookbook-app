@@ -46,6 +46,12 @@ public class RecipeService {
         return result;
     }
 
+
+
+    public boolean deleteById(int recipeId) {
+        return repository.deleteById(recipeId);
+    }
+
 //    private Result<Recipe> validate(Recipe recipe) {
 //        Result<Recipe> result = new Result<>();
 //        if (recipe == null) {

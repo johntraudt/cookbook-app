@@ -55,11 +55,11 @@ public class RecipeController {
 //        return ErrorResponse.build(result);
 //    }
 
-//    @DeleteMapping("/{recipeId}")
-//    public ResponseEntity<Void> deleteById(@PathVariable int recipeId) {
-//        if (service.deleteById(recipeId)) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+    @DeleteMapping("/{recipeId}")
+    public ResponseEntity<Void> deleteById(@PathVariable int recipeId) {
+        if (service.deleteById(recipeId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
