@@ -10,6 +10,12 @@ public interface UserRepository {
 
     User findById(int userId);
 
+    User findByUserName(String userName);
+
+    User findByEmail(String email);
+
+    boolean correctUserNamePassword(String userName, String passwordHash);
+
     User add(User user);
 
     boolean update(User user);
