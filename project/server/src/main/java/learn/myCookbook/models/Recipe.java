@@ -1,21 +1,49 @@
 package learn.myCookbook.models;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Recipe {
     private int recipeId;
+
+    @NotNull(message = "Recipe must have a user.")
     private int userId;
     private User user;
+
+    @NotNull
+    @NotBlank(message = "Recipe must have a name.")
     private String name;
+
+    @NotNull
+    @Min(value = 0, message = "Recipe must have 0 or greater prep time.")
     private int prepTimeInMinutes;
+
+    @NotNull
+    @Min(value = 0, message = "Recipe must have 0 or greater cook time.")
     private int cookTimeInMinutes;
+
+    @NotNull
+    @Min(value = 1, message = "Recipe must have at least 1 serving.")
     private int servings;
+
+    @NotNull(message = "Recipe must have a date.")
     private LocalDate date;
+
+    @NotNull(message = "Recipe must have wasUpdated set.")
     private boolean wasUpdated;
+
+    @NotNull(message = "Recipe must have isFeatured set.")
     private boolean isFeatured;
+
+    @NotNull
+    @Min(value = 1, message = "Calories must be 1 or greater.")
     private int calories;
+
+    @NotNull
+    @NotBlank(message = "Recipe must have link to an image.")
     private String imageLink;
+
     private List<RecipeIngredient> ingredients;
     private List<Direction> directions;
     private List<RecipeTag> tags;

@@ -112,14 +112,6 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     @Transactional
     public boolean deleteById(int recipeId) {
-        /*
-        delete from recipe_ingredient where recipe_id = 2;
-        delete from direction where recipe_id = 2;
-        delete from cookbook_recipe where recipe_id = 2;
-        delete from recipe_recipe_tag where recipe_id = 2;
-        delete from review where recipe_id = 2;
-        delete from recipe where recipe_id = 2;
-         */
         jdbcTemplate.update("delete from recipe_ingredient where recipe_id = ?;", recipeId);
         jdbcTemplate.update("delete from direction where recipe_id = ?;", recipeId);
         jdbcTemplate.update("delete from cookbook_recipe where recipe_id = ?;", recipeId);

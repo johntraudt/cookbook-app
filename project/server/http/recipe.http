@@ -4,4 +4,45 @@ GET {{url}} HTTP/1.1
 
 ###
 
-GET {{url}}/3 HTTP/1.1
+GET {{url}}/2 HTTP/1.1
+
+###
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "name": "Yum yum",
+  "prepTimeInMinutes": 0, 
+  "cookTimeInMinutes": 25, 
+  "servings": 1, 
+  "date": "2020-11-02", 
+  "wasUpdated": 1, 
+  "isFeatured": 0, 
+  "calories": 50, 
+  "imageLink": "picture.jpg" 
+}
+
+###
+
+PUT {{url}}/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "recipeId": 4,
+  "userId": 1,
+  "name": "Delicious Update",
+  "prepTimeInMinutes": 0, 
+  "cookTimeInMinutes": 25, 
+  "servings": 1, 
+  "date": "2020-11-02", 
+  "wasUpdated": 1, 
+  "isFeatured": 0, 
+  "calories": 50, 
+  "imageLink": "picture.jpg"
+}
+
+###
+
+DELETE {{url}}/4 HTTP/1.1
