@@ -102,8 +102,6 @@ public class CookbookService {
             return result;
         }
 
-        result = checkDuplicateTitleOnUpdate(cookbook);
-
         if (!repository.update(cookbook)) {
             result.addMessage("Could not find that cookbook.", ResultType.INVALID);
         }
@@ -147,28 +145,6 @@ public class CookbookService {
 
         if (userRepository.findById(cookbook.getUserId()) == null) {
             result.addMessage("Could not find that user.", ResultType.INVALID);
-        }
-
-        return result;
-    }
-
-    private Result<Cookbook> checkDuplicateTitleOnUpdate(Cookbook cookbook) {
-        Result<Cookbook> result = new Result<>();
-
-        String email = repository.findById(user.getUserId()).getEmail();
-
-        if (!repository.setTitle(cookbook.getCookbookId(), "RESERVED")) {
-            String message =  String.format("Cookbook ID: %s not found.", cookbook.getCookbookId());
-            result.addMessage(message, ResultType.INVALID);
-            return result;
-        }
-
-        if (repository.findBy(user.getEmail()) != null) {
-            result.addMessage("That email is already taken.", ResultType.INVALID);
-        }
-
-        if (!result.isSuccess()) {
-            repository.setUserNameEmail(user.getUserId(), email, userName);
         }
 
         return result;

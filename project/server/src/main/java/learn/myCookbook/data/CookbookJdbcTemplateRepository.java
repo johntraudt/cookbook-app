@@ -16,7 +16,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class CookbookJdbcTemplateRepository implements CookbookRepository{
+public class CookbookJdbcTemplateRepository implements CookbookRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

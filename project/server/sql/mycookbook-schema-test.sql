@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `mycookbook_test`.`cookbook` (
   PRIMARY KEY (`cookbook_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `cookbook_id_UNIQUE` (`cookbook_id` ASC) VISIBLE,
+  UNIQUE INDEX `user_id_title_UNIQUE` (`user_id` ASC, `title` ASC) VISIBLE,
   UNIQUE INDEX `cookbook_id_recipe_id_UNIQUE` (`cookbook_id` ASC, `user_id` ASC) VISIBLE,
   CONSTRAINT `FK_user_cookbook`
     FOREIGN KEY (`user_id`)
