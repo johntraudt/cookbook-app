@@ -34,6 +34,7 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody @Valid Recipe recipe, BindingResult result) {
+        service.add(recipe);
         if (result.hasErrors()) {
             return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
