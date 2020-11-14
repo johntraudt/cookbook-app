@@ -10,11 +10,16 @@ function Footer() {
                         <Link to='/' >
                             <h2 className="row-center">BUILD A COOKBOOK</h2>
                         </Link>
-                        <div className="row-center">
-                            <a className="m-5">About Us</a>
-                            <a className="m-5">Privacy Policy</a>
-                            <a className="m-5">Download Our App</a>
-                            <a className="m-5">Join Our Weekly Newsletter</a>
+                        <div className="d-flex flex-wrap justify-content-center">
+                            <Link to='/about'>
+                                <div className="ml-5 mr-5">About Us</div>
+                            </Link>
+                            <Link to='/privacy'>
+                                <div className="ml-5 mr-5">Privacy Policy</div>
+                            </Link>
+                            <Link to='/notfound'>
+                                <div className="ml-5 mr-5">Join Our Weekly Newsletter</div>
+                            </Link>
                         </div>
                     </div>
                 </div>
