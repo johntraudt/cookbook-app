@@ -2,6 +2,7 @@ package learn.myCookbook.domain;
 
 import learn.myCookbook.data.UserRepository;
 import learn.myCookbook.models.User;
+import learn.myCookbook.models.UserRole;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,6 +24,10 @@ public class UserService {
         return repository.findById(userId);
     }
 
+    public boolean correctUserNamePassword(String userName, String password) {
+        return repository.correctUserNamePassword(userName, password);
+    }
+
     public Result<User> add(User user) {
         Result<User> result = validate(user);
         if (!result.isSuccess()) {
@@ -31,6 +36,17 @@ public class UserService {
 
         if (user.getUserId() != 0) {
             result.addMessage("userId cannot be set for `add` operation.", ResultType.INVALID);
+        }
+
+        if (repository.findByEmail(user.getEmail()) != null) {
+            result.addMessage("That email is already taken", ResultType.INVALID);
+        }
+
+        if (repository.findByUserName(user.getUserName()) != null) {
+            result.addMessage("That username is already taken", ResultType.INVALID);
+        }
+
+        if (!result.isSuccess()) {
             return result;
         }
 
@@ -58,11 +74,18 @@ public class UserService {
         return result;
     }
 
+
+
     private Result<User> validate(User user) {
         // TODO: userRoleId
         Result<User> result = new Result<>();
         if (user == null) {
             result.addMessage("user cannot be null.", ResultType.INVALID);
+            return result;
+        }
+
+        if (user.getUserRoleId() < 1 || user.getUserRoleId() > UserRole.NUMBER_OF_USER_ROLES) {
+            result.addMessage("invalid user role", ResultType.INVALID);
             return result;
         }
 
@@ -85,14 +108,10 @@ public class UserService {
         if (Validations.isNullOrBlank(user.getPasswordHash())) {
             result.addMessage("password is required", ResultType.INVALID);
         }
-
-
-        /*
-        private UserRole role;
-        private int userRoleId;
-         */
         return result;
     }
 
-
+    public boolean deactivateById(int userId) {
+        return repository.deactivateById(userId);
+    }
 }

@@ -2,6 +2,9 @@ package learn.myCookbook.models;
 
 import learn.myCookbook.models.UserRole;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class User {
     private int userId;
     private String userName;
@@ -11,7 +14,11 @@ public class User {
     private String firstName;
     private String lastName;
     private UserRole role;
+
+    @Min(value = 1)
+    @Max(value = UserRole.NUMBER_OF_USER_ROLES)
     private int userRoleId;
+
 
 
     public int getUserId() {

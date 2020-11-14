@@ -1,0 +1,31 @@
+@url = http://localhost:8080/api/cookbook
+
+GET {{url}} HTTP/1.1
+
+###
+
+GET {{url}}/1 HTTP/1.1
+
+###
+
+GET {{url}}/user/1/all HTTP/1.1
+
+###
+
+GET {{url}}/user/1/public HTTP/1.1
+
+###
+
+GET {{url}}/recipe/2/all HTTP/1.1
+
+###
+
+GET {{url}}/recipe/2/public HTTP/1.1
+
+###
+
+GET {{url}}/title/Assorted+Recipes/public HTTP/1.1
+
+###
+
+^^that one doesnt work, spaces are weird in urls

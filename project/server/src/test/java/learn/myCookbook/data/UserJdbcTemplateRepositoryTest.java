@@ -39,11 +39,43 @@ class UserJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindJohn() {
+    void shouldFindById() {
         User user = repository.findById(1);
 
         assertEquals(1, user.getUserId());
         assertEquals("John", user.getFirstName());
+    }
+
+    @Test
+    void shouldFindByUserName() {
+        User user = repository.findByUserName("john.traudt");
+        assertNotNull(user);
+        assertEquals("John", user.getFirstName());
+    }
+
+    @Test
+    void shouldFindByEmail() {
+        User user = repository.findByEmail("john@traudt.com");
+        assertNotNull(user);
+        assertEquals("John", user.getFirstName());
+    }
+
+    @Test
+    void shouldNotFindByMissing() {
+        assertNull(repository.findById(999));
+        assertNull(repository.findByEmail("missing"));
+        assertNull(repository.findByUserName("missing"));
+    }
+
+    @Test
+    void shouldVerifyUserNamePassword() {
+        assertTrue(repository.correctUserNamePassword("john.traudt", "password"));
+    }
+
+    @Test
+    void shouldNotVerifyUserNamePassword() {
+        assertFalse(repository.correctUserNamePassword("missing", "password"));
+        assertFalse(repository.correctUserNamePassword("john.traudt", "missing"));
     }
 
     @Test
@@ -74,11 +106,12 @@ class UserJdbcTemplateRepositoryTest {
         assertFalse(repository.update(user));
     }
 
-//    @Test
-//    void shouldDelete() {
-//        assertTrue(repository.deleteById(4));
-//        assertFalse(repository.deleteById(4));
-//    }
+    @Test
+    void shouldDeactivate() {
+        assertTrue(repository.deactivateById(2));
+        assertFalse(repository.findById(2).isActive());
+        assertFalse(repository.deactivateById(2));
+    }
 
     private User makeUser() {
         User user = new User();

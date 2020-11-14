@@ -30,34 +30,34 @@ public class UserController {
         return service.findById(userId);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Object> add(@RequestBody User user) {
-//        Result<User> result = service.add(user);
-//        if (result.isSuccess()) {
-//            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
-//        }
-//        return ErrorResponse.build(result);
-//    }
+    @PostMapping
+    public ResponseEntity<Object> add(@RequestBody User user) {
+        Result<User> result = service.add(user);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }
 
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<Object> update(@PathVariable int userId, @RequestBody User user) {
-//        if (userId != user.getUserId()) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//        Result<User> result = service.update(user);
-//        if (result.isSuccess()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//
-//        return ErrorResponse.build(result);
-//    }
+    @PutMapping("/{userId}")
+    public ResponseEntity<Object> update(@PathVariable int userId, @RequestBody User user) {
+        if (userId != user.getUserId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
 
-//    @DeleteMapping("/{userId}")
-//    public ResponseEntity<Void> deleteById(@PathVariable int userId) {
-//        if (service.deleteById(userId)) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+        Result<User> result = service.update(user);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ErrorResponse.build(result);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deactivateById(@PathVariable int userId) {
+        if (service.deactivateById(userId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

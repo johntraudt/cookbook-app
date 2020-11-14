@@ -297,7 +297,7 @@ values
     (2, 'MODERATOR');
     
 insert into `user`
-	(user_id, first_name, last_name, email, user_role_id)
+	(user_id, first_name, last_name, email, is_active, user_role_id)
 values
 	(1, 'John', 'Traudt', 'john@traudt.com', 1),
     (2, 'Devon', 'Burwell', 'devon@burwell.com', 1),

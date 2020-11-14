@@ -50,6 +50,52 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
+    public User findByUserName(String userName) {
+        final String sql = "select u.user_id, u.first_name, u.last_name, u.email, u.is_active, u.user_role_id " +
+                "from user u " +
+                "join login l on u.user_id = l.user_id " +
+                "where l.user_name = ?;";
+
+        User user = jdbcTemplate.query(sql, new UserMapper(), userName).stream()
+                .findFirst().orElse(null);
+
+        if (user != null) {
+            setLogin(user);
+            setRole(user);
+        }
+
+        return user;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
+                + "from user "
+                + "where email = ?;";
+
+        User user = jdbcTemplate.query(sql, new UserMapper(), email).stream()
+                .findFirst().orElse(null);
+
+        if (user != null) {
+            setLogin(user);
+            setRole(user);
+        }
+
+        return user;
+    }
+
+    @Override
+    public boolean correctUserNamePassword(String userName, String passwordHash) {
+        final String sql = "select l.user_id, l.user_name, l.password_hash " +
+                "from login l " +
+                "join user u on u.user_id = l.user_id " +
+                "where l.user_name = ? " +
+                "and l.password_hash = ?;";
+
+        return jdbcTemplate.query(sql, new LoginMapper(), userName, passwordHash).size() > 0;
+    }
+
+    @Override
     public User add(User user) {
         final String sql = "insert into `user` (first_name, last_name, email, user_role_id) "
                 + "values (?,?,?,?);";
@@ -63,10 +109,12 @@ public class UserJdbcTemplateRepository implements UserRepository {
             ps.setInt(4, user.getUserRoleId());
             return ps;
         }, keyHolder);
-        if (rowsAffected <= 0 && addLogin(user)) {
+        if (rowsAffected <= 0) {
             return null;
         }
         user.setUserId(keyHolder.getKey().intValue());
+        addLogin(user);
+
         return user;
     }
 
@@ -123,7 +171,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     private boolean addLogin(User user) {
         final String sql = "insert into login (user_id, user_name, password_hash) " +
-                "values (?,?);";
+                "values (?,?,?);";
 
         return jdbcTemplate.update(sql, user.getUserId(), user.getUserName(), user.getPasswordHash()) > 0;
     }
