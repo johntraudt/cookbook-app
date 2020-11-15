@@ -24,14 +24,14 @@ footer {
 }
 
 .shadow {
-    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.2);
+    box-shadow:  10px 20px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
 
 .subtitle {
     background-color: #b4d35e;
-    font-size: 1.5em;
-    color: rgb(32, 32, 32);
+    font-size: 1.25em;
+    color: rgb(0, 0, 0);
     padding: .25em;
     font-weight: 600;
 

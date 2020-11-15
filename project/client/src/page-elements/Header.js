@@ -35,7 +35,7 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <div className="subtitle">
+            <div className="subtitle shadow">
                 <div className="container">
                     <div className="d-flex justify-content-around">
                         <Link className="dark" to='/notfound'>
