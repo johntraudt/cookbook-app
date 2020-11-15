@@ -64,11 +64,10 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     @Override
-    public Recipe findRandom() {
+    public int findRandomRecipeId() {
         List<Recipe> all = findAll();
         int index = (int) (Math.random() * all.size());
-        int id = all.get(index).getRecipeId();
-        return findById(id);
+        return all.get(index).getRecipeId();
     }
 
     @Override

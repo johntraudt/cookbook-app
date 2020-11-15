@@ -12,7 +12,7 @@ public interface RecipeRepository {
 
     List<Recipe> findByName(String recipeName);
 
-    Recipe findRandom();
+    int findRandomRecipeId();
 
     Recipe add(Recipe recipe);
 

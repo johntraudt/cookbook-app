@@ -32,8 +32,8 @@ public class RecipeService {
         return repository.findByName(recipeName);
     }
 
-    public Recipe findRandom(){
-        return repository.findRandom();
+    public int findRandomRecipeId(){
+        return repository.findRandomRecipeId();
     }
 
     public Result<Recipe> add(Recipe recipe) {

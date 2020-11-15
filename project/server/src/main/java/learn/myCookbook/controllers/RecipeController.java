@@ -38,8 +38,8 @@ public class RecipeController {
     }
 
     @GetMapping("/random")
-    public Recipe findRandom() {
-        return service.findRandom();
+    public int findRandomRecipeId() {
+        return service.findRandomRecipeId();
     }
 
     @PostMapping
