@@ -32,7 +32,7 @@ public class RecipeIngredientService {
     }
 
     /*
-        RecipeIngredient add(RecipeIngredient recipeIngredient);
+        RecipeIngredient add(RecipeIngredient recipeIngredient); <==call add ingredient from here
 
         boolean update(RecipeIngredient recipeIngredient);
 

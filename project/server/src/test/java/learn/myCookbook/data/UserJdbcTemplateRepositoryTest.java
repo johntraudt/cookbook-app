@@ -110,7 +110,6 @@ class UserJdbcTemplateRepositoryTest {
     void shouldDeactivate() {
         assertTrue(repository.deactivateById(2));
         assertFalse(repository.findById(2).isActive());
-        assertFalse(repository.deactivateById(2));
     }
 
     private User makeUser() {

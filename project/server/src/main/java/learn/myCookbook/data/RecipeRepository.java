@@ -12,6 +12,8 @@ public interface RecipeRepository {
 
     List<Recipe> findByName(String recipeName);
 
+    Recipe findRandom();
+
     Recipe add(Recipe recipe);
 
     boolean update(Recipe recipe);

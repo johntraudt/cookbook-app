@@ -37,6 +37,11 @@ public class RecipeController {
         return service.findByName(recipeName);
     }
 
+    @GetMapping("/random")
+    public Recipe findRandom() {
+        return service.findRandom();
+    }
+
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody @Valid Recipe recipe, BindingResult result) {
         service.add(recipe);

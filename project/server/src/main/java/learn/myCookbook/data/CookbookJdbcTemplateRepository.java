@@ -111,9 +111,9 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
         final String sql = "select c.cookbook_id, c.title, c.is_private, c.user_id, u.user_id, u.first_name, u.last_name, u.email, u.is_active, u.user_role_id " +
                 "from cookbook c " +
                 "join user u on c.user_id = u.user_id " +
-                "where c.title = ? " +
+                "where c.title like ? " +
                 "and c.is_private = ?;";
-        return jdbcTemplate.query(sql, new CookbookMapper(), title, 0);
+        return jdbcTemplate.query(sql, new CookbookMapper(), "%" + title + "%", 0);
     }
 
     @Override

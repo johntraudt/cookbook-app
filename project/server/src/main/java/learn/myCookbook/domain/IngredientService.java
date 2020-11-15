@@ -30,8 +30,5 @@ public class IngredientService {
     /*
         Ingredient add(Ingredient ingredient);
 
-        boolean update(Ingredient ingredient);
-
-        boolean deleteById(int ingredientId);
     */
 }
