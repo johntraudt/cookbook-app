@@ -209,7 +209,7 @@ export default function PostRecipe() {
     
 
     return (
-        <div className="container full-body mt-5 text-center">
+        <div className="container full-body text-center">
             <h3 className="mb-3">
                 Design Your Own Recipe!
             </h3>
@@ -256,7 +256,7 @@ export default function PostRecipe() {
 
             <div>
                 <h4 className="mt-5">Ingredients</h4>
-                <table className="table">
+                <table className="table table-responsive">
                     <thead>
                         <tr>
                             <th></th>
@@ -314,13 +314,15 @@ export default function PostRecipe() {
                         <div className="col-1"></div>
                     </div>
                 </div> */}
-                <table className="table">
+                <table className="table table-responsive">
 
                     {
                         directions.map(direction => (
                             <tr>
                                 <td>{direction.id}</td>
+                                <div>
                                 <td><textarea value={direction.direction} onChange={event => changeDirection(event, direction.id)} className="expand" placeholder={`Direction ${direction.id} here...`}></textarea></td>
+                                </div>f
                                 <td><button onClick={() => handleDeleteDirection(direction.id)} className="btn btn-danger pt-1 pb-1">X</button></td>
                             </tr>
                         ))

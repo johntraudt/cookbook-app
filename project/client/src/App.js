@@ -9,7 +9,6 @@ import UserProfile from './pages/UserProfile';
 import NotFound from './pages/NotFound';
 import AboutUs from './pages/AboutUs';
 import ScrollToTop from './ScrollToTop';
-import RandomRecipe from './pages/RandomRecipe';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
 
@@ -71,10 +70,8 @@ export default function App() {
             <Route path="/user" component={UserProfile}/>
             <Route path="/notfound" component={NotFound}/>
             <Route path="/about" component={AboutUs}/>
-            <Route path="/random" component={RandomRecipe}/>
             <Route path="/privacy" component={Privacy}/>
             <Route path="/post" component={PostRecipe}/>
-            {/* <Route path="" component={NotFound}/> */}
           </Switch>
           <Footer />
         </div>

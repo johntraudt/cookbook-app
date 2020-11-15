@@ -62,8 +62,9 @@ function Header() {
                         <Link className="dark" to='/notfound'>
                             <div>Recipe Of The Day</div>
                         </Link>
-
-                        <div onClick={() => getRandomId()}>Show Me The Money</div>
+                        <div className="hand" onClick={() => getRandomId()}>
+                            Show Me The Money
+                        </div>
 
                     </div>
                 </div>
