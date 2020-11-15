@@ -10,7 +10,7 @@ export default function Results() {
     const searchTerm = history.location.pathname.replace('/results/','');
 
     const featuredRecipes = () => {
-        fetch('http://localhost:8080/api/recipe') 
+        fetch(`http://localhost:8080/api/recipe/search/${searchTerm}`) 
             .then(response => response.json())
             .then((data) => {
                 setRecipes(data);
