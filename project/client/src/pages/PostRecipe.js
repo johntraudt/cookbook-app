@@ -4,14 +4,16 @@ import {Redirect} from 'react-router-dom';
 export default function PostRecipe() {
     const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([{
-        name:'',
+        ingredient:{
+            name:'',
+        },
         quantity:'',
-        measurementType:'',
-        id:1,
+        measurementUnitId:5,
+        ingredientListIndex:1,
     }]);
     const [directions, setDirections] = useState([{
-        direction:'',
-        id:1,
+        text:'',
+        directionNumber:1,
     }]);
     const [title, setTitle] =useState('');
     const [prepTime, setPrepTime] = useState(0);
@@ -33,12 +35,17 @@ export default function PostRecipe() {
         };
         getCategories();
         setSelectedCategories();
+        // setDirections();
+        // setIngredients();
     },[console.log(selectedCategories)]);
 
     const today = new Date();
 
     const SubmitButton = (event) => {
         event.preventDefault();
+        console.log(ingredients)
+        console.log(directions)
+        console.log(selectedCategories);
 
         fetch('http://localhost:8080/api/recipe', {
             method: 'POST',
@@ -55,16 +62,20 @@ export default function PostRecipe() {
                 // calories: 50, 
                 // imageLink: "picture.jpg" 
 
+                recipeId: 0,
                 userId: 1,
                 name: title,
                 prepTimeInMinutes: prepTime, 
                 cookTimeInMinutes: cookTime, 
                 servings: servings, 
                 date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`, 
-                wasUpdated: 1,
-                isFeatured: 0,
+                wasUpdated: false,
                 calories: calories,
                 imageLink: image,
+                ingredients: ingredients,
+                directions: directions,
+                tags: selectedCategories,
+                featured: false
             })
         })
         .then(response => {
@@ -81,22 +92,22 @@ export default function PostRecipe() {
         })
     }
 
-    const changeIngredientName = (event, id) =>  {
+    const changeIngredientName = (event, ingredientListIndex) =>  {
         let tempIngredients=[];
         for (let i=0; i < ingredients.length; i++) {
             tempIngredients.push(ingredients[i]);
         };
-        tempIngredients[id-1].name = event.target.value;
+        tempIngredients[ingredientListIndex-1].ingredient.name = event.target.value;
 
         setIngredients(tempIngredients);
     }
 
-    const changeIngredientQuantity = (event, id) => {
+    const changeIngredientQuantity = (event, ingredientListIndex) => {
         let tempIngredients=[];
         for (let i=0; i < ingredients.length; i++) {
             tempIngredients.push(ingredients[i]);
         };
-        tempIngredients[id-1].quantity = event.target.value;
+        tempIngredients[ingredientListIndex-1].quantity = event.target.value;
 
         setIngredients(tempIngredients);
     }
@@ -108,44 +119,42 @@ export default function PostRecipe() {
         };
         
         tempIngredients.push({
-            name:'',
+            ingredient:{
+                name:'',
+            },
             quantity:'',
-            measurementType:'',
-            id:0,
+            measurementUnitId:5,
+            ingredientListIndex:0,
         })
 
         for (let i=1; i <= tempIngredients.length; i++) {
-            tempIngredients[i-1].id=i;
+            tempIngredients[i-1].ingredientListIndex=i;
         };
         setIngredients(tempIngredients);
-        console.log(ingredients)
     }
 
-    const handleDeleteIngredient = (id) => {
-        console.log(id);
+    const handleDeleteIngredient = (ingredientListIndex) => {
         let tempIngredients=[];
         for (let i=0; i < ingredients.length; i++) {
             tempIngredients.push(ingredients[i]);
         };
 
-        tempIngredients.splice(id-1, 1)
+        tempIngredients.splice(ingredientListIndex-1, 1)
 
         for (let i=1; i <= tempIngredients.length; i++) {
-            tempIngredients[i-1].id=i;
+            tempIngredients[i-1].ingredientListIndex=i;
         };
         setIngredients(tempIngredients);
-        console.log(ingredients)
     }
 
-    const changeDirection = (event, id) => {
+    const changeDirection = (event, directionNumber) => {
         let tempDirections=[];
         for (let i=0; i < directions.length; i++) {
             tempDirections.push(directions[i]);
         };
-        tempDirections[id-1].direction = event.target.value;
+        tempDirections[directionNumber-1].text = event.target.value;
 
         setDirections(tempDirections);
-        console.log(directions)
     }
 
     const handleAddDirection = () => {
@@ -155,36 +164,38 @@ export default function PostRecipe() {
         };
         
         tempDirections.push({
-            direction:'',
-            id:0,
+            text:'',
+            directionNumber:0,
         })
 
         for (let i=1; i <= tempDirections.length; i++) {
-            tempDirections[i-1].id=i;
+            tempDirections[i-1].directionNumber=i;
+            // console.log(i)
+            // console.log(tempDirections)
         };
         setDirections(tempDirections);
+
     }
 
-    const handleDeleteDirection = (id) => {
-        console.log(id);
+    const handleDeleteDirection = (directionNumber) => {
+
         let tempDirections=[];
         for (let i=0; i < directions.length; i++) {
             tempDirections.push(directions[i]);
         };
 
-        tempDirections.splice(id-1, 1)
+        tempDirections.splice(directionNumber-1, 1)
 
         for (let i=1; i <= tempDirections.length; i++) {
-            tempDirections[i-1].id=i;
+            tempDirections[i-1].directionNumber=i;
         };
         setDirections(tempDirections);
-        console.log(tempDirections)
     }
 
-    function useForceUpdate(){
-        const [value, setValue] = useState(0);
-        return () => setValue(value => ++value); 
-    }
+    // function useForceUpdate(){
+    //     const [value, setValue] = useState(0);
+    //     return () => setValue(value => ++value); 
+    // }
 
     const toggleCategory = (category) => {
         let tempCategories = [];
@@ -202,7 +213,6 @@ export default function PostRecipe() {
             tempCategories.push(category)
         }
         setSelectedCategories(tempCategories);
-        console.log(selectedCategories);
     }
 
 
@@ -272,9 +282,9 @@ export default function PostRecipe() {
                                 {
                                     ingredients.map(ingredient => (
                                         <tr>
-                                            <td>{ingredient.id}</td>
-                                            <td><input value={ingredient.name} className="expand" onChange={event => changeIngredientName(event, ingredient.id)} type="text" placeholder={`Ingredient ${ingredient.id} here...`}></input></td>
-                                            <td><input value={ingredient.quantity} onChange={event => changeIngredientQuantity(event, ingredient.id)} type="text" placeholder="Quantity here..."></input></td>
+                                            <td>{ingredient.ingredientListIndex}</td>
+                                            <td><input value={ingredient.ingredient.name} className="expand" onChange={event => changeIngredientName(event, ingredient.ingredientListIndex)} type="text" placeholder={`Ingredient ${ingredient.ingredientListIndex} here...`}></input></td>
+                                            <td><input value={ingredient.quantity} onChange={event => changeIngredientQuantity(event, ingredient.ingredientListIndex)} type="text" placeholder="Quantity here..."></input></td>
                                             <td>
                                                 <select>
                                                     <option>--  --</option>
@@ -285,7 +295,7 @@ export default function PostRecipe() {
                                                     <option>lbs</option>
                                                 </select>
                                             </td>
-                                            <td><button onClick={() => handleDeleteIngredient(ingredient.id)} className="btn btn-danger pt-1 pb-1">X</button></td>
+                                            <td><button onClick={() => handleDeleteIngredient(ingredient.ingredientListIndex)} className="btn btn-danger pt-1 pb-1">X</button></td>
                                         </tr>
                                     ))
                                 }
@@ -304,11 +314,11 @@ export default function PostRecipe() {
                             {
                                 directions.map(direction => (
                                     <tr>
-                                        <td>{direction.id}</td>
+                                        <td>{direction.directionNumber}</td>
                                         <div>
-                                        <td><textarea value={direction.direction} onChange={event => changeDirection(event, direction.id)} className="expand" placeholder={`Direction ${direction.id} here...`}></textarea></td>
+                                        <td><textarea value={direction.text} onChange={event => changeDirection(event, direction.directionNumber)} className="expand" placeholder={`Direction ${direction.directionNumber} here...`}></textarea></td>
                                         </div>
-                                        <td><button onClick={() => handleDeleteDirection(direction.id)} className="btn btn-danger pt-1 pb-1">X</button></td>
+                                        <td><button onClick={() => handleDeleteDirection(direction.directionNumber)} className="btn btn-danger pt-1 pb-1">X</button></td>
                                     </tr>
                                 ))
                             }

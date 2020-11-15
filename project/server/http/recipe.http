@@ -72,7 +72,7 @@ Content-Type: application/json
     "userRoleId": 2,
     "active": true
   },
-  "name": "Noah's New Recipe",
+  "name": "Noah's New Recipe 9",
   "prepTimeInMinutes": 25,
   "cookTimeInMinutes": 55,
   "servings": 5,
@@ -237,6 +237,50 @@ Content-Type: application/json
     }
   ],
   "featured": true
+}
+
+###
+
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "recipeId": 0,
+  "userId": 3,
+  "name": "Noah's New Recipe 9",
+  "prepTimeInMinutes": 25,
+  "cookTimeInMinutes": 55,
+  "servings": 5,
+  "date": "2020-09-21",
+  "wasUpdated": true,
+  "calories": 0,
+  "imageLink": "https://w7.pngwing.com/pngs/791/275/png-transparent-agumon-tai-kamiya-digimon-logo-art-digimon-fictional-character-cartoon-work-of-art.png",
+  "ingredients": [
+    {
+      "ingredient": {
+        "name": "Idaho potato"
+      },
+      "ingredientListIndex": 1,
+      "quantity": "8",
+      "measurementUnitId": 5
+    }
+  ],
+  "directions": [
+    {
+      "directionNumber": 1,
+      "text": "Peel 8 potatos"
+    }
+  ],
+  "tags": [
+    {
+      "recipeTagId": 2,
+      "name": "HEARTY",
+      "imageLink": "https://64.media.tumblr.com/4d2f6d0c3e29990123bda22166fe8e86/1220ce887d7a24a9-52/s1280x1920/1642bbc597a807ba47ec68450284de3a1725fb87.png",
+      "recipeTagCategoryId": 0
+    }
+  ],
+  "featured": false
 }
 
 ###
