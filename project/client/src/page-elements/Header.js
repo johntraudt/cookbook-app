@@ -1,11 +1,24 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import dino from '../resources/dino.jpg';
 
 function Header() {
-
     const location = useLocation();
 
+    const history = useHistory();
+
+    let randomInt = 0;
+
+    const getRandomId = () => {
+        fetch('http://localhost:8080/api/recipe/random') 
+            .then(response => response.json())
+            .then((data) => {
+                randomInt = data;
+                console.log(data);
+            })
+            .then(() => history.push(`/recipe/${randomInt}`));
+    };
 
 
     return (
@@ -15,7 +28,7 @@ function Header() {
                     <div className={location.pathname !== '/' ? "row mr-auto ml-3": "row mr-auto ml-3"} >
                         <Link to='/' >
                             <div className="float-left">
-                                <img height="20px" width="20px" src="dino.jpg" alt="dino logo"></img>
+                                <img height="20px" width="20px" src={dino} alt="dino logo"></img>
                             </div>
                             <div className="float-right">
                                 <h1>BUILD A COOKBOOK</h1>
@@ -49,9 +62,9 @@ function Header() {
                         <Link className="dark" to='/notfound'>
                             <div>Recipe Of The Day</div>
                         </Link>
-                        <Link className="dark"  to='/recipe/random' onClick={() => window.location.reload()}>
-                            <div>Show Me The Money</div>
-                        </Link>
+
+                        <div onClick={() => getRandomId()}>Show Me The Money</div>
+
                     </div>
                 </div>
             </div>
