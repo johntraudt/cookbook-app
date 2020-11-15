@@ -55,24 +55,23 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     @Override
-    public Recipe findByName(String recipeName) {
+    public List<Recipe> findByName(String recipeName) {
         final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe " +
-                "where recipe_name like '%?%';";
+                "where recipe_name like ?;";
 
-        Recipe recipe = jdbcTemplate.query(sql, new RecipeMapper(), recipeName)
-                .stream()
-                .findFirst().orElse(null);
+        return jdbcTemplate.query(sql, new RecipeMapper(),  "%" + recipeName + "%");
 
-        if (recipe != null) {
-            recipe.setUser(userRepository.findById(recipe.getUserId()));
-            addReviews(recipe);
-            addDirections(recipe);
-            addTags(recipe);
-            addIngredients(recipe);
-        }
 
-        return recipe;
+//        if (recipe != null) {
+//            recipe.setUser(userRepository.findById(recipe.getUserId()));
+//            addReviews(recipe);
+//            addDirections(recipe);
+//            addTags(recipe);
+//            addIngredients(recipe);
+//        }
+//
+//        return recipe;
     }
 
     @Override

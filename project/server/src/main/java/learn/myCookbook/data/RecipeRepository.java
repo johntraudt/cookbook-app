@@ -10,7 +10,7 @@ public interface RecipeRepository {
 
     Recipe findById(int recipeId);
 
-    Recipe findByName(String recipeName);
+    List<Recipe> findByName(String recipeName);
 
     Recipe add(Recipe recipe);
 

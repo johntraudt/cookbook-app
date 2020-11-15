@@ -28,7 +28,7 @@ public class RecipeService {
         return repository.findById(recipeId);
     }
 
-    public Recipe findByName(String recipeName) {
+    public List<Recipe> findByName(String recipeName) {
         return repository.findByName(recipeName);
     }
 

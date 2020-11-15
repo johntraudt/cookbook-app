@@ -32,8 +32,8 @@ public class RecipeController {
         return service.findById(recipeId);
     }
 
-    @GetMapping("/{recipeName}")
-    public Recipe findByName(@PathVariable String recipeName) {
+    @GetMapping("/search/{recipeName}")
+    public List<Recipe> findByName(@PathVariable String recipeName) {
         return service.findByName(recipeName);
     }
 
