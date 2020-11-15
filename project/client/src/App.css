@@ -18,6 +18,10 @@ Header, .btn-secondary {
     color: black;
 }
 
+.hand {
+    cursor: pointer;
+}
+
 .btn-outline-secondary {
     color: rgb(71, 107, 45);
     border-color: rgba(71, 107, 45);
@@ -130,7 +134,7 @@ a:visited {
 }
 
 .full-body {
-    min-height: 90vh;
+    min-height: calc(100vh - 202px);
     overflow: hidden;
     position: relative;
 }

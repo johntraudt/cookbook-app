@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function NotFound() {
     return (
-        <div className="container full-body mt-5 text-center">
+        <div className="container full-body text-center">
             <h3>
                 Whoops, something went wrong. 
             </h3>
