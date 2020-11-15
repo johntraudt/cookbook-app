@@ -117,7 +117,7 @@ public class UserService {
 
         if (!repository.setUserNameEmail(user.getUserId(), "RESERVED", "RESERVED")) {
             String message =  String.format("User ID: %s not found.", user.getUserId());
-            result.addMessage(message, ResultType.INVALID);
+            result.addMessage(message, ResultType.NOT_FOUND);
             return result;
         }
 

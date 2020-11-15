@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -24,17 +26,43 @@ class DirectionJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByRecipeId() {
-        Direction direction = repository.findByRecipeId(2);
+        List<Direction> directions = repository.findByRecipeId(3);
 
-        assertNotNull(direction);
-        assertEquals("Peel 8 potatos", direction.getText());
+        assertNotNull(directions);
+        assertEquals(3, directions.size());
     }
 
     @Test
-    void shouldNotFindMissing() {
-        Direction result = repository.findByRecipeId(500);
+    void shouldNotByFindMissingRecipId() {
+        List<Direction> result = repository.findByRecipeId(999);
+        assertNotNull(result);
+        assertEquals(0, result.size());
+    }
 
-        assertNull(result);
+    @Test
+    void shouldFindById() {
+        Direction direction = repository.findById(1);
+        assertNotNull(direction);
+        assertEquals("Buy an entire chicken", direction.getText());
+    }
+
+    @Test
+    void shouldNotFindByMissingId() {
+        Direction direction = repository.findById(999);
+        assertNull(direction);
+    }
+
+    @Test
+    void shouldFindByRecipeIdAndStepNumber() {
+        Direction direction = repository.findByRecipeIdAndDirectionNumber(1,2);
+        assertNotNull(direction);
+        assertEquals("Bake the entire chicken for 20 minutes", direction.getText());
+    }
+
+    @Test
+    void shouldNotFindByMissingRecipeIdAndStepNumber() {
+        Direction direction = repository.findByRecipeIdAndDirectionNumber(1,999);
+        assertNull(direction);
     }
 
     @Test
