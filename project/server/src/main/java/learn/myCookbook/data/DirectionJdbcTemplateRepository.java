@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class DirectionJdbcTemplateRepository implements DirectionRepository {
@@ -20,14 +21,37 @@ public class DirectionJdbcTemplateRepository implements DirectionRepository {
     }
 
     @Override
-    public Direction findByRecipeId(int recipeId) {
+    public Direction findById(int directionId) {
+        final String sql = "select direction_id, recipe_id, direction_number, direction_text " +
+                "from direction " +
+                "where direction_id = ?;";
+
+        return jdbcTemplate.query(sql, new DirectionMapper(), directionId)
+            .stream()
+            .findFirst()
+            .orElse(null);
+    }
+
+    @Override
+    public Direction findByRecipeIdAndDirectionNumber(int recipeId, int directionNumber) {
+        final String sql = "select direction_id, recipe_id, direction_number, direction_text " +
+                "from direction " +
+                "where recipe_id = ? " +
+                "and direction_number = ?;";
+
+        return jdbcTemplate.query(sql, new DirectionMapper(), recipeId, directionNumber)
+                .stream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public List<Direction> findByRecipeId(int recipeId) {
         final String sql = "select direction_id, recipe_id, direction_number, direction_text " +
                 "from direction " +
                 "where recipe_id = ?;";
 
-        return jdbcTemplate.query(sql, new DirectionMapper(), recipeId)
-                .stream()
-                .findFirst().orElse(null);
+        return jdbcTemplate.query(sql, new DirectionMapper(), recipeId);
     }
 
     @Override
@@ -59,6 +83,17 @@ public class DirectionJdbcTemplateRepository implements DirectionRepository {
 
         return jdbcTemplate.update(sql,
                 direction.getText(),
+                direction.getDirectionId()) > 0;
+    }
+
+    @Override
+    public boolean decrementDirectionNumber(Direction direction) {
+        final String sql = "update direction set " +
+                "direction_number = ? " +
+                "where direction_id = ?;";
+
+        return jdbcTemplate.update(sql,
+                direction.getDirectionNumber() - 1,
                 direction.getDirectionId()) > 0;
     }
 

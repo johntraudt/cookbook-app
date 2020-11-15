@@ -68,9 +68,6 @@ public class CookbookService {
 
         if (repository.titleTakenForUser(cookbook.getUserId(), cookbook.getTitle())) {
             result.addMessage("You've already used that title.", ResultType.INVALID);
-        }
-
-        if (!result.isSuccess()) {
             return result;
         }
 
@@ -109,7 +106,7 @@ public class CookbookService {
         }
 
         if (!repository.update(cookbook)) {
-            result.addMessage("Could not find that cookbook.", ResultType.INVALID);
+            result.addMessage("Could not find that cookbook.", ResultType.NOT_FOUND);
         }
 
         return result;
@@ -150,7 +147,7 @@ public class CookbookService {
         }
 
         if (userRepository.findById(cookbook.getUserId()) == null) {
-            result.addMessage("Could not find that user.", ResultType.INVALID);
+            result.addMessage("Could not find that user.", ResultType.NOT_FOUND);
         }
 
         return result;
@@ -163,7 +160,7 @@ public class CookbookService {
 
         if (!repository.setTitle(cookbook.getCookbookId(), "RESERVED")) {
             String message =  String.format("Cookbook ID: %s not found.", cookbook.getCookbookId());
-            result.addMessage(message, ResultType.INVALID);
+            result.addMessage(message, ResultType.NOT_FOUND);
             return result;
         }
 
