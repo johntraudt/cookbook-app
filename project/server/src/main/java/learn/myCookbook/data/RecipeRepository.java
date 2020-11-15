@@ -12,6 +12,8 @@ public interface RecipeRepository {
 
     List<Recipe> findByName(String recipeName);
 
+    Recipe findByUserIdAndName(int userId, String name);
+
     int findRandomRecipeId();
 
     Recipe add(Recipe recipe);

@@ -34,21 +34,209 @@ Content-Type: application/json
 
 ###
 
-PUT {{url}}/4 HTTP/1.1
+POST {{url}} HTTP/1.1
 Content-Type: application/json
 
 {
-  "recipeId": 4,
-  "userId": 1,
-  "name": "Delicious Update",
-  "prepTimeInMinutes": 0, 
-  "cookTimeInMinutes": 25, 
-  "servings": 1, 
-  "date": "2020-11-02", 
-  "wasUpdated": 1, 
-  "isFeatured": 0, 
-  "calories": 50, 
-  "imageLink": "picture.jpg"
+   "userId": 1,
+   "name": "Yum yum",
+   "prepTimeInMinutes": 0,
+   "cookTimeInMinutes": 25,
+   "servings": 1,
+   "date": "2020-11-02",
+   "wasUpdated": 1,
+   "isFeatured": 0,
+   "calories": 50,
+   "imageLink": "picture.jpg"
+}
+
+###
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "recipeId": 0,
+  "userId": 3,
+  "user": {
+    "userId": 3,
+    "userName": "noah.mitchelson",
+    "email": "noah@mitchelson.com",
+    "passwordHash": null,
+    "firstName": "Noah",
+    "lastName": "Mitchelson",
+    "role": {
+      "userRoleId": 2,
+      "name": "MODERATOR"
+    },
+    "userRoleId": 2,
+    "active": true
+  },
+  "name": "Noah's New Recipe",
+  "prepTimeInMinutes": 25,
+  "cookTimeInMinutes": 55,
+  "servings": 5,
+  "date": "2020-09-21",
+  "wasUpdated": true,
+  "calories": 0,
+  "imageLink": "https://w7.pngwing.com/pngs/791/275/png-transparent-agumon-tai-kamiya-digimon-logo-art-digimon-fictional-character-cartoon-work-of-art.png",
+  "ingredients": [
+    {
+      "recipeIngredientId": 0,
+      "recipeId": 0,
+      "ingredientId": 0,
+      "recipe": null,
+      "ingredient": {
+        "ingredientId": 0,
+        "name": "Idaho potato"
+      },
+      "ingredientListIndex": 1,
+      "quantity": "8",
+      "measurementUnitId": 5,
+      "measurementUnit": {
+        "measurementUnitId": 0,
+        "name": null
+      }
+    },
+    {
+      "recipeIngredientId": 0,
+      "recipeId": 0,
+      "ingredientId": 0,
+      "recipe": null,
+      "ingredient": {
+        "ingredientId": 0,
+        "name": "butter"
+      },
+      "ingredientListIndex": 2,
+      "quantity": "1/2",
+      "measurementUnitId": 1,
+      "measurementUnit": {
+        "measurementUnitId": 1,
+        "name": "CUP"
+      }
+    },
+    {
+      "recipeIngredientId": 0,
+      "recipeId": 0,
+      "ingredientId": 0,
+      "recipe": null,
+      "ingredient": {
+        "ingredientId": 0,
+        "name": "salt"
+      },
+      "ingredientListIndex": 3,
+      "quantity": null,
+      "measurementUnitId": 5,
+      "measurementUnit": {
+        "measurementUnitId": 0,
+        "name": null
+      }
+    },
+    {
+      "recipeIngredientId": 0,
+      "recipeId": 0,
+      "ingredientId": 0,
+      "recipe": null,
+      "ingredient": {
+        "ingredientId": 0,
+        "name": "black pepper"
+      },
+      "ingredientListIndex": 4,
+      "quantity": null,
+      "measurementUnitId": 5,
+      "measurementUnit": {
+        "measurementUnitId": 0,
+        "name": null
+      }
+    },
+    {
+      "recipeIngredientId": 0,
+      "recipeId": 0,
+      "ingredientId": 0,
+      "recipe": null,
+      "ingredient": {
+        "ingredientId": 0,
+        "name": "shredded cheese"
+      },
+      "ingredientListIndex": 5,
+      "quantity": "2",
+      "measurementUnitId": 1,
+      "measurementUnit": {
+        "measurementUnitId": 1,
+        "name": "CUP"
+      }
+    },
+    {
+      "recipeIngredientId": 0,
+      "recipeId": 0,
+      "ingredientId": 0,
+      "recipe": null,
+      "ingredient": {
+        "ingredientId": 0,
+        "name": "bacon bits"
+      },
+      "ingredientListIndex": 6,
+      "quantity": "1/2",
+      "measurementUnitId": 1,
+      "measurementUnit": {
+        "measurementUnitId": 1,
+        "name": "CUP"
+      }
+    }
+  ],
+  "directions": [
+    {
+      "directionId": 0,
+      "recipeId": 0,
+      "directionNumber": 1,
+      "text": "Peel 8 potatos"
+    },
+    {
+      "directionId": 0,
+      "recipeId": 0,
+      "directionNumber": 2,
+      "text": "Cut the potatos into chunks"
+    },
+    {
+      "directionId": 0,
+      "recipeId": 0,
+      "directionNumber": 3,
+      "text": "Boil the potatos until soft"
+    },
+    {
+      "directionId": 0,
+      "recipeId": 0,
+      "directionNumber": 4,
+      "text": "Mash em with a fork in a large bowl"
+    },
+    {
+      "directionId": 0,
+      "recipeId": 0,
+      "directionNumber": 5,
+      "text": "Add 1 cup butter, 2 cups shredded cheese, and 1/2 cup bacon bits. Mix well"
+    },
+    {
+      "directionId": 0,
+      "recipeId": 0,
+      "directionNumber": 6,
+      "text": "Add salt and pepper to taste"
+    }
+  ],
+  "tags": [
+    {
+      "recipeTagId": 2,
+      "name": "HEARTY",
+      "imageLink": "https://64.media.tumblr.com/4d2f6d0c3e29990123bda22166fe8e86/1220ce887d7a24a9-52/s1280x1920/1642bbc597a807ba47ec68450284de3a1725fb87.png",
+      "recipeTagCategoryId": 0
+    },
+    {
+      "recipeTagId": 4,
+      "name": "AMERICAN",
+      "imageLink": "https://ih1.redbubble.net/image.1031152073.5216/flat,750x1000,075,f.jpg",
+      "recipeTagCategoryId": 1
+    }
+  ],
+  "featured": true
 }
 
 ###

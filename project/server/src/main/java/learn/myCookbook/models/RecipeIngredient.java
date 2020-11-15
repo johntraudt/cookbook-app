@@ -1,15 +1,28 @@
 package learn.myCookbook.models;
 
+import javax.validation.constraints.Min;
+
 public class RecipeIngredient {
+    @Min(value = 0, message = "recipeIngredientId cannot be negative.")
     private int recipeIngredientId;
+
+    @Min(value = 0, message = "recipeId cannot be negative.")
     private int recipeId;
+
+    @Min(value = 0, message = "ingredientId cannot be negative.")
     private int ingredientId;
     private Recipe recipe;
     private Ingredient ingredient;
+
+    @Min(value = 0, message = "ingredientListIndex cannot be negative.")
     private int ingredientListIndex;
     private String quantity;
+
+    @Min(value = 0, message = "measurementUnitId cannot be negative.")
     private int measurementUnitId;
     private MeasurementUnit measurementUnit;
+
+
 
     public int getRecipeIngredientId() {
         return recipeIngredientId;

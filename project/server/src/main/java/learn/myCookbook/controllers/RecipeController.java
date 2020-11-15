@@ -43,12 +43,17 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody @Valid Recipe recipe, BindingResult result) {
-        service.add(recipe);
-        if (result.hasErrors()) {
-            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> add(@RequestBody /*@Valid*/ Recipe recipe/*, BindingResult result*/) {
+//        service.add(recipe);
+//        if (result.hasErrors()) {
+//            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(recipe, HttpStatus.CREATED);
+        Result<Recipe> result = service.add(recipe);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(recipe, HttpStatus.CREATED);
+        return ErrorResponse.build(result);
     }
 
     @PutMapping("/{recipeId}")

@@ -1,7 +1,16 @@
 package learn.myCookbook.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Ingredient {
+
+    @Min(value = 0, message = "IngredientId cannot be negative.")
     private int ingredientId;
+
+    @NotNull(message = "Ingredient name is required.")
+    @NotBlank(message = "Ingredient name is required.")
     private String name;
 
     public Ingredient() {

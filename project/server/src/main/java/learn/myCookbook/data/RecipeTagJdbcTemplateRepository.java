@@ -46,6 +46,28 @@ public class RecipeTagJdbcTemplateRepository implements RecipeTagRepository{
     }
 
     @Override
+    public boolean tagRecipe(int recipeId, int recipeTagId) {
+        final String sql = "insert into recipe_recipe_tag " +
+                "(recipe_id, recipe_tag_id) " +
+                "values " +
+                "(?, ?);";
+
+        return jdbcTemplate.update(sql, recipeId, recipeTagId) > 0;
+    }
+
+    @Override
+    public boolean recipeAlreadyTagged(int recipeId, int recipeTagId) {
+        final String sql = "select rt.recipe_tag_id, rt.recipe_tag_name, rt.recipe_tag_category_id, rt.tag_image_link " +
+                "from recipe_tag rt " +
+                "join recipe_recipe_tag rrt on rt.recipe_tag_id = rrt.recipe_tag_id " +
+                "join recipe r on rrt.recipe_id = r.recipe_id " +
+                "where r.recipe_id = ? " +
+                "and rt.recipe_tag_id = ?;";
+
+        return jdbcTemplate.query(sql, new RecipeTagMapper(), recipeId, recipeTagId).size() > 0;
+    }
+
+    @Override
     public boolean deleteById(int recipeTagId) {
         return false;
     }
