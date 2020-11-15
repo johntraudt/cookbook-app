@@ -61,17 +61,14 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
                 "where recipe_name like ?;";
 
         return jdbcTemplate.query(sql, new RecipeMapper(),  "%" + recipeName + "%");
+    }
 
-
-//        if (recipe != null) {
-//            recipe.setUser(userRepository.findById(recipe.getUserId()));
-//            addReviews(recipe);
-//            addDirections(recipe);
-//            addTags(recipe);
-//            addIngredients(recipe);
-//        }
-//
-//        return recipe;
+    @Override
+    public Recipe findRandom() {
+        List<Recipe> all = findAll();
+        int index = (int) (Math.random() * all.size());
+        int id = all.get(index).getRecipeId();
+        return findById(id);
     }
 
     @Override
