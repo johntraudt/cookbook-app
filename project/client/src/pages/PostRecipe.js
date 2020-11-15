@@ -81,7 +81,7 @@ export default function PostRecipe() {
         .then(response => {
             if (response.status === 201) {
                 console.log('success!')
-                response.json().then(data => console.log(data));
+                // response.json().then(data => console.log(data));
             } else if (response.status === 400) {
                 console.log('errors!');
                 console.log(response);

@@ -11,16 +11,20 @@ export default function UserProfile() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
+    const [userName, setUserName] = useState('');
+
 
     useEffect(() => {
         setEmail();
         setFirstName();
         setLastName();
         setCookBook();
+        setUserName();
     },[console.log(email),
         console.log(firstName),
         console.log(lastName),
-        console.log(cookBook)]);    
+        console.log(cookBook),
+        console.log(userName)]);    
 
     return (
         <div className="container full-body">
@@ -36,7 +40,11 @@ export default function UserProfile() {
                         </thead>
                         <tr>
                             <th>UserName</th>
-                            <td>Insert userName</td>
+                            <td>
+                                {editUser===false ? 'Insert email' : 
+                                    <input type="text" placeholder="New UserName Here..." onChange={event => setUserName(event.target.value)}></input>
+                                }
+                            </td>
                         </tr>
                         <tr>
                             <th>Email</th>
