@@ -32,6 +32,11 @@ public class RecipeController {
         return service.findById(recipeId);
     }
 
+    @GetMapping("/{recipeName}")
+    public Recipe findByName(@PathVariable String recipeName) {
+        return service.findByName(recipeName);
+    }
+
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody @Valid Recipe recipe, BindingResult result) {
         service.add(recipe);

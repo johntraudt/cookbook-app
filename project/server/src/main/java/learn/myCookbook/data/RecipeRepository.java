@@ -10,10 +10,13 @@ public interface RecipeRepository {
 
     Recipe findById(int recipeId);
 
+    Recipe findByName(String recipeName);
+
     Recipe add(Recipe recipe);
 
     boolean update(Recipe recipe);
 
     @Transactional
     boolean deleteById(int recipeId);
+
 }

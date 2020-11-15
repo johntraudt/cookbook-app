@@ -55,6 +55,27 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     @Override
+    public Recipe findByName(String recipeName) {
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
+                "from recipe " +
+                "where recipe_name like '%?%';";
+
+        Recipe recipe = jdbcTemplate.query(sql, new RecipeMapper(), recipeName)
+                .stream()
+                .findFirst().orElse(null);
+
+        if (recipe != null) {
+            recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+            addDirections(recipe);
+            addTags(recipe);
+            addIngredients(recipe);
+        }
+
+        return recipe;
+    }
+
+    @Override
     public Recipe add(Recipe recipe) {
         final String sql = "insert into recipe (recipe_name, prep_time, cook_time, servings, `date`, was_updated, is_featured, calories, user_id, image_link) " +
                 "values (?,?,?,?,?,?,?,?,?,?);";

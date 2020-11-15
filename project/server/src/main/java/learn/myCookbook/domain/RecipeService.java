@@ -28,6 +28,10 @@ public class RecipeService {
         return repository.findById(recipeId);
     }
 
+    public Recipe findByName(String recipeName) {
+        return repository.findByName(recipeName);
+    }
+
     public Result<Recipe> add(Recipe recipe) {
         Result<Recipe> result = new Result<>();
 
