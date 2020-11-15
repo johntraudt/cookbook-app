@@ -17,6 +17,7 @@ function Header() {
                 randomInt = data;
                 console.log(data);
             })
+            // .then(() => console.log(randomInt))
             .then(() => history.push(`/recipe/${randomInt}`));
     };
 
@@ -24,7 +25,7 @@ function Header() {
     return (
         <header className="shadow">
             <div className="container">
-                <div className="row p-1">
+                <div className="d-flex flex-wrap justify-content-center p-1">
                     <div className={location.pathname !== '/' ? "row mr-auto ml-3": "row mr-auto ml-3"} >
                         <Link to='/' >
                             <div className="float-left">
@@ -56,13 +57,13 @@ function Header() {
             <div className="subtitle shadow">
                 <div className="container">
                     <div className="d-flex justify-content-around">
-                        <Link className="dark" to='/notfound'>
-                            <div>MyCookbooks</div>
+                        <Link className="dark mr-auto ml-auto" to='/notfound'>
+                            <div className='ml-5 mr-5'>MyCookbooks</div>
                         </Link>
-                        <Link className="dark" to='/notfound'>
+                        {/* <Link className="dark" to='/notfound'>
                             <div>Recipe Of The Day</div>
-                        </Link>
-                        <div className="hand" onClick={() => getRandomId()}>
+                        </Link> */}
+                        <div className="hand mr-auto ml-auto ml-5 mr-5" onClick={() => getRandomId()}>
                             Show Me The Money
                         </div>
 

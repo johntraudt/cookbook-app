@@ -22,13 +22,15 @@ export default function Categories() {
 
     return (
         <div className="container full-body">
-            <h1 className="text-center m-4">Categories</h1>
-            <div className="d-flex flex-wrap justify-content-center">
-                {categories.map(category => (
-                    <div className="col-4" id={category.recipeTagCategoryId}>
-                        <CicleCard category={category} />
-                    </div>
-                ))}
+            <div className="mt-4">
+                <h1 className="text-center m-4">Categories</h1>
+                <div className="d-flex flex-wrap justify-content-center">
+                    {categories.map(category => (
+                        <div className="col-4" id={category.recipeTagCategoryId}>
+                            <CicleCard category={category} />
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>    
     );

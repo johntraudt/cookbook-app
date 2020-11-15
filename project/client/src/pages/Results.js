@@ -41,13 +41,15 @@ export default function Results() {
 
     return (
         <div className="container full-body">
-            <h1 className="text-center m-4">Results for: {searchTerm}</h1>
-            <div className="d-flex flex-wrap justify-content-center">
-            {recipes.map(recipe => (
-                <div className="col-4" id={recipe.recipeId}>
-                    <SquareCard recipe={recipe} />
+            <div className="mt-4">
+                <h1 className="text-center m-4">Results for: {searchTerm}</h1>
+                <div className="d-flex flex-wrap justify-content-center">
+                {recipes.map(recipe => (
+                    <div className="col-lg-4 col-md-6 col-sm-12" id={recipe.recipeId}>
+                        <SquareCard recipe={recipe} />
+                    </div>
+                ))}
                 </div>
-            ))}
             </div>
         </div>    
     );

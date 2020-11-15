@@ -47,36 +47,38 @@ function Login() {
     return (
 
         <div className="container full-body">
-            <div className="text-center m-5">
-                <h1 className="p-2">Login</h1>
-                <form onSubmit={() => handleSubmit()}>
-                    <div className="center">
-                        <div className="p-2">
-                            <div>
-                                <label className="pr-3">Username: </label>
-                                <input className="m-1 expand" type='text' placeholder="Username" onChange={event => setUsername(event.target.value)}></input>
+            <div className="mt-4">
+                <div className="text-center m-5">
+                    <h1 className="p-2">Login</h1>
+                    <form onSubmit={() => handleSubmit()}>
+                        <div className="center">
+                            <div className="p-2">
+                                <div>
+                                    <label className="pr-3">Username: </label>
+                                    <input className="m-1 expand" type='text' placeholder="Username" onChange={event => setUsername(event.target.value)}></input>
+                                </div>
+                                <div>
+                                    <label className="pr-3">Password: </label>
+                                    <input className="m-1 expand" type='password' placeholder="Password" onChange={event => setPassword(event.target.value)}></input>
+                                </div>
                             </div>
-                            <div>
-                                <label className="pr-3">Password: </label>
-                                <input className="m-1 expand" type='password' placeholder="Password" onChange={event => setPassword(event.target.value)}></input>
+
+                            <div className="p-4">
+                                <div>
+                                    <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Login</button>
+                                </div>
+
+                                <div>
+                                    <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
+                                </div>
                             </div>
+
                         </div>
-
-                        <div className="p-4">
-                            <div>
-                                <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Login</button>
-                            </div>
-
-                            <div>
-                                <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
-                <h4 className="m-5">
-                    Build A Cookbook: Your gateway to home cooking
-                </h4>  
+                    </form>
+                    <h4 className="m-5">
+                        Build A Cookbook: Your gateway to home cooking
+                    </h4>  
+                </div>
             </div>
         </div>
 

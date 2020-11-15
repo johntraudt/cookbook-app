@@ -4,7 +4,7 @@ import banner from '../resources/home-banner.jpg';
 import SearchBar from '../page-elements/SearchBar';
 import SquareCard from '../page-elements/SquareCard';
 
-function Home() {
+export default function Home() {
 
     const [recipes, setRecipes] = useState([]);
 
@@ -26,40 +26,38 @@ function Home() {
 
     return (
         <div className="container full-body">
-            <div className="banner">
-                <div className="text-center">
-                    <div className="center-overlay">
-                        <div className="row">
-                            <div className="col-3"></div>
-                            <div className="col-6">
-                                
-                                <SearchBar className="home-search"/>
-                                <Link to='/categories'>
-                                    <button className="btn btn-light btn-lg mt-1">Categories</button>
-                                </Link>
+            <div className="mt-4">
+                <div className="banner">
+                    <div className="text-center">
+                        <div className="center-overlay">
+                            <div className="d-flex flex-wrap justify-content-center">
+                                <div className="col-lg-6 col-md-6 col-sm-10">
+                                    
+                                    <SearchBar className="home-search"/>
+                                    <Link to='/categories'>
+                                        <button className="btn btn-light btn-lg mt-1">Categories</button>
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="col-3"></div>
                         </div>
                     </div>
+                    <img className="img-fluid" src={banner} alt="Homepage banner with various fresh ingredients"/>
                 </div>
-                <img className="img-fluid" src={banner} alt="Homepage banner with various fresh ingredients"/>
-            </div>
 
-            <div className="subtitle text-center">
-                This Week's Featured Recipes:
-            </div>
-            
-            <div className="d-flex flex-wrap justify-content-center">
-            {recipes.map(recipe => (
-                recipe.featured === true && (
-                <div className="col-4" id={recipe.recipeId}>
-                    <SquareCard recipe={recipe} />
+                <div className="subtitle text-center">
+                    This Week's Featured Recipes:
                 </div>
-                )
-            ))}
+                
+                <div className="d-flex flex-wrap justify-content-center">
+                {recipes.map(recipe => (
+                    recipe.featured === true && (
+                    <div className="col-lg-4 col-md-6 col-sm-12" id={recipe.recipeId}>
+                        <SquareCard recipe={recipe} />
+                    </div>
+                    )
+                ))}
+                </div>
             </div>
         </div>
     );
 }
-  
-export default Home;

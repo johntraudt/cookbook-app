@@ -26,7 +26,7 @@ export default function UserProfile() {
         <div className="container full-body">
             <h1 className="text-center m-4">UserName Profile</h1>
             <div className="row mt-5">
-                <div className='col-4'>
+                <div className='col-lg-4 col-md-12 col-sm-12'>
                     
                     <table className="table">
                         <thead>
@@ -80,7 +80,7 @@ export default function UserProfile() {
                     </table>
                 </div>
 
-                <div className='col-8'>
+                <div className='col-lg-8 col-md-12 col-sm-12'>
 
                 <Accordion defaultActiveKey="0">
                     <h3 className="m-2">Your Cookbooks:</h3>
