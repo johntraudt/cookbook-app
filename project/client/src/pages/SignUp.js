@@ -1,5 +1,5 @@
 import React from 'react';
-import Errors from 'Errors';
+import Errors from './Errors';
 
 class SignUp extends React.Component {
   constructor() {
