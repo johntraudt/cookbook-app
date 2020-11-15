@@ -1,17 +1,32 @@
 body {
-    font-family: Georgia, 'Times New Roman', Times, serif ;
+   /* font-family: Georgia, 'Times New Roman', Times, serif ; */
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(245, 244, 234);
 }
 
-header, .btn-secondary {
-    background-color: #424e34;
-    color: rgb(233, 233, 233);
+h1 {
+    color: black;
 }
 
-.btn-secondary:hover, .btn-secondary:active {
-    background-color: #8ea74a;
+Header, .btn-secondary {
+    background-color: #424e34;
+    background-color: white;
+    border-width: 5px;
+    border-color: azure;
+    border: white;
+    /*color: rgb(233, 233, 233);*/
     color: black;
+}
 
+.btn-outline-secondary {
+    color: rgb(71, 107, 45);
+    border-color: rgba(71, 107, 45);
+}
+
+.btn-outline-secondary:hover, .btn-outline-secondary:active {
+    /*background-color: #8ea74a;*/
+    color: rgb(71, 107, 45);
+    background-color: rgba(71, 107, 45);
 }
 
 footer {
