@@ -26,10 +26,17 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     @Override
     public List<Recipe> findAll() {
 
-        final String sql = "select recipe_id, user_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
                 "from recipe limit 1000;";
 
-        return jdbcTemplate.query(sql, new RecipeMapper());
+        List<Recipe> all = jdbcTemplate.query(sql, new RecipeMapper());
+
+        for (Recipe recipe : all) {
+            recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+        }
+
+        return all;
     }
 
     @Override
