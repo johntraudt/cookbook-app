@@ -18,7 +18,7 @@ export default function Recipe() {
         servings: 0,
         tags: null,
         user: {
-            userId: 0,
+            userId: 1,
             userName: "",
             email: "",
             passwordHash: null,

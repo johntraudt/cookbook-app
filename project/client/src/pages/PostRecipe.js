@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import {Redirect} from 'react-router-dom';
 
 export default function PostRecipe() {
-    const today = new Date();
     const [categories, setCategories] = useState([]);
     const [ingredients, setIngredients] = useState([{
         name:'',
@@ -19,20 +19,8 @@ export default function PostRecipe() {
     const [servings, setServings] = useState(0);
     const [calories, setCalories] = useState(0);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    // const [recipe, setRecipe] = useState({
-    //     userId: 0,
-    //     name:'',
-    //     prepTimeInMinutes:0, 
-    //     cookTimeInMinutes:0, 
-    //     servings: 0, 
-    //     date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`, 
-    //     wasUpdated: 1, 
-    //     isFeatured: 0, 
-    //     calories: 0, 
-    //     imageLink: '',
-    //     directions: [],
-    //     ingredients: [], 
-    // })
+    const [image, setImage] = useState(''); 
+
 
     useEffect(()=>{
         const getCategories = () => {
@@ -44,8 +32,54 @@ export default function PostRecipe() {
                 });
         };
         getCategories();
-        // setRecipe();
-    },[]);
+        setSelectedCategories();
+    },[console.log(selectedCategories)]);
+
+    const today = new Date();
+
+    const SubmitButton = (event) => {
+        event.preventDefault();
+
+        fetch('http://localhost:8080/api/recipe', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                // userId: 2,
+                // name: "Yum yum",
+                // prepTimeInMinutes: 0, 
+                // cookTimeInMinutes: 25, 
+                // servings: 1, 
+                // date: "2020-11-02", 
+                // wasUpdated: 1, 
+                // isFeatured: 0, 
+                // calories: 50, 
+                // imageLink: "picture.jpg" 
+
+                userId: 1,
+                name: title,
+                prepTimeInMinutes: prepTime, 
+                cookTimeInMinutes: cookTime, 
+                servings: servings, 
+                date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`, 
+                wasUpdated: 1,
+                isFeatured: 0,
+                calories: calories,
+                imageLink: image,
+            })
+        })
+        .then(response => {
+            if (response.status === 201) {
+                console.log('success!')
+                response.json().then(data => console.log(data));
+            } else if (response.status === 400) {
+                console.log('errors!');
+                console.log(response);
+            } else {
+                console.log('Oops... it broke');
+                console.log(response);
+            }
+        })
+    }
 
     const changeIngredientName = (event, id) =>  {
         let tempIngredients=[];
@@ -65,18 +99,6 @@ export default function PostRecipe() {
         tempIngredients[id-1].quantity = event.target.value;
 
         setIngredients(tempIngredients);
-    }
-
-    
-    const changeDirection = (event, id) => {
-        let tempDirections=[];
-        for (let i=0; i < directions.length; i++) {
-            tempDirections.push(directions[i]);
-        };
-        tempDirections[id-1].direction = event.target.value;
-
-        setIngredients(tempDirections);
-        console.log(directions)
     }
 
     const handleAddIngredient = () => {
@@ -115,6 +137,17 @@ export default function PostRecipe() {
         console.log(ingredients)
     }
 
+    const changeDirection = (event, id) => {
+        let tempDirections=[];
+        for (let i=0; i < directions.length; i++) {
+            tempDirections.push(directions[i]);
+        };
+        tempDirections[id-1].direction = event.target.value;
+
+        setDirections(tempDirections);
+        console.log(directions)
+    }
+
     const handleAddDirection = () => {
         let tempDirections=[];
         for (let i=0; i < directions.length; i++) {
@@ -122,9 +155,7 @@ export default function PostRecipe() {
         };
         
         tempDirections.push({
-            name:'',
-            quantity:'',
-            measurementType:'',
+            direction:'',
             id:0,
         })
 
@@ -150,22 +181,32 @@ export default function PostRecipe() {
         console.log(tempDirections)
     }
 
-    // const toggleCategory = (category) => {
-    //     let tempCategories = [];
-    //     let checked = false; 
-    //     for (let i=0; i < selectedCategories.length; i++) {
-    //         if (selectedCategories[i].name != category.name) {
-    //             tempCategories.push(selectedCategories[i])
-    //         } else {
-    //             checked = true;
-    //         }
-    //     };
-    //     if (checked === false) {
-    //         tempCategories.push(category)
-    //     }
-    //     setSelectedCategories(tempCategories)
-    //     console.log(selectedCategories);
-    // }
+    function useForceUpdate(){
+        const [value, setValue] = useState(0);
+        return () => setValue(value => ++value); 
+    }
+
+    const toggleCategory = (category) => {
+        let tempCategories = [];
+        let checked = true; 
+        if(selectedCategories){
+            for (let i=0; i < selectedCategories.length; i++) {
+                if (selectedCategories[i].name !== category.name) {
+                    tempCategories.push(selectedCategories[i])
+                } else {
+                    checked = false;
+                }
+            }
+        };
+        if (checked === true) {
+            tempCategories.push(category)
+        }
+        setSelectedCategories(tempCategories);
+        console.log(selectedCategories);
+    }
+
+
+    
 
     return (
         <div className="container full-body mt-5 text-center">
@@ -193,6 +234,10 @@ export default function PostRecipe() {
                     <label for="calories">Calories:</label>
                     <input value={calories} onChange={event => setCalories(event.target.value)} id="calories" type="number" placeholder="Calories here..."></input>
                 </div>
+                <div className="ml-3 mr-3 mt-2">
+                    <label for="image">Image Link:</label>
+                    <input value={image} onChange={event => setImage(event.target.value)} id="image" type="text" placeholder="Image link here..."></input>
+                </div>
             </div>
 
             <div>
@@ -201,7 +246,7 @@ export default function PostRecipe() {
                     {
                         categories.map(category => (
                             <div className="ml-3 mr-3">
-                                <input className="mr-2" type="checkbox" id={category.recipeTagId} value={category.name} />
+                                <input onChange={() => toggleCategory(category)} className="mr-2" type="checkbox" id={category.recipeTagId} value={category.name} />
                                 <label for={category.recipeTagId}>{category.name}</label>
                             </div>
                         ))
@@ -284,7 +329,7 @@ export default function PostRecipe() {
                 </table>
                 <button onClick={() => handleAddDirection()} className="btn btn-secondary mb-1">Add Another Direction</button>
             </div>
-            <button className="btn btn-secondary btn-lg mt-3 mb-5">Submit Recipe</button>
+            <button onClick={(event) => SubmitButton(event)} className="btn btn-secondary btn-lg mt-3 mb-5">Submit Recipe</button>
 
         </div>
     );
