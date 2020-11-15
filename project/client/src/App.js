@@ -1,6 +1,7 @@
 import Home from './pages/Home';
 import Categories from './pages/Categories';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import Header from './page-elements/Header';
 import Footer from './page-elements/Footer';
 import Recipe from './pages/Recipe';
@@ -65,6 +66,7 @@ export default function App() {
             <Route path="/" exact component={Home}/>
             <Route path="/categories" exact component={Categories}/>
             <Route path="/login" component={Login}/>
+            <Route path="/signup" component={SignUp}/>
             <Route path="/recipe" component={Recipe}/>
             <Route path="/results" component={Results}/>
             <Route path="/user" component={UserProfile}/>

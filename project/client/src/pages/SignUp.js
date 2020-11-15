@@ -1,5 +1,5 @@
 import React from 'react';
-import Errors from 'Errors';
+import Errors from './Errors';
 
 class SignUp extends React.Component {
   constructor() {
@@ -11,6 +11,12 @@ class SignUp extends React.Component {
       passwordHash: "",
       firstName: "",
       lastName: "",
+      role: {
+        userRoleId: 1,
+        name: "USER",
+      },
+      userRoleId: 1,
+      active: true,
     };
   }
 
@@ -22,7 +28,10 @@ class SignUp extends React.Component {
       email,
       passwordHash,
       firstName,
-      lastName
+      lastName,
+      role,
+      userRoleId,
+      active
     } = this.state;
 
     fetch('http://localhost:8080/api/user', {
@@ -35,7 +44,10 @@ class SignUp extends React.Component {
         email,
         passwordHash,
         firstName,
-        lastName
+        lastName,
+        role,
+        userRoleId,
+        active,
       })
     })
     .then((response) => {
@@ -93,7 +105,7 @@ class SignUp extends React.Component {
 
     return (
       <>
-      <Errors errors={errors}/>
+       {/* <Errors errors={errors} />--> */}
 
       <form onSubmit={this.handleSubmit}>
         <label>First Name</label>

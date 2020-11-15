@@ -68,9 +68,11 @@ function Login() {
                                     <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Login</button>
                                 </div>
 
+                                <Link to='/signup'>
                                 <div>
                                     <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
                                 </div>
+                                </Link>
                             </div>
 
                         </div>
