@@ -390,10 +390,10 @@ values
 insert into measurement_unit
 	(measurement_unit_id, measurement_unit_name)
 values
-	(1, 'CUP'),
-    (2, 'POUND'),
-    (3, 'OUNCE'),
-    (5, '');
+	(1, 'cup'),
+    (2, 'pound'),
+    (3, 'ounce'),
+    (5, '-- --');
     
 insert into ingredient
 	(ingredient_id, ingredient_name)

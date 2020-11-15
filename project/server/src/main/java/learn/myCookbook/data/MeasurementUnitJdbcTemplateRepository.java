@@ -22,7 +22,7 @@ public class MeasurementUnitJdbcTemplateRepository implements MeasurementUnitRep
     @Override
     public List<MeasurementUnit> findAll() {
         final String sql = "select measurement_unit_id, measurement_unit_name " +
-                "from measurement_unit limit 1000;";
+                "from measurement_unit order by measurement_unit_name asc;";
 
         return jdbcTemplate.query(sql, new MeasurementUnitMapper());
     }
