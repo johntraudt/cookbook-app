@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import SquareCard from '../page-elements/SquareCard';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 export default function Results() {
     const [recipes, setRecipes] = useState([]);
@@ -8,6 +8,8 @@ export default function Results() {
     const history = useHistory(); 
 
     const searchTerm = history.location.pathname.replace('/results/','');
+
+
 
     const featuredRecipes = () => {
         fetch(`http://localhost:8080/api/recipe/search/${searchTerm}`) 
@@ -20,6 +22,22 @@ export default function Results() {
     useEffect(() => {
         featuredRecipes();
     }, []);
+
+    if (!searchTerm) {
+        return (
+            <div>
+
+            </div>
+        )
+    }
+
+    if (recipes.length === 0) {
+        return (
+            <div className="container full-body">
+                <h1>No results were found for: {searchTerm}</h1>
+            </div>
+        )
+    }
 
     return (
         <div className="container full-body">
