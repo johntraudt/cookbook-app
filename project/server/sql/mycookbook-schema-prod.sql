@@ -392,7 +392,8 @@ insert into measurement_unit
 values
 	(1, 'CUP'),
     (2, 'POUND'),
-    (3, 'OUNCE');
+    (3, 'OUNCE'),
+    (5, '');
     
 insert into ingredient
 	(ingredient_id, ingredient_name)

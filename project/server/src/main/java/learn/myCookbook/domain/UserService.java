@@ -103,7 +103,6 @@ public class UserService {
             for (ConstraintViolation<User> violation : violations) {
                 result.addMessage(violation.getMessage(), ResultType.INVALID);
             }
-            return result;
         }
 
        return result;

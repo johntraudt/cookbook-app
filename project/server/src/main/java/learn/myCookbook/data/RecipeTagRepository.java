@@ -15,5 +15,9 @@ public interface RecipeTagRepository {
 
     boolean update(RecipeTag recipeTag);
 
+    boolean tagRecipe(int recipeId, int recipeTagId);
+
+    boolean recipeAlreadyTagged(int recipeId, int recipeTagId);
+
     boolean deleteById(int recipeTagId);
 }
