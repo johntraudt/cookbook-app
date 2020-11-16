@@ -19,9 +19,13 @@ import java.util.List;
 public class CookbookJdbcTemplateRepository implements CookbookRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
+    private final RecipeRepository recipeRepository;
 
-    public CookbookJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public CookbookJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserRepository userRepository, RecipeRepository recipeRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userRepository = userRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     @Override
@@ -40,10 +44,15 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
                 "join user u on c.user_id = u.user_id " +
                 "where cookbook_id = ?;";
 
-        return jdbcTemplate.query(sql, new CookbookMapper(), cookbookId)
+        Cookbook cookbook = jdbcTemplate.query(sql, new CookbookMapper(), cookbookId)
                 .stream()
                 .findFirst()
                 .orElse(null);
+
+        cookbook.setUser(userRepository.findById(cookbook.getUserId()));
+        cookbook.setRecipes(recipeRepository.findByCookbookId(cookbookId));
+
+        return cookbook;
     }
 
     @Override
