@@ -2,7 +2,12 @@ package learn.myCookbook.domain;
 
 import learn.myCookbook.data.UserRepository;
 import learn.myCookbook.models.User;
-import learn.myCookbook.models.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -12,12 +17,14 @@ import javax.validation.ValidatorFactory;
 import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
+    private final PasswordEncoder encoder;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     public List<User> findAll() {
@@ -26,6 +33,23 @@ public class UserService {
 
     public User findById(int userId) {
         return repository.findById(userId);
+    }
+
+    public User findByUsername(String username) {
+        return repository.findByUserName(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       User user = repository.findByUserName(username);
+
+       if (user == null || !user.isActive()) {
+           throw new UsernameNotFoundException(username + "not found.");
+       }
+
+       List<GrantedAuthority> authorities = user.getRole();
+
+        return new User(user.getUserName(), user.getPasswordHash(), authorities);
     }
 
     public boolean correctUserNamePassword(String userName, String passwordHash) {

@@ -114,6 +114,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
         }
         user.setUserId(keyHolder.getKey().intValue());
         addLogin(user);
+        //updateRoles(user);
 
         return user;
     }
