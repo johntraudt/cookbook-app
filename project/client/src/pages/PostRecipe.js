@@ -295,6 +295,14 @@ export default function PostRecipe() {
                                                     <option>lbs</option>
                                                 </select>
                                             </td>
+                                            <DropdownButton alignRight title={"⭐".repeat(review.rating) + "☆".repeat(5-review.rating)} id="dropdown-menu-align-right" onSelect={setRating}>
+                                                <Dropdown.Item eventKey={1}>⭐☆☆☆☆</Dropdown.Item>
+                                                <Dropdown.Item eventKey={2}>⭐⭐☆☆☆</Dropdown.Item>
+                                                <Dropdown.Item eventKey={3}>⭐⭐⭐☆☆</Dropdown.Item>
+                                                <Dropdown.Item eventKey={4}>⭐⭐⭐⭐☆</Dropdown.Item>
+                                                <Dropdown.Item eventKey={5}>⭐⭐⭐⭐⭐</Dropdown.Item>
+                                            </DropdownButton>
+
                                             <td><button onClick={() => handleDeleteIngredient(ingredient.ingredientListIndex)} className="btn btn-danger pt-1 pb-1">X</button></td>
                                         </tr>
                                     ))

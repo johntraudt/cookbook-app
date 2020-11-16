@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Rating from '../page-elements/Rating'
 import { useLocation } from 'react-router-dom'
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default function Recipe() {
 
@@ -24,7 +26,6 @@ export default function Recipe() {
             passwordHash: null,
             firstName: "",
             lastName: "",
-            passwordHash: null,
             role: {
                 userRoleId: 0,
                 name: ""
@@ -42,10 +43,15 @@ export default function Recipe() {
         reviewId: 0,
         recipeId: 0,
         userId: 0,
+        userName: "",
         comment: "",
         rating: 5,
         date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
     }) 
+
+    // const [rating, setRating] = useState (
+    //     4,
+    // )
     
     const location = useLocation();
 
@@ -59,8 +65,12 @@ export default function Recipe() {
                     console.log(data);
                 });
         }
-        getRecipe()
+        getRecipe();
     }, [location.pathname]);
+
+    useEffect(() => {
+        let tempReview = review;
+    });
 
     if(!recipe) {
         return null;
@@ -71,8 +81,34 @@ export default function Recipe() {
     };
 
     const setComment = (text) => {
-        const tempReview = review;
-        setReview(tempReview.comment = text);
+        const tempReview = {
+            reviewId: review.reviewId,
+            recipeId: review.recipeId,
+            userId: review.userId,
+            userName: review.userName,
+            comment: text,
+            rating: review.rating,
+            date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+        }
+        setReview(tempReview);
+        console.log(review.rating);
+        console.log(review.comment);
+    }
+
+    const setRating = (score) => {
+        console.log(score);
+        const tempReview = {
+            reviewId: review.reviewId,
+            recipeId: review.recipeId,
+            userId: review.userId,
+            userName: review.userName,
+            comment: review.comment,
+            rating: score,
+            date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+        }
+        setReview(tempReview);
+        console.log("LOOK HERE DUMMY");
+        console.log(review.rating);
         console.log(review.comment);
     }
 
@@ -82,8 +118,8 @@ export default function Recipe() {
                 <h2 className="display-3">{recipe.name}</h2>
                 <Rating detailed={true} reviews={recipe.reviews}/>
                 <div className="row">
-                    <div className="col-2"></div>
-                    <div className="col-8">
+                    <div className="col-lg-2 col-sm-0"></div>
+                    <div className="col-lg-8 col-sm-12">
                         <div className="row justify-content-md-center">
                             <div className="mr-2 ml-2">User: {`${recipe.user.firstName} ${recipe.user.lastName}`}</div>
                             <div className="mr-2 ml-2">{recipe.wasUpdated ? 'Posted': 'Edited'}: {recipe.date}</div>
@@ -141,27 +177,54 @@ export default function Recipe() {
                         <div>
                             <table className="table text-left mt-4">
                                 <tr className="text-center">
-                                    <th>Comments</th>
+                                    <th colspan="2">Comments</th>
                                 </tr>
-                                <tr><td>
-                                    <form className="text-center" onSubmit={(event) => addReview(event)}>
-                                        <textarea className="expand" onChange={(event) => setComment(event.target.value)} value={review.comment}>
-                                            Hello
-                                        </textarea>
-                                        <button className="btn" type="submit">Write a Review</button>
-                                    </form>
-                                </td></tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <form className="text-center" onSubmit={(event) => addReview(event)}>
+                                            <textarea className="form-control" onChange={(event) => setComment(event.target.value)} value={review.comment}></textarea>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr className="text-center mr-3">
+                                    {/* <select value={rating} onSelect={(event) => setRating(event.target.value)}>
+                                        <option value={1}>⭐☆☆☆☆</option>
+                                        <option value={2}>⭐⭐☆☆☆</option>
+                                        <option value={3}>⭐⭐⭐☆☆</option>
+                                        <option value={4}>⭐⭐⭐⭐☆</option>
+                                        <option value={5}>⭐⭐⭐⭐⭐</option>
+                                    </select> */}
+                                    <td className="ml-auto">
+                                        <DropdownButton alignRight title={"⭐".repeat(review.rating) + "☆".repeat(5-review.rating)} id="dropdown-menu-align-right" onSelect={setRating}>
+                                            <Dropdown.Item eventKey={1}>⭐☆☆☆☆</Dropdown.Item>
+                                            <Dropdown.Item eventKey={2}>⭐⭐☆☆☆</Dropdown.Item>
+                                            <Dropdown.Item eventKey={3}>⭐⭐⭐☆☆</Dropdown.Item>
+                                            <Dropdown.Item eventKey={4}>⭐⭐⭐⭐☆</Dropdown.Item>
+                                            <Dropdown.Item eventKey={5}>⭐⭐⭐⭐⭐</Dropdown.Item>
+                                        </DropdownButton>
+                                    </td>
+                                    <td className="mr-auto">
+                                        <button className="btn btn-outline-secondary ml-3" type="submit">Post a Review</button>
+                                    </td>
+                                </tr>
                                 <table className="table">
                                     {recipe.reviews.map((review) => {
-                                        return <div><th> {} usename === null ? '' : usesanem </th>
-                                            <tr><div className="pl-5 pb-3">{review.comment}</div></tr></div>
+                                        return <div>
+                                            <th>{review.comment === null ? "" : review.user.firstName + review.user.lastName}</th>
+                                            <tr>
+                                                <div className="pl-5">{review.comment === null ? "" : review.comment}</div>
+                                            </tr>
+                                            <tr>
+                                                <div className="pl-5 pb-3"> {review.comment === null ? "" : <Rating detailed={false} reviews={[review]}/>}</div>
+                                            </tr>
+                                        </div>
                                     })}
                                 </table>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div className="col-2"></div>
+                <div className="col-lg-2 col-sm-0"></div>
             </div>
         </div>
     )

@@ -15,7 +15,7 @@ function SquareCard({recipe}) {
                     <p className="card-title text-dark">{recipe.name}</p>
                     <p className="card-text text-dark">Posted By: {recipe.user.userName}</p>
                     <div>
-                        <Rating reviews={recipe.reviews}/>
+                        <Rating detailed={true} reviews={recipe.reviews}/>
                     </div>
                 </div>
             </div>
