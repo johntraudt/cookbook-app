@@ -57,7 +57,7 @@ function Header() {
             <div className="subtitle shadow">
                 <div className="container">
                     <div className="d-flex justify-content-around">
-                        <Link className="dark mr-auto ml-auto" to='/notfound'>
+                        <Link className="dark mr-auto ml-auto" to='/cookbook'>
                             <div className='ml-5 mr-5'>MyCookbooks</div>
                         </Link>
                         {/* <Link className="dark" to='/notfound'>

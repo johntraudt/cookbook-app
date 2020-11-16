@@ -35,6 +35,17 @@ export default function Recipe() {
         userId: 0,
         wasUpdated: false
     });
+
+    const today = new Date();
+
+    const [review, setReview] = useState({
+        reviewId: 0,
+        recipeId: 0,
+        userId: 0,
+        comment: "",
+        rating: 5,
+        date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+    }) 
     
     const location = useLocation();
 
@@ -53,6 +64,16 @@ export default function Recipe() {
 
     if(!recipe) {
         return null;
+    }
+
+    const addReview = (event) => {
+        event.preventDefault();
+    };
+
+    const setComment = (text) => {
+        const tempReview = review;
+        setReview(tempReview.comment = text);
+        console.log(review.comment);
     }
 
     return (
@@ -116,6 +137,27 @@ export default function Recipe() {
                                     </ol>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <table className="table text-left mt-4">
+                                <tr className="text-center">
+                                    <th>Comments</th>
+                                </tr>
+                                <tr><td>
+                                    <form className="text-center" onSubmit={(event) => addReview(event)}>
+                                        <textarea className="expand" onChange={(event) => setComment(event.target.value)} value={review.comment}>
+                                            Hello
+                                        </textarea>
+                                        <button className="btn" type="submit">Write a Review</button>
+                                    </form>
+                                </td></tr>
+                                <table className="table">
+                                    {recipe.reviews.map((review) => {
+                                        return <div><th> {} usename === null ? '' : usesanem </th>
+                                            <tr><div className="pl-5 pb-3">{review.comment}</div></tr></div>
+                                    })}
+                                </table>
+                            </table>
                         </div>
                     </div>
                 </div>

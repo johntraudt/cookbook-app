@@ -12,6 +12,7 @@ import AboutUs from './pages/AboutUs';
 import ScrollToTop from './ScrollToTop';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
+import Cookbook from './pages/Cookbook';
 
 import AuthContext from './page-elements/AuthContext';
 
@@ -74,6 +75,7 @@ export default function App() {
             <Route path="/about" component={AboutUs}/>
             <Route path="/privacy" component={Privacy}/>
             <Route path="/post" component={PostRecipe}/>
+            <Route path="/cookbook" component={Cookbook}/>
           </Switch>
           <Footer />
         </div>
