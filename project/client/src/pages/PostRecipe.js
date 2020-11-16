@@ -9,13 +9,13 @@ export default function PostRecipe() {
         ingredient:{
             name:'',
         },
+        ingredientListIndex:1,
         quantity:'',
         measurementUnitId:5,
-        ingredientListIndex:1,
     }]);
     const [directions, setDirections] = useState([{
-        text:'',
         directionNumber:1,
+        text:'',
     }]);
     const [title, setTitle] =useState('');
     const [prepTime, setPrepTime] = useState(0);
@@ -52,21 +52,18 @@ export default function PostRecipe() {
 
     useEffect(() =>{
         let garbage = categories;
-        console.log(garbage)
         garbage = measurementUnits;
-        console.log(garbage)
         garbage = selectedCategories;
-        console.log(garbage)
         garbage = ingredients;
-        console.log('here')
-        console.log(garbage)
     })
 
     const today = new Date();
 
     const SubmitButton = (event) => {
         event.preventDefault();
+        console.log('look here')
         console.log(ingredients)
+        console.log('up above')
         console.log(directions)
         console.log(selectedCategories);
 
