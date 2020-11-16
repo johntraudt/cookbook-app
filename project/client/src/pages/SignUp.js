@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
+import Loading from '../resources/loading-2.gif'
 
 class SignUp extends React.Component {
   constructor() {
@@ -21,10 +22,7 @@ class SignUp extends React.Component {
       active: true,
       isSuccess: false,
     };
-
   }
-
-  
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -60,9 +58,14 @@ class SignUp extends React.Component {
         response.json().then(data => console.log(data));
         this.setState({
           errors:[],
+          userName: "",
+          email: "",
+          passwordHash: "",
+          firstName: "",
+          lastName: "",
           isSuccess: true,
         })
-        setTimeout(()=>{window.location.href = '/'} ,4000);
+        setTimeout(()=>{window.location.href = '/'}, 2500);
       } else if (response.status === 400) {
         response.json().then(data => {
           console.log(data);
@@ -119,11 +122,12 @@ class SignUp extends React.Component {
           <div className="mr-3">
             <Errors errors={errors} />
           </div>
-
+        
         <div className="flex">
           <div className="align-self-center">
             <h3>Create Account</h3>
           </div>
+          { !isSuccess && (
           <Form  onSubmit={this.handleSubmit} >
             <Form.Row>
               <Form.Group className="mr-2" controlId="validationCustom02">
@@ -153,13 +157,17 @@ class SignUp extends React.Component {
               </Form.Group>
             </Form.Row>
 
-
             <button type="submit" className="float-right btn btn-primary btn-create">Create</button>
           </Form>
 
-          {isSuccess && 
-            <h3>Success! Redirecting...</h3>
-          }
+          )}
+
+          {isSuccess && (
+            <div className="text-center">
+              <h3>Success! Redirecting...</h3>
+              <img src={Loading}></img>
+            </div>
+          )}
         </div>
 
       </div>

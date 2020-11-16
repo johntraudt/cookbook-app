@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import dino from '../resources/dino.jpg';
+import AuthContext from './AuthContext';
 
 function Header() {
     const location = useLocation();
 
     const history = useHistory();
+    const auth = useContext(AuthContext);
 
     let randomInt = 0;
 
@@ -48,7 +50,7 @@ function Header() {
                         
                         <div className="p-2">
                             <Link to='/login'>
-                                <div className="right btn btn-outline-secondary p-2 pr-4 pl-4">LOG IN</div>
+                                <div className="right btn btn-outline-secondary p-2 pr-4 pl-4">{auth.user ? 'SIGN OUT' : 'LOG IN'}</div>
                             </Link>
                         </div>
                     </div>
@@ -57,12 +59,16 @@ function Header() {
             <div className="subtitle shadow">
                 <div className="container">
                     <div className="d-flex justify-content-around">
-                        <Link className="dark mr-auto ml-auto" to='/cookbook'>
-                            <div className='ml-5 mr-5'>MyCookbooks</div>
-                        </Link>
-                        {/* <Link className="dark" to='/notfound'>
-                            <div>Recipe Of The Day</div>
-                        </Link> */}
+                        {auth.user && (
+                            <>
+                                <Link className="dark mr-auto ml-auto" to='/user'>
+                                    <div className='ml-5 mr-5'>My Profile</div>
+                                </Link>
+                                <Link className="dark mr-auto ml-auto" to='/cookbook'>
+                                    <div className='ml-5 mr-5'>MyCookbooks</div>
+                                </Link>
+                            </>
+                        )}
                         <div className="hand mr-auto ml-auto ml-5 mr-5" onClick={() => getRandomId()}>
                             Show Me The Money
                         </div>
