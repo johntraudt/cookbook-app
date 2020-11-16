@@ -1,4 +1,3 @@
-
 package learn.myCookbook.security;
 
 import org.springframework.security.authentication.AuthenticationManager;
