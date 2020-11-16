@@ -80,7 +80,7 @@ export default function App() {
             <Route path="/notfound" component={NotFound}/>
             <Route path="/about" component={AboutUs}/>
             <Route path="/privacy" component={Privacy}/>
-            <Route path="/post" component={user ? PostRecipe : Login}/>
+            <Route path="/post" component={user ? Login : PostRecipe}/>
             <Route path="/cookbook" component={Cookbook}/>
             <Route path="/recipe-tag" component={Tag}/>
           </Switch>
