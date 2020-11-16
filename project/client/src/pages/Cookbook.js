@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import banner from '../resources/home-banner.jpg';
 import SearchBar from '../page-elements/SearchBar';
 import SquareCard from '../page-elements/SquareCard';
@@ -14,9 +14,13 @@ export default function Cookbook() {
 
     const featuredRecipes = () => {
         fetch(`http://localhost:8080/api/cookbook/${cookbookId}`) 
-            .then(response => response.json())
-            .then((data) => {
-                setCookbook(data);
+            .then( (response) => {
+                if (response.status >= 400) {
+                    history.push("/notfound")
+                } else {
+                    response.json()
+                        .then((data) => setCookbook(data))
+                }
             });
     }
     
@@ -25,13 +29,19 @@ export default function Cookbook() {
     }, []);
 
     if(!cookbook) {
-        return (<h1 className="container text-center">Data Not Found</h1>);
+        return (<h1 className="container text-center">Cookbook Not Found</h1>);
     }
+
+    if(!cookbook.recipes) {
+        return (<h1 className="container text-center">Recipes Not Found</h1>);
+    }
+
+
 
     return (
         <div className="container full-body">
             <div className="mt-4">
-                <div className="banner">
+                {/* <div className="banner">
                     <div className="text-center">
                         <div className="center-overlay">
                             <div className="d-flex flex-wrap justify-content-center">
@@ -46,10 +56,10 @@ export default function Cookbook() {
                         </div>
                     </div>
                     <img className="img-fluid" src={banner} alt="Homepage banner with various fresh ingredients"/>
-                </div>
+                </div> */}
 
                 <div className="subtitle text-center">
-                    This Week's Featured Recipes:
+                    {cookbook.title}
                 </div>
                 
                 <div className="d-flex flex-wrap justify-content-center">

@@ -7,7 +7,7 @@ export default function Results() {
 
     const history = useHistory(); 
 
-    useEffect(() => {const garbage = recipes})
+    // useEffect(() => {const garbage = recipes})
 
     const searchTerm = history.location.pathname.replace('/results/','');
 
@@ -24,6 +24,9 @@ export default function Results() {
     useEffect(() => {
         recipeResults();
     }, []);
+
+    console.log(recipes)
+    console.log(searchTerm)
 
     if (!searchTerm) {
         return (

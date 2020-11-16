@@ -8,7 +8,7 @@ GET {{url}}/4 HTTP/1.1
 
 ###
 
-GET {{url}}/search/garden HTTP/1.1
+GET {{url}}/search/mash HTTP/1.1
 
 ###
 

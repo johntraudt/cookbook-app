@@ -6,9 +6,11 @@ function SquareCard({recipe}) {
     // console.log('here')
     // console.log(recipe)
     // console.log('above')
-    if(!recipe.user) {
-        return null;
-    }
+    // if(!recipe.user) {
+    //     return null;
+    // }
+
+    console.log(recipe);
 
     return (
         <Link to={`/recipe/${recipe.recipeId}`}>
@@ -18,9 +20,9 @@ function SquareCard({recipe}) {
                 </div>
                 <div className="card-body">
                     <p className="card-title text-dark">{recipe.name}</p>
-                    <p className="card-text text-dark">Posted By: {recipe.user.userName}</p>
+                    <p className="card-text text-dark">Posted By: {recipe.user ? recipe.user.userName : ""}</p>
                     <div>
-                        <Rating reviews={recipe.reviews}/>
+                        <Rating detailed={true} reviews={recipe.reviews}/>
                     </div>
                 </div>
             </div>
