@@ -5,7 +5,6 @@ export default function Errors({ errors }) {
     <>
       {errors.length > 0 && (
         <div className="alert alert-danger" role="alert">
-          <p>The following errors occurred:</p>
           {errors.map((error) => (
             <p key={error}>{error}</p>
           ))}

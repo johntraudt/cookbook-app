@@ -19,13 +19,15 @@ class SignUp extends React.Component {
       },
       userRoleId: 1,
       active: true,
+      isSuccess: false,
     };
 
   }
 
+  
+
   handleSubmit = (event) => {
     event.preventDefault();
-
     const {
       userName,
       email,
@@ -56,7 +58,11 @@ class SignUp extends React.Component {
     .then((response) => {
       if (response.status === 201) {
         response.json().then(data => console.log(data));
-        window.location.href = 'http://localhost:3000/';
+        this.setState({
+          errors:[],
+          isSuccess: true,
+        })
+        setTimeout(()=>{window.location.href = 'http://localhost:3000/'} ,5000);
       } else if (response.status === 400) {
         response.json().then(data => {
           console.log(data);
@@ -104,49 +110,58 @@ class SignUp extends React.Component {
 
   render() {
     const {
-      errors
+      errors,
+      isSuccess
     } = this.state;
 
     return (
-      <div  className="container full-body mt-4">
-        <Errors errors={errors} />
+      <div className="container full-body mt-4 d-flex flex-wrap justify-content-center">
+          <div className="mr-3">
+            <Errors errors={errors} />
+          </div>
 
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Row>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Control value={this.state.firstName} onChange={this.handleFirstName} type="text" placeholder="First name" />
-            </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Control value={this.state.lastName} onChange={this.handleLastName} type="text" placeholder="Last name" />
-            </Form.Group>
-          </Form.Row>
+        <div className="flex">
+          <div className="align-self-center">
+            <h3>Create Account</h3>
+          </div>
+          <Form  onSubmit={this.handleSubmit} >
+            <Form.Row>
+              <Form.Group className="mr-2" controlId="validationCustom02">
+                <Form.Control value={this.state.firstName} onChange={this.handleFirstName} type="text" placeholder="First name" />
+              </Form.Group>
+              <Form.Group controlId="">
+                <Form.Control value={this.state.lastName} onChange={this.handleLastName} type="text" placeholder="Last name" />
+                <p></p>
+              </Form.Group>
+            </Form.Row>
 
-          <Form.Row>
-            <Form.Group controlId="formHoriztonalEmail">
-              <Form.Control value={this.state.email} onChange={this.handleEmail} type="email" placeholder="Email" />
-            </Form.Group>
-          </Form.Row>
+            <Form.Row>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Control value={this.state.email} onChange={this.handleEmail} type="email" placeholder="Email" />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else. Promise.
+                </Form.Text>
+              </Form.Group>
+            </Form.Row>
 
-          <Form.Row>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Control value={this.state.userName} onChange={this.handleUsername} type="text" placeholder="Username" />
-            </Form.Group>
-            <Form.Group controlId="formGridPassword">
-              <Form.Control value={this.state.passwordHash} onChange={this.handlePassword} type="password" placeholder="Password" />
-            </Form.Group>
-          </Form.Row>
+            <Form.Row>
+              <Form.Group className="mr-2" controlId="">
+                <Form.Control value={this.state.userName} onChange={this.handleUsername} type="text" placeholder="Username" />
+              </Form.Group>
+              <Form.Group controlId="formGridPassword">
+                <Form.Control value={this.state.passwordHash} onChange={this.handlePassword} type="password" placeholder="Password" />
+              </Form.Group>
+            </Form.Row>
 
-          {/* <label>Email</label>
-          <input value={this.state.email} type="text" placeholder="Email" onChange={this.handleEmail}/>
 
-          <label>Username</label>
-          <input value={this.state.userName} type="text" placeholder="Username" onChange={this.handleUsername}/>
+            <button type="submit" className="float-right btn btn-primary btn-create">Create</button>
+          </Form>
 
-          <label>Password</label>
-          <input value={this.state.passwordHash} type="password" placeholder="Password" onChange={this.handlePassword}/> */}
+          {isSuccess && 
+            <h3>Success! Redirecting...</h3>
+          }
+        </div>
 
-          <button type="submit" className="btn btn-primary">Create</button>
-        </Form>
       </div>
     );
   }
