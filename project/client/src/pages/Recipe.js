@@ -161,7 +161,7 @@ export default function Recipe() {
                                     <ul>
                                         {
                                             recipe.ingredients.map((ingredient) => {
-                                                return <li>{ingredient.quantity} {ingredient.measurementUnit.name!==null ? `${ingredient.measurementUnit.name}`.toLowerCase() : ''} {ingredient.ingredient.name}</li>
+                                                return <li>{ingredient.quantity ? ingredient.quantity : ''} {ingredient.measurementUnit.measurementUnitId !== 0 && ingredient.measurementUnit.measurementUnitId !== 5 ? ingredient.measurementUnit.name : ''} {ingredient.ingredient.name}</li>
                                             })
                                         }
                                     </ul>
