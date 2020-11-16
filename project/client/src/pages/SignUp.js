@@ -62,7 +62,7 @@ class SignUp extends React.Component {
           errors:[],
           isSuccess: true,
         })
-        setTimeout(()=>{window.location.href = 'http://localhost:3000/'} ,5000);
+        setTimeout(()=>{window.location.href = '/'} ,4000);
       } else if (response.status === 400) {
         response.json().then(data => {
           console.log(data);
