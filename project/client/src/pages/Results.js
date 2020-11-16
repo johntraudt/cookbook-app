@@ -3,15 +3,11 @@ import SquareCard from '../page-elements/SquareCard';
 import { useHistory, Redirect } from 'react-router-dom';
 
 export default function Results() {
-    const [recipes, setRecipes] = useState([{}]);
+    const [recipes, setRecipes] = useState([]);
 
     const history = useHistory(); 
 
-    // useEffect(() => {const garbage = recipes})
-
     const searchTerm = history.location.pathname.replace('/results/','');
-
-
 
     const recipeResults = () => {
         fetch(`http://localhost:8080/api/recipe/search/${searchTerm}`) 

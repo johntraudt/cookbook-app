@@ -3,12 +3,6 @@ import Rating from './Rating'
 import { Link } from 'react-router-dom';
 
 function SquareCard({recipe}) {
-    // console.log('here')
-    // console.log(recipe)
-    // console.log('above')
-    // if(!recipe.user) {
-    //     return null;
-    // }
 
     console.log(recipe);
 

@@ -41,25 +41,9 @@ export default function Cookbook() {
     return (
         <div className="container full-body">
             <div className="mt-4">
-                {/* <div className="banner">
-                    <div className="text-center">
-                        <div className="center-overlay">
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <div className="col-lg-6 col-md-6 col-sm-10">
-                                    
-                                    <SearchBar className="home-search"/>
-                                    <Link to='/categories'>
-                                        <button className="btn btn-light btn-lg mt-1">Categories</button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <img className="img-fluid" src={banner} alt="Homepage banner with various fresh ingredients"/>
-                </div> */}
 
                 <div className="subtitle text-center">
-                    {cookbook.title}
+                    {cookbook.title} by {cookbook.user ? cookbook.user.userName : ''}
                 </div>
                 
                 <div className="d-flex flex-wrap justify-content-center">
