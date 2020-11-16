@@ -20,37 +20,35 @@ function Login() {
         event.preventDefault();
     
         const response = await fetch('http://localhost:8080/api/authenticate', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            username,
-            password
-          })
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
         });
         
         if (response.status === 200) {
-          const { jwt_token } = await response.json();
-        
-          auth.login(jwt_token);
-        
-          history.goBack(); // Not sure if this will work.  If not history.push('/') will redirect to home instead
+            const { jwt_token } = await response.json();
+            
+            auth.login(jwt_token);
         } 
         // else if (response.status === 403) {
-        //   setErrors(['Login failed.']);
+        // setErrors(['Login failed.']);
         // } else {
-        //   setErrors(['Unknown error.']);
+        // setErrors(['Unknown error.']);
         // }
       };
 
     return (
-
+        
         <div className="container full-body">
             <div className="mt-4">
                 <div className="text-center m-5">
                     <h1 className="p-2">Login</h1>
-                    <form onSubmit={() => handleSubmit()}>
+                    <form onSubmit={(event) => handleSubmit(event)}>
                         <div className="center">
                             <div className="p-2">
                                 <div>
@@ -69,9 +67,9 @@ function Login() {
                                 </div>
 
                                 <Link to='/signup'>
-                                <div>
-                                    <button type="submit" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
-                                </div>
+                                    <div>
+                                        <button type="button" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
+                                    </div>
                                 </Link>
                             </div>
 

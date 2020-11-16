@@ -66,15 +66,15 @@ export default function App() {
           <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/categories" exact component={Categories}/>
-            <Route path="/login" component={Login}/>
+            <Route path="/login" component={user ? Home : Login}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/recipe" component={Recipe}/>
             <Route path="/results" component={Results}/>
-            <Route path="/user" component={UserProfile}/>
+            <Route path="/user" component={user ? UserProfile : Login}/>
             <Route path="/notfound" component={NotFound}/>
             <Route path="/about" component={AboutUs}/>
             <Route path="/privacy" component={Privacy}/>
-            <Route path="/post" component={PostRecipe}/>
+            <Route path="/post" component={user ? PostRecipe : Login}/>
             <Route path="/cookbook" component={Cookbook}/>
           </Switch>
           <Footer />

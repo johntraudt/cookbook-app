@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Errors({ errors }) {
   return (
-    <>
+    <div>
       {errors.length > 0 && (
         <div className="alert alert-danger" role="alert">
           {errors.map((error) => (
@@ -10,6 +10,6 @@ export default function Errors({ errors }) {
           ))}
         </div>
       )}
-      </>
+    </div>
   );
 }
