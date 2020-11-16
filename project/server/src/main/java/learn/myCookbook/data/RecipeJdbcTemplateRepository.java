@@ -69,7 +69,13 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
                 "from recipe " +
                 "where recipe_name like ?;";
 
-        return jdbcTemplate.query(sql, new RecipeMapper(),  "%" + recipeName + "%");
+        List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(),  "%" + recipeName + "%");
+        for (Recipe recipe : recipes) {
+            recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+        }
+
+        return recipes;
     }
 
     @Override
