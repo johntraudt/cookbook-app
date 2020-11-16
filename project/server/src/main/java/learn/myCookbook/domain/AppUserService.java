@@ -11,10 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,16 +67,19 @@ public class AppUserService implements UserDetailsService {
 
         if (repository.findByEmail(user.getEmail()) != null) {
             result.addMessage("That email is already taken.", ResultType.INVALID);
+            throw new ValidationException("That email is already taken.");
         }
 
         if (repository.findByUserName(user.getUserName()) != null) {
             result.addMessage("That username is already taken.", ResultType.INVALID);
+            throw new ValidationException("That username is already taken.");
         }
 
         if (!result.isSuccess()) {
             return result;
         }
 
+        user.setPasswordHash(encoder.encode(user.getPasswordHash()));
         user = repository.add(user);
         result.setPayload(user);
         return result;
@@ -161,5 +161,9 @@ public class AppUserService implements UserDetailsService {
         }
 
         return result;
+    }
+
+    private void validatePassword(AppUser user) {
+
     }
 }
