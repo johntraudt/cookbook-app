@@ -17,9 +17,9 @@ import java.util.List;
 public class ReviewJdbcTemplateRepository implements ReviewRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserRepository userRepository;
+    private final AppUserRepository userRepository;
 
-    public ReviewJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserRepository userRepository) {
+    public ReviewJdbcTemplateRepository(JdbcTemplate jdbcTemplate, AppUserRepository userRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRepository = userRepository;
     }

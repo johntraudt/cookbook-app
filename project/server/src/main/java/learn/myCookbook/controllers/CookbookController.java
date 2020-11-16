@@ -4,7 +4,6 @@ import learn.myCookbook.domain.CookbookService;
 import learn.myCookbook.domain.Result;
 import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Recipe;
-import learn.myCookbook.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

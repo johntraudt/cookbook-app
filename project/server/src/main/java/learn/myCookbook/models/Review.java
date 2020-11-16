@@ -7,7 +7,7 @@ public class Review {
     private int recipeId;
     private int userId;
     private Recipe recipe;
-    private User user;
+    private AppUser user;
     private String comment;
     private int rating;
     private LocalDate date;
@@ -44,11 +44,11 @@ public class Review {
         this.recipe = recipe;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 
