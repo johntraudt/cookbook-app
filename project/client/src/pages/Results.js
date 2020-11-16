@@ -3,7 +3,7 @@ import SquareCard from '../page-elements/SquareCard';
 import { useHistory, Redirect } from 'react-router-dom';
 
 export default function Results() {
-    const [recipes, setRecipes] = useState([]);
+    const [recipes, setRecipes] = useState([{}]);
 
     const history = useHistory(); 
 

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default function PostRecipe() {
     const [categories, setCategories] = useState([]);
@@ -22,7 +24,7 @@ export default function PostRecipe() {
     const [calories, setCalories] = useState(0);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [image, setImage] = useState(''); 
-
+    const [measurementUnits, setMeasurementUnits] = useState([])
 
     useEffect(()=>{
         const getCategories = () => {
@@ -31,13 +33,34 @@ export default function PostRecipe() {
                 .then((data) => {
                     setCategories(data);
                     console.log(data)
-                });
+                })
         };
+        const getMeasurementUnits = () => {
+            fetch('http://localhost:8080/api/measurement-unit')
+                .then(response => response.json())
+                .then((data) => {
+                    setMeasurementUnits(data);
+                    console.log(data)
+                })
+        };
+        getMeasurementUnits();
         getCategories();
-        setSelectedCategories();
+        setSelectedCategories();  //this might cause a problem 
         // setDirections();
         // setIngredients();
-    },[console.log(selectedCategories)]);
+    },[]);
+
+    useEffect(() =>{
+        let garbage = categories;
+        console.log(garbage)
+        garbage = measurementUnits;
+        console.log(garbage)
+        garbage = selectedCategories;
+        console.log(garbage)
+        garbage = ingredients;
+        console.log('here')
+        console.log(garbage)
+    })
 
     const today = new Date();
 
@@ -90,6 +113,16 @@ export default function PostRecipe() {
                 console.log(response);
             }
         })
+    }
+
+    const changeMeasurementUnitId = (event, ingredientListIndex) => {
+        let tempIngredients=[];
+        for (let i=0; i < ingredients.length; i++) {
+            tempIngredients.push(ingredients[i]);
+        };
+        tempIngredients[ingredientListIndex-1].measurementUnitId = event.target.value;
+
+        setIngredients(tempIngredients);
     }
 
     const changeIngredientName = (event, ingredientListIndex) =>  {
@@ -285,23 +318,25 @@ export default function PostRecipe() {
                                             <td>{ingredient.ingredientListIndex}</td>
                                             <td><input value={ingredient.ingredient.name} className="expand" onChange={event => changeIngredientName(event, ingredient.ingredientListIndex)} type="text" placeholder={`Ingredient ${ingredient.ingredientListIndex} here...`}></input></td>
                                             <td><input value={ingredient.quantity} onChange={event => changeIngredientQuantity(event, ingredient.ingredientListIndex)} type="text" placeholder="Quantity here..."></input></td>
+                                            
+                                            
                                             <td>
-                                                <select>
-                                                    <option>--  --</option>
-                                                    <option>tsp</option>
-                                                    <option>Cup</option>
-                                                    <option>Tbsp</option>
-                                                    <option>Ounces</option>
-                                                    <option>lbs</option>
+                                                <select onChange={(event) => {changeMeasurementUnitId(event, ingredient.ingredientListIndex)}}>
+                                                {
+                                                    measurementUnits.map((unit) => {
+                                                        return <option value={unit.measurementUnitId}>{unit.name}</option>
+                                                    })
+                                                }
                                                 </select>
                                             </td>
-                                            <DropdownButton alignRight title={"⭐".repeat(review.rating) + "☆".repeat(5-review.rating)} id="dropdown-menu-align-right" onSelect={setRating}>
-                                                <Dropdown.Item eventKey={1}>⭐☆☆☆☆</Dropdown.Item>
-                                                <Dropdown.Item eventKey={2}>⭐⭐☆☆☆</Dropdown.Item>
-                                                <Dropdown.Item eventKey={3}>⭐⭐⭐☆☆</Dropdown.Item>
-                                                <Dropdown.Item eventKey={4}>⭐⭐⭐⭐☆</Dropdown.Item>
-                                                <Dropdown.Item eventKey={5}>⭐⭐⭐⭐⭐</Dropdown.Item>
-                                            </DropdownButton>
+
+
+                                            {/* <DropdownButton  title={'fill me'} onSelect={console.log()}>
+                                                {measurementUnits.map((unit) => {
+                                                    return <Dropdown.Item eventKey={unit.measurementUnitId}>'test'</Dropdown.Item>
+                                                })}
+                                            </DropdownButton> */}
+
 
                                             <td><button onClick={() => handleDeleteIngredient(ingredient.ingredientListIndex)} className="btn btn-danger pt-1 pb-1">X</button></td>
                                         </tr>
