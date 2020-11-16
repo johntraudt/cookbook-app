@@ -1,8 +1,9 @@
 package learn.myCookbook.domain;
 
-import learn.myCookbook.data.UserRepository;
-import learn.myCookbook.models.User;
+import learn.myCookbook.data.AppUserRepository;
+import learn.myCookbook.models.AppUser;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,39 +16,42 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
+public class AppUserService implements UserDetailsService {
 
-    private final UserRepository repository;
+    private final AppUserRepository repository;
     private final PasswordEncoder encoder;
 
-    public UserService(UserRepository repository, PasswordEncoder encoder) {
+    public AppUserService(AppUserRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
         this.encoder = encoder;
     }
 
-    public List<User> findAll() {
+    public List<AppUser> findAll() {
         return repository.findAll();
     }
 
-    public User findById(int userId) {
+    public AppUser findById(int userId) {
         return repository.findById(userId);
     }
 
-    public User findByUsername(String username) {
+    public AppUser findByUsername(String username) {
         return repository.findByUserName(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       User user = repository.findByUserName(username);
+       AppUser user = repository.findByUserName(username);
 
        if (user == null || !user.isActive()) {
            throw new UsernameNotFoundException(username + "not found.");
        }
 
-       List<GrantedAuthority> authorities = user.getRole();
+       List<GrantedAuthority> authorities = user.getRoles().stream()
+               .map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName))
+               .collect(Collectors.toList());
 
         return new User(user.getUserName(), user.getPasswordHash(), authorities);
     }
@@ -56,9 +60,9 @@ public class UserService implements UserDetailsService {
         return repository.correctUserNamePassword(userName, passwordHash);
     }
 
-    public Result<User> add(User user) {
+    public Result<AppUser> add(AppUser user) {
 
-        Result<User> result = validate(user);
+        Result<AppUser> result = validate(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -81,9 +85,9 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
-    public Result<User> update(User user) {
+    public Result<AppUser> update(AppUser user) {
 
-        Result<User> result = validate(user);
+        Result<AppUser> result = validate(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -111,9 +115,9 @@ public class UserService implements UserDetailsService {
 
     //Helper methods
 
-    private Result<User> validate(User user) {
+    private Result<AppUser> validate(AppUser user) {
 
-        Result<User> result = new Result<>();
+        Result<AppUser> result = new Result<>();
         if (user == null) {
             result.addMessage("User cannot be null.", ResultType.INVALID);
             return result;
@@ -121,10 +125,10 @@ public class UserService implements UserDetailsService {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        Set<ConstraintViolation<AppUser>> violations = validator.validate(user);
 
         if (!violations.isEmpty()) {
-            for (ConstraintViolation<User> violation : violations) {
+            for (ConstraintViolation<AppUser> violation : violations) {
                 result.addMessage(violation.getMessage(), ResultType.INVALID);
             }
         }
@@ -132,8 +136,8 @@ public class UserService implements UserDetailsService {
        return result;
     }
 
-    private Result<User> checkDuplicateUserNameEmailOnUpdate(User user) {
-        Result<User> result = new Result<>();
+    private Result<AppUser> checkDuplicateUserNameEmailOnUpdate(AppUser user) {
+        Result<AppUser> result = new Result<>();
 
         String email = repository.findById(user.getUserId()).getEmail();
         String userName = repository.findById(user.getUserId()).getUserName();

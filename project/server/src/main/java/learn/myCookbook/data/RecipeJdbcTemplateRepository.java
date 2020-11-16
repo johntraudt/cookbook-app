@@ -16,10 +16,10 @@ import java.util.List;
 public class RecipeJdbcTemplateRepository implements RecipeRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserJdbcTemplateRepository userRepository;
+    private final AppUserJdbcTemplateRepository userRepository;
     private final ReviewRepository reviewRepository;
 
-    public RecipeJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserJdbcTemplateRepository userRepository, ReviewRepository reviewRepository) {
+    public RecipeJdbcTemplateRepository(JdbcTemplate jdbcTemplate, AppUserJdbcTemplateRepository userRepository, ReviewRepository reviewRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRepository = userRepository;
         this.reviewRepository = reviewRepository;
