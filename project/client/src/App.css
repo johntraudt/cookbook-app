@@ -30,7 +30,7 @@ Header, .btn-secondary {
 .btn-outline-secondary:hover, .btn-outline-secondary:active {
     /*background-color: #8ea74a;*/
     color: rgb(71, 107, 45);
-    background-color: #b4d35e;
+    background-color: #b4d35e67;
 }
 
 footer {
