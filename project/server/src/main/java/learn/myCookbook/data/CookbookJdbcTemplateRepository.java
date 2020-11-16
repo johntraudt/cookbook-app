@@ -49,8 +49,10 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
                 .findFirst()
                 .orElse(null);
 
-        cookbook.setUser(userRepository.findById(cookbook.getUserId()));
-        cookbook.setRecipes(recipeRepository.findByCookbookId(cookbookId));
+        if (cookbook != null) {
+            cookbook.setUser(userRepository.findById(cookbook.getUserId()));
+            cookbook.setRecipes(recipeRepository.findByCookbookId(cookbookId));
+        }
 
         return cookbook;
     }
