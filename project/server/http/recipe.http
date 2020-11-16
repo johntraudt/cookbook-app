@@ -248,7 +248,7 @@ Content-Type: application/json
 {
   "recipeId": 0,
   "userId": 3,
-  "name": "Noah's New Recipe 9",
+  "name": "Noah's New Recipe 8",
   "prepTimeInMinutes": 25,
   "cookTimeInMinutes": 55,
   "servings": 5,
@@ -263,7 +263,7 @@ Content-Type: application/json
       },
       "ingredientListIndex": 1,
       "quantity": "8",
-      "measurementUnitId": 5
+      "measurementUnitId": 3
     }
   ],
   "directions": [

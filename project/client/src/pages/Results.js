@@ -7,11 +7,13 @@ export default function Results() {
 
     const history = useHistory(); 
 
+    useEffect(() => {const garbage = recipes})
+
     const searchTerm = history.location.pathname.replace('/results/','');
 
 
 
-    const featuredRecipes = () => {
+    const recipeResults = () => {
         fetch(`http://localhost:8080/api/recipe/search/${searchTerm}`) 
             .then(response => response.json())
             .then((data) => {
@@ -20,7 +22,7 @@ export default function Results() {
     }
     
     useEffect(() => {
-        featuredRecipes();
+        recipeResults();
     }, []);
 
     if (!searchTerm) {
