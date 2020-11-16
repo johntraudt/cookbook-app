@@ -3,9 +3,14 @@ import Rating from './Rating'
 import { Link } from 'react-router-dom';
 
 function SquareCard({recipe}) {
-    console.log(recipe)
-    return (
+    // console.log('here')
+    // console.log(recipe)
+    // console.log('above')
+    if(!recipe.user) {
+        return null;
+    }
 
+    return (
         <Link to={`/recipe/${recipe.recipeId}`}>
             <div className="card shadow custom-card border-white mt-5 mb-5">
                 <div className="image">

@@ -13,7 +13,7 @@ function SearchBar() {
 
     useEffect(() => {
         setSearch()
-    },[console.log(search)]);
+    },[]);
 
     return (
         <div>
