@@ -1,7 +1,7 @@
 package learn.myCookbook.controllers;
 
 import learn.myCookbook.domain.Result;
-import learn.myCookbook.domain.UserService;
+import learn.myCookbook.domain.AppUserService;
 import learn.myCookbook.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserService service;
+    private final AppUserService service;
 
-    public UserController(UserService service) {
+    public UserController(AppUserService service) {
         this.service = service;
     }
 

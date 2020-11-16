@@ -6,8 +6,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
-public class User {
+public class AppUser {
 
     @Min(value = 0, message = "User id must not be negative.")
     private int userId;
@@ -40,7 +42,7 @@ public class User {
     @Max(value = UserRole.NUMBER_OF_USER_ROLES, message = "invalid user role id.")
     private int userRoleId;
 
-
+    List<UserRole> roles = new ArrayList<>();
 
     public int getUserId() {
         return userId;
@@ -112,5 +114,13 @@ public class User {
 
     public void setUserRoleId(int userRoleId) {
         this.userRoleId = userRoleId;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 }
