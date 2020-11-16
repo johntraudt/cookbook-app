@@ -32,7 +32,6 @@ function Login() {
         
         if (response.status === 200) {
             const { jwt_token } = await response.json();
-            
             auth.login(jwt_token);
         } 
         // else if (response.status === 403) {

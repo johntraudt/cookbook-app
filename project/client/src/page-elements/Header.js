@@ -59,12 +59,16 @@ function Header() {
             <div className="subtitle shadow">
                 <div className="container">
                     <div className="d-flex justify-content-around">
-                        <Link className="dark mr-auto ml-auto" to='/cookbook'>
-                            <div className='ml-5 mr-5'>MyCookbooks</div>
-                        </Link>
-                        {/* <Link className="dark" to='/notfound'>
-                            <div>Recipe Of The Day</div>
-                        </Link> */}
+                        {auth.user && (
+                            <>
+                                <Link className="dark mr-auto ml-auto" to='/user'>
+                                    <div className='ml-5 mr-5'>My Profile</div>
+                                </Link>
+                                <Link className="dark mr-auto ml-auto" to='/cookbook'>
+                                    <div className='ml-5 mr-5'>MyCookbooks</div>
+                                </Link>
+                            </>
+                        )}
                         <div className="hand mr-auto ml-auto ml-5 mr-5" onClick={() => getRandomId()}>
                             Show Me The Money
                         </div>

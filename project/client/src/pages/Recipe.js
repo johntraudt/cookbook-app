@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Rating from '../page-elements/Rating'
 import { useLocation } from 'react-router-dom'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
+import AuthContext from '../page-elements/AuthContext';
+
 
 export default function Recipe() {
 
@@ -38,7 +40,6 @@ export default function Recipe() {
     });
 
     const today = new Date();
-
     const [review, setReview] = useState({
         reviewId: 0,
         recipeId: 0,
@@ -49,9 +50,7 @@ export default function Recipe() {
         date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
     }) 
 
-    // const [rating, setRating] = useState (
-    //     4,
-    // )
+    const auth = useContext(AuthContext);
     
     const location = useLocation();
 
@@ -120,7 +119,7 @@ export default function Recipe() {
                 <div className="row">
                     <div className="col-lg-2 col-sm-0"></div>
                     <div className="col-lg-8 col-sm-12">
-                        <div className="row justify-content-md-center">
+                        <div className="row justify-content-md-center m-2">
                             <div className="mr-2 ml-2">User: {`${recipe.user.firstName} ${recipe.user.lastName}`}</div>
                             <div className="mr-2 ml-2">{recipe.wasUpdated ? 'Posted': 'Edited'}: {recipe.date}</div>
                             <div className="mr-2 ml-2">Prep Time: {recipe.prepTimeInMinutes}</div>
@@ -141,14 +140,16 @@ export default function Recipe() {
                             <img className="card-img-top p-2" src={recipe.imageLink} alt={`${recipe.name}`}></img>
                             <div className="card-body p-0">
                                 <form className="m-2">
+                                    {auth.user && (
                                     <div className="col m-2">
                                         <select className="p-1" name="myCookbooks" id="myCookbooks">
                                             <option value="">--Add To Cookbook--</option>
                                             <option value="Dessert Book">Dessert Book</option>
                                             <option value="Mexican Food">Mexican Food</option>
                                         </select>
-                                        {/* <button className="btn btn-light btn-outline-dark btn-sm">Add Recipe</button> */}
+                                        <button className="btn btn-light btn-outline-dark btn-sm">Add Recipe</button>
                                     </div>
+                                    )}
                                     {/* <div className="col">
                                         <lable className="text-secondary">Desired Servings: </lable>
                                         <input type="number"  placeholder="Set Serving Size #..."></input>
@@ -179,34 +180,31 @@ export default function Recipe() {
                                 <tr className="text-center">
                                     <th colspan="2">Comments</th>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <form className="text-center" onSubmit={(event) => addReview(event)}>
-                                            <textarea className="form-control" onChange={(event) => setComment(event.target.value)} value={review.comment}></textarea>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr className="text-center mr-3">
-                                    {/* <select value={rating} onSelect={(event) => setRating(event.target.value)}>
-                                        <option value={1}>⭐☆☆☆☆</option>
-                                        <option value={2}>⭐⭐☆☆☆</option>
-                                        <option value={3}>⭐⭐⭐☆☆</option>
-                                        <option value={4}>⭐⭐⭐⭐☆</option>
-                                        <option value={5}>⭐⭐⭐⭐⭐</option>
-                                    </select> */}
-                                    <td className="ml-auto">
-                                        <DropdownButton alignRight title={"⭐".repeat(review.rating) + "☆".repeat(5-review.rating)} id="dropdown-menu-align-right" onSelect={setRating}>
-                                            <Dropdown.Item eventKey={1}>⭐☆☆☆☆</Dropdown.Item>
-                                            <Dropdown.Item eventKey={2}>⭐⭐☆☆☆</Dropdown.Item>
-                                            <Dropdown.Item eventKey={3}>⭐⭐⭐☆☆</Dropdown.Item>
-                                            <Dropdown.Item eventKey={4}>⭐⭐⭐⭐☆</Dropdown.Item>
-                                            <Dropdown.Item eventKey={5}>⭐⭐⭐⭐⭐</Dropdown.Item>
-                                        </DropdownButton>
-                                    </td>
-                                    <td className="mr-auto">
-                                        <button className="btn btn-outline-secondary ml-3" type="submit">Post a Review</button>
-                                    </td>
-                                </tr>
+                                { auth.user && (
+                                    <div>
+                                        <tr>
+                                            <td colspan="2">
+                                                <form className="text-center" onSubmit={(event) => addReview(event)}>
+                                                    <textarea className="form-control" onChange={(event) => setComment(event.target.value)} value={review.comment}></textarea>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr className="text-center mr-3">
+                                            <td className="ml-auto">
+                                                <DropdownButton alignRight title={"⭐".repeat(review.rating) + "☆".repeat(5-review.rating)} id="dropdown-menu-align-right" onSelect={setRating}>
+                                                    <Dropdown.Item eventKey={1}>⭐☆☆☆☆</Dropdown.Item>
+                                                    <Dropdown.Item eventKey={2}>⭐⭐☆☆☆</Dropdown.Item>
+                                                    <Dropdown.Item eventKey={3}>⭐⭐⭐☆☆</Dropdown.Item>
+                                                    <Dropdown.Item eventKey={4}>⭐⭐⭐⭐☆</Dropdown.Item>
+                                                    <Dropdown.Item eventKey={5}>⭐⭐⭐⭐⭐</Dropdown.Item>
+                                                </DropdownButton>
+                                            </td>
+                                            <td className="mr-auto">
+                                                <button className="btn btn-outline-secondary ml-3" type="submit">Post a Review</button>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                )}
                                 <table className="table">
                                     {recipe.reviews.map((review) => {
                                         return <div>
