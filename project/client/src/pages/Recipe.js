@@ -53,6 +53,7 @@ export default function Recipe() {
     const auth = useContext(AuthContext);
     
     const location = useLocation();
+    console.log(location.pathname)
 
     
     useEffect(() => {

@@ -26,15 +26,20 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   const login = (token) => {
-    const { appUserId, sub: username, authorities } = jwt_decode(token);
+    const { appUserId, sub: userName, email, firstName, lastName, role, userRoleId, active, authorities } = jwt_decode(token);
 
     // Split the authorities into an array of roles.
     const roles = authorities.split(',');
   
     const user = {
-      appUserId: parseInt(appUserId, 10),
-      username,
+      userId: parseInt(appUserId, 10),
+      userName,
+      email,
+      firstName,
+      lastName,
       roles,
+      userRoleId,
+      active,
       token,
       hasRole(role) {
         return this.roles.includes(role);
