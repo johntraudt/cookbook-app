@@ -1,10 +1,12 @@
 import React from 'react';
+import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
 
 class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
+      errors: [],
       userId: 0,
       userName: "",
       email: "",
@@ -18,6 +20,7 @@ class SignUp extends React.Component {
       userRoleId: 1,
       active: true,
     };
+
   }
 
   handleSubmit = (event) => {
@@ -53,6 +56,7 @@ class SignUp extends React.Component {
     .then((response) => {
       if (response.status === 201) {
         response.json().then(data => console.log(data));
+        window.location.href = 'http://localhost:3000/';
       } else if (response.status === 400) {
         response.json().then(data => {
           console.log(data);
@@ -105,26 +109,44 @@ class SignUp extends React.Component {
 
     return (
       <div  className="container full-body mt-4">
-        {/* <Errors errors={errors} />--> */}
+        <Errors errors={errors} />
 
-        <form onSubmit={this.handleSubmit}>
-          <label>First Name</label>
-          <input value={this.state.firstName} type="text" placeholder="First Name" onChange={this.handleFirstName}/>
-          
-          <label>Last Name</label>
-          <input value={this.state.lastName} type="text" placeholder="Last Name" onChange={this.handleLastName}/>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Row>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Control value={this.state.firstName} onChange={this.handleFirstName} type="text" placeholder="First name" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Control value={this.state.lastName} onChange={this.handleLastName} type="text" placeholder="Last name" />
+            </Form.Group>
+          </Form.Row>
 
-          <label>Email</label>
+          <Form.Row>
+            <Form.Group controlId="formHoriztonalEmail">
+              <Form.Control value={this.state.email} onChange={this.handleEmail} type="email" placeholder="Email" />
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Control value={this.state.userName} onChange={this.handleUsername} type="text" placeholder="Username" />
+            </Form.Group>
+            <Form.Group controlId="formGridPassword">
+              <Form.Control value={this.state.passwordHash} onChange={this.handlePassword} type="password" placeholder="Password" />
+            </Form.Group>
+          </Form.Row>
+
+          {/* <label>Email</label>
           <input value={this.state.email} type="text" placeholder="Email" onChange={this.handleEmail}/>
 
           <label>Username</label>
           <input value={this.state.userName} type="text" placeholder="Username" onChange={this.handleUsername}/>
 
           <label>Password</label>
-          <input value={this.state.passwordHash} type="password" placeholder="Password" onChange={this.handlePassword}/>
+          <input value={this.state.passwordHash} type="password" placeholder="Password" onChange={this.handlePassword}/> */}
 
           <button type="submit" className="btn btn-primary">Create</button>
-        </form>
+        </Form>
       </div>
     );
   }
