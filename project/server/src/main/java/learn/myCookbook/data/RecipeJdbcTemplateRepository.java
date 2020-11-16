@@ -17,10 +17,12 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final UserJdbcTemplateRepository userRepository;
+    private final ReviewRepository reviewRepository;
 
-    public RecipeJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserJdbcTemplateRepository userRepository) {
+    public RecipeJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserJdbcTemplateRepository userRepository, ReviewRepository reviewRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.userRepository = userRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
 
         if (recipe != null) {
             recipe.setUser(userRepository.findById(recipe.getUserId()));
-            addReviews(recipe);
+            recipe.setReviews(reviewRepository.findByRecipeId(recipe.getRecipeId()));
             addDirections(recipe);
             addTags(recipe);
             addIngredients(recipe);

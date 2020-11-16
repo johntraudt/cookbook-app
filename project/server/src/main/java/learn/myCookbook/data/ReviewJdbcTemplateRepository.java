@@ -17,9 +17,11 @@ import java.util.List;
 public class ReviewJdbcTemplateRepository implements ReviewRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
 
-    public ReviewJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public ReviewJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserRepository userRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -56,7 +58,13 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
                 "from review where recipe_id = ? " +
                 "order by review_date desc;";
 
-        return jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
+        List<Review> reviews = jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
+
+        for (Review review : reviews) {
+            review.setUser(userRepository.findById(review.getUserId()));
+        }
+
+        return reviews;
     }
 
     @Override
