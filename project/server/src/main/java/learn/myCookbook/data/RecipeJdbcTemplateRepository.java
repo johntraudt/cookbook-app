@@ -117,6 +117,22 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     @Override
+    public List<Recipe> findByRecipeTagId(int recipeTagId) {
+        final String sql = "select r.recipe_id, r.recipe_name, r.prep_time, r.cook_time, r.servings, r.date, r.was_updated, r.is_featured, r.calories, r.image_link, r.user_id " +
+                "from recipe r " +
+                "join recipe_recipe_tag rrt on r.recipe_id = rrt.recipe_id " +
+                "where rrt.recipe_tag_id = ?;";
+
+        List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(), recipeTagId);
+        for (Recipe recipe : recipes) {
+            recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+        }
+
+        return recipes;
+    }
+
+    @Override
     public int findRandomRecipeId() {
         List<Recipe> all = findAll();
         int index = (int) (Math.random() * all.size());

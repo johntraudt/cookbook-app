@@ -11,23 +11,38 @@ import java.util.List;
 public class RecipeTagJdbcTemplateRepository implements RecipeTagRepository{
 
     private final JdbcTemplate jdbcTemplate;
+    private final RecipeRepository recipeRepository;
 
-    public RecipeTagJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public RecipeTagJdbcTemplateRepository(JdbcTemplate jdbcTemplate, RecipeRepository recipeRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.recipeRepository = recipeRepository;
     }
 
     @Override
     public List<RecipeTag> findAll() {
         final String sql = "select recipe_tag_id, recipe_tag_name, recipe_tag_category_id, tag_image_link " +
                 "from recipe_tag " +
-                "order by recipe_tag_id limit 1000;";
+                "order by recipe_tag_name asc;";
 
         return jdbcTemplate.query(sql, new RecipeTagMapper());
     }
 
     @Override
     public RecipeTag findById(int recipeTagId) {
-        return null;
+        final String sql = "select recipe_tag_id, recipe_tag_name, recipe_tag_category_id, tag_image_link " +
+                "from recipe_tag " +
+                "where recipe_tag_id = ?;";
+
+        RecipeTag recipeTag = jdbcTemplate.query(sql, new RecipeTagMapper(), recipeTagId)
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        if (recipeTag != null) {
+            recipeTag.setRecipes(recipeRepository.findByRecipeTagId(recipeTagId));
+        }
+
+        return recipeTag;
     }
 
     @Override

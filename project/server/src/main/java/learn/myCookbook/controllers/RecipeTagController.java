@@ -2,10 +2,7 @@ package learn.myCookbook.controllers;
 
 import learn.myCookbook.domain.RecipeTagService;
 import learn.myCookbook.models.RecipeTag;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,10 @@ public class RecipeTagController {
     @GetMapping
     public List<RecipeTag> findAll() {
         return service.findAll();
+    }
+
+    @GetMapping("/{recipeTagId}")
+    public RecipeTag findById(@PathVariable int recipeTagId) {
+        return service.findById(recipeTagId);
     }
 }

@@ -13,6 +13,7 @@ import ScrollToTop from './ScrollToTop';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
 import Cookbook from './pages/Cookbook';
+import Tag from "./pages/Tag";
 
 import AuthContext from './page-elements/AuthContext';
 
@@ -76,6 +77,7 @@ export default function App() {
             <Route path="/privacy" component={Privacy}/>
             <Route path="/post" component={PostRecipe}/>
             <Route path="/cookbook" component={Cookbook}/>
+            <Route path="/recipe-tag" component={Tag}/>
           </Switch>
           <Footer />
         </div>

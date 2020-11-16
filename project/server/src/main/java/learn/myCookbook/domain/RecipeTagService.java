@@ -19,6 +19,10 @@ public class RecipeTagService {
         return repository.findAll();
     }
 
+    public RecipeTag findById(int recipeTagId) {
+        return repository.findById(recipeTagId);
+    }
+
     public Result<RecipeTag> tagRecipe(int recipeId, int recipeTagId) {
         Result<RecipeTag> result = new Result<>();
 

@@ -1,11 +1,15 @@
 package learn.myCookbook.models;
 
+import java.util.List;
+
 public class RecipeTag {
 
     private int recipeTagId;
     private String name;
     private String imageLink;
     private int recipeTagCategoryId;
+
+    private List<Recipe> recipes;
 
     public RecipeTag() {
     }
@@ -40,5 +44,13 @@ public class RecipeTag {
 
     public void setRecipeTagCategoryId(int recipeTagCategoryId) {
         this.recipeTagCategoryId = recipeTagCategoryId;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }
