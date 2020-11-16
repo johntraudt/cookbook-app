@@ -104,28 +104,28 @@ class SignUp extends React.Component {
     } = this.state;
 
     return (
-      <>
-       {/* <Errors errors={errors} />--> */}
+      <div  className="container full-body mt-4">
+        {/* <Errors errors={errors} />--> */}
 
-      <form onSubmit={this.handleSubmit}>
-        <label>First Name</label>
-        <input value={this.state.firstName} type="text" placeholder="First Name" onChange={this.handleFirstName}/>
-        
-        <label>Last Name</label>
-        <input value={this.state.lastName} type="text" placeholder="Last Name" onChange={this.handleLastName}/>
+        <form onSubmit={this.handleSubmit}>
+          <label>First Name</label>
+          <input value={this.state.firstName} type="text" placeholder="First Name" onChange={this.handleFirstName}/>
+          
+          <label>Last Name</label>
+          <input value={this.state.lastName} type="text" placeholder="Last Name" onChange={this.handleLastName}/>
 
-        <label>Email</label>
-        <input value={this.state.email} type="text" placeholder="Email" onChange={this.handleEmail}/>
+          <label>Email</label>
+          <input value={this.state.email} type="text" placeholder="Email" onChange={this.handleEmail}/>
 
-        <label>Username</label>
-        <input value={this.state.userName} type="text" placeholder="Username" onChange={this.handleUsername}/>
+          <label>Username</label>
+          <input value={this.state.userName} type="text" placeholder="Username" onChange={this.handleUsername}/>
 
-        <label>Password</label>
-        <input value={this.state.passwordHash} type="password" placeholder="Password" onChange={this.handlePassword}/>
+          <label>Password</label>
+          <input value={this.state.passwordHash} type="password" placeholder="Password" onChange={this.handlePassword}/>
 
-        <button type="submit" className="btn btn-primary">Create</button>
-      </form>
-      </>
+          <button type="submit" className="btn btn-primary">Create</button>
+        </form>
+      </div>
     );
   }
     
