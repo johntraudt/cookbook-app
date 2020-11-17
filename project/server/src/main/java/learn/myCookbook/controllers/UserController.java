@@ -45,6 +45,10 @@ public class UserController {
         return service.findById(userId);
     }
 
+    @GetMapping("/name/{userName}")
+    public AppUser findByUserName(@PathVariable String userName) {
+        return service.findByUsername(userName);
+    }
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody AppUser user) {
