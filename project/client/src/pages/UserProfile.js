@@ -13,6 +13,7 @@ export default function UserProfile() {
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
+    // const [user, setUser] = useState({});
 
     const auth = useContext(AuthContext);
 
@@ -74,7 +75,7 @@ export default function UserProfile() {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <td>{auth.user.status ? 'active': 'deactivated'}</td>
+                            <td>{!auth.user.status ? 'active': 'deactivated'}</td>
                         </tr>
                         <tr>
                             <td colspan={editUser === true ? 1 : 2} className="text-center">

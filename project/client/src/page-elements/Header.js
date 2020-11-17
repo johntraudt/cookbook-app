@@ -23,6 +23,10 @@ function Header() {
             .then(() => history.push(`/recipe/${randomInt}`));
     };
 
+    const logout = () => {
+        auth.logout();
+        history.push('/');
+    }
 
     return (
         <header className="shadow">
@@ -49,9 +53,11 @@ function Header() {
                         }
                         
                         <div className="p-2">
-                            <Link to='/login'>
-                                <div className="right btn btn-outline-secondary p-2 pr-4 pl-4">{auth.user ? 'SIGN OUT' : 'LOG IN'}</div>
-                            </Link>
+                            {
+                                !auth.user ? 
+                                    <Link to='/login'><div className="right btn btn-outline-secondary p-2 pr-4 pl-4">LOG IN</div></Link> : 
+                                    <div className="right btn btn-outline-secondary p-2 pr-4 pl-4" onClick={() => logout()}>Sign Out</div>
+                            }
                         </div>
                     </div>
                 </div>

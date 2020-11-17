@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Success from '../page-elements/Success' 
 import {Redirect} from 'react-router-dom';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
+
+import AuthContext from '../page-elements/AuthContext';
 
 export default function PostRecipe() {
     const [categories, setCategories] = useState([]);
@@ -58,22 +60,23 @@ export default function PostRecipe() {
         garbage = ingredients;
     })
 
+    const auth = useContext(AuthContext);
+
     const today = new Date();
 
     const SubmitButton = (event) => {
         event.preventDefault();
         console.log('look here')
-        console.log(ingredients)
+        console.log(auth.user)
         console.log('up above')
-        console.log(directions)
-        console.log(selectedCategories);
+
 
         fetch('http://localhost:8080/api/recipe', {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 recipeId: 0,
-                userId: 1,
+                userId: `${auth.user.userId}`,
                 name: title,
                 prepTimeInMinutes: prepTime, 
                 cookTimeInMinutes: cookTime, 
@@ -236,7 +239,13 @@ export default function PostRecipe() {
     }
 
 
-    
+    if (!auth || !auth.user) {
+        return null;
+    }
+
+    if (!auth.user) {
+        return null;
+    }
 
     return (
         <div className="container full-body text-center">

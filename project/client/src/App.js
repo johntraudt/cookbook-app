@@ -21,60 +21,23 @@ import './App.css'
 
 import jwt_decode from 'jwt-decode';
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 export default function App() {
   const [user, setUser] = useState(null);
 
+
+
   const login = (token) => {
     const { sub: userName, authorities: role} = jwt_decode(token);  
 
-    console.log('here')
-    console.log(userName)
-
     const user = {
       userName,
-      // firstName,
-      // lastName,
       role,
-      // userRoleId,
-      // active,
       token,
     };
-    console.log(user);
 
     const findUserByUserName = () => {
-      if (user) {
-        fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
-        .then(response => response.json())
-        .then((data) => {
-          setUser({
-            userName: user.userName,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            role: user.role,
-            token: user.token,
-            active: data.active,
-          });
-        });
-      }
-    };
-    
-    findUserByUserName();
-
-    // // console.log(user);
-
-    // // return user;
-    //   }
-    // };
-    setUser(user);
-
-    return user;
-  }
-
-  const findUserByUserName = () => {
-    if (user) {
       fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
       .then(response => response.json())
       .then((data) => {
@@ -86,14 +49,20 @@ export default function App() {
           role: user.role,
           token: user.token,
           active: data.active,
+          userId: data.userId,
         });
       });
-    }
-  };
+    };
+    
+    findUserByUserName();
+    setUser(user);
+
+    return user;
+  }
 
   useEffect(() => {
-    findUserByUserName()
-  }, [])
+    setUser();
+  },[])
 
   const logout = () => {
     setUser(null);
