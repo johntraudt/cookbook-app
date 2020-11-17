@@ -39,6 +39,10 @@ public class RecipeService {
         return repository.findByName(recipeName);
     }
 
+    public List<Recipe> findByUserId(int userId) {
+        return repository.findByUserId(userId);
+    }
+
     public int findRandomRecipeId(){
         return repository.findRandomRecipeId();
     }

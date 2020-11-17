@@ -12,6 +12,10 @@ GET {{url}}/search/garden HTTP/1.1
 
 ###
 
+Get {{url}}/user/3 HTTP/1.1
+
+###
+
 GET {{url}}/random HTTP/1.1
 
 ###

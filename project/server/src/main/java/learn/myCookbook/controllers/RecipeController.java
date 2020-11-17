@@ -37,6 +37,11 @@ public class RecipeController {
         return service.findByName(recipeName);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<Recipe> findByUserId(@PathVariable int userId) {
+        return service.findByUserId(userId);
+    }
+
     @GetMapping("/random")
     public int findRandomRecipeId() {
         return service.findRandomRecipeId();

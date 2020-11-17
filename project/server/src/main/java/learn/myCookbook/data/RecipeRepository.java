@@ -1,5 +1,6 @@
 package learn.myCookbook.data;
 
+import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Recipe;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,8 @@ public interface RecipeRepository {
     Recipe findById(int recipeId);
 
     List<Recipe> findByName(String recipeName);
+
+    List<Recipe> findByUserId(int userId);
 
     Recipe findByUserIdAndName(int userId, String name);
 

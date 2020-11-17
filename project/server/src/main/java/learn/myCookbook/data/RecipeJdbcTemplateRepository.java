@@ -1,6 +1,7 @@
 package learn.myCookbook.data;
 
 import learn.myCookbook.data.mappers.*;
+import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Recipe;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -72,6 +73,20 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
         List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(),  "%" + recipeName + "%");
         for (Recipe recipe : recipes) {
             recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+        }
+
+        return recipes;
+    }
+
+    @Override
+    public List<Recipe> findByUserId(int userId) {
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
+                "from recipe " +
+                "where user_id = ?;";
+
+        List<Recipe> recipes = jdbcTemplate.query(sql, new RecipeMapper(), userId);
+        for (Recipe recipe : recipes) {
             addReviews(recipe);
         }
 
