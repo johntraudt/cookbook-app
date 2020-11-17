@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 import AuthContext from '../page-elements/AuthContext';
+import Rating from '../page-elements/Rating';
 
 export default function UserProfile() {
     const [open, setOpen] = useState(false);
@@ -43,6 +44,10 @@ export default function UserProfile() {
 
     const removeFromCookBook = () => {
 
+    }
+
+    const deleteCookBook = (cookbookId) => {
+        
     }
 
     useEffect(() => {
@@ -137,8 +142,7 @@ export default function UserProfile() {
                                         
 
                                         book.recipes.map((recipe) => (
-                                            <div className="row">
-                                            
+                                            <div className="row mb-4">
                                                 <div className="col-3">
                                                     <Link className="dark" to={`/recipe/${recipe.recipeId}`}>
                                                         <img src={recipe.imageLink} height='75'></img>
@@ -146,20 +150,22 @@ export default function UserProfile() {
                                                 </div>
                                                 <div className="col-5">
                                                     <Link className="dark" to={`/recipe/${recipe.recipeId}`}>
-                                                        {recipe.name}
+                                                        <div>{recipe.name}</div>
+                                                        <div>{<Rating detailed={false} reviews={recipe.reviews} />}</div>
+                                                        
                                                     </Link>
                                                 </div>
                                                 <div className="col-4">
                                                 <button className="btn btn-danger" onClick={() => removeFromCookBook()}>X</button>
                                                 </div>
-                                                {/* <Link className="dark" to={`/recipe/${recipe.recipeId}`}><div className="col-3"><img src={recipe.imageLink} height='75'></img></div><div className="col-9">{recipe.name}</div></Link>
-                                                <button className="btn btn-secondary" onClick={() => removeFromCookBook()}>Remove</button> */}
                                             </div>
                                         ))
                                     }
                                     <div className="d-flex flex-wrap justify-content-center">
-                                        <a className="btn btn-info ml-auto mr-auto">View</a>
-                                        <a className="btn btn-danger ml-auto mr-auto">Delete</a>
+                                        <Link className="ml-auto mr-auto" to={`/cookbook/${book.cookbookId}`}>
+                                            <button type="button" className="btn btn-info" >View Detailed</button>
+                                        </Link>
+                                        <button type="button" onClick={(book) => deleteCookBook(book.cookbookId)} className="btn btn-danger ml-auto mr-auto">Delete</button>
                                     </div>
                                 </Card.Body>
                                 </Accordion.Collapse>
