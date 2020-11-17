@@ -25,7 +25,7 @@ function Login() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username,
+                userName: username,
                 passwordHash: password,
             })
         });

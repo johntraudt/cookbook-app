@@ -27,18 +27,25 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   const login = (token) => {
-    const { appUserId, sub: userName, email, firstName, lastName, role, userRoleId, active, authorities } = jwt_decode(token);
+    const {sub: userName, authorities} = jwt_decode(token);
 
     // Split the authorities into an array of roles.
-    const roles = authorities.split(',');
   
+  useEffect(()=>{
+    fetch('') 
+            .then(response => response.json())
+            .then((data) => {
+                setRecipes(data);
+            });
+  })
+
     const user = {
       userId: parseInt(appUserId, 10),
       userName,
       email,
       firstName,
       lastName,
-      roles,
+      roles: authorities,
       userRoleId,
       active,
       token,
