@@ -27,12 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/api/authenticate").permitAll()
+                // TODO: Permit stuff reviews,cookbook, direction, ingredients,
                 .antMatchers("/api/user/authenticate").permitAll()
+                .antMatchers("/api/user", "/api/user/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/recipe", "/api/recipe/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/recipe").hasAnyRole("USER", "MODERATOR")
                 .antMatchers(HttpMethod.PUT, "/api/recipe/*").hasAnyRole("USER", "MODERATOR")
-                .antMatchers(HttpMethod.DELETE, "/api/recipe/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/recipe/*").hasRole("MODERATOR")
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))
                 .sessionManagement()
