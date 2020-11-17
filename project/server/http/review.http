@@ -3,5 +3,32 @@
 GET {{url}} HTTP/1.1
 
 ###
+GET {{url}}/8 HTTP/1.1
 
-GET {{url}}/2 HTTP/1.1
+###
+POST {{url}} HTTP/1.1
+Content-Type: application/json 
+
+{
+  "rating": 4,
+  "comment": "Super delicious.", 
+  "date": "2020-11-02", 
+  "userId": 2, 
+  "recipeId": 2
+}
+
+###
+PUT {{url}}/8 HTTP/1.1
+Content-Type: application/json 
+
+{
+  "reviewId": 8,
+  "rating": 4,
+  "comment": "Super delicious. Not.", 
+  "date": "2020-11-02", 
+  "userId": 2, 
+  "recipeId": 2
+}
+
+###
+DELETE {{url}}/2 HTTP/1.1
