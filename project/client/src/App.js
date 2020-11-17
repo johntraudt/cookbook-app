@@ -12,11 +12,6 @@ import AboutUs from './pages/AboutUs';
 import ScrollToTop from './ScrollToTop';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
-import Cookbook from './pages/Cookbook';
-import Tag from './pages/Tag';
-//import PdfExport from './pages/PdfExport';
-import DownloadButton from './page-elements/DownloadButton';
-
 
 import AuthContext from './page-elements/AuthContext';
 
@@ -30,20 +25,15 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   const login = (token) => {
-    const { appUserId, sub: userName, email, firstName, lastName, role, userRoleId, active, authorities } = jwt_decode(token);
+    const { appUserId, sub: username, authorities } = jwt_decode(token);
 
     // Split the authorities into an array of roles.
     const roles = authorities.split(',');
   
     const user = {
-      userId: parseInt(appUserId, 10),
-      userName,
-      email,
-      firstName,
-      lastName,
+      appUserId: parseInt(appUserId, 10),
+      username,
       roles,
-      userRoleId,
-      active,
       token,
       hasRole(role) {
         return this.roles.includes(role);
@@ -75,18 +65,15 @@ export default function App() {
           <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/categories" exact component={Categories}/>
-            <Route path="/login" component={user ? Home : Login}/>
+            <Route path="/login" component={Login}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/recipe" component={Recipe}/>
             <Route path="/results" component={Results}/>
-            <Route path="/user" component={user ? UserProfile : Login}/>
+            <Route path="/user" component={UserProfile}/>
             <Route path="/notfound" component={NotFound}/>
             <Route path="/about" component={AboutUs}/>
             <Route path="/privacy" component={Privacy}/>
-            <Route path="/post" component={user ? Login : PostRecipe}/>
-            <Route path="/cookbook" component={Cookbook}/>
-            <Route path="/recipe-tag" component={Tag}/>
-            {/* <Route path="/pdf-export" component={PdfExport}/> */}
+            <Route path="/post" component={PostRecipe}/>
           </Switch>
           <Footer />
         </div>
