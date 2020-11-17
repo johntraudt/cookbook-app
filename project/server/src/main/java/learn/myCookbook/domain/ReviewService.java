@@ -1,17 +1,23 @@
 package learn.myCookbook.domain;
 
-import learn.myCookbook.data.ReviewJdbcTemplateRepository;
+import learn.myCookbook.data.ReviewRepository;
+import learn.myCookbook.models.Ingredient;
 import learn.myCookbook.models.Review;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ReviewService {
 
-    private final ReviewJdbcTemplateRepository repository;
+    private final ReviewRepository repository;
 
-    public ReviewService(ReviewJdbcTemplateRepository repository) {
+    public ReviewService(ReviewRepository repository) {
         this.repository = repository;
     }
 
@@ -83,6 +89,16 @@ public class ReviewService {
         if (review == null) {
             result.addMessage("review cannot be null.", ResultType.INVALID);
             return result;
+        }
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Review>> violations = validator.validate(review);
+
+        if (!violations.isEmpty()) {
+            for (ConstraintViolation<Review> violation : violations) {
+                result.addMessage(violation.getMessage(), ResultType.INVALID);
+            }
         }
 
 

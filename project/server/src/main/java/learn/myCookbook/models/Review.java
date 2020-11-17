@@ -1,5 +1,6 @@
 package learn.myCookbook.models;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class Review {
@@ -9,6 +10,9 @@ public class Review {
     private Recipe recipe;
     private AppUser user;
     private String comment;
+
+    @Min(value = 1, message = "rating must be at least 1.")
+    @Max(value = 5, message = "rating cannot be greater than 5.")
     private int rating;
     private LocalDate date;
 
