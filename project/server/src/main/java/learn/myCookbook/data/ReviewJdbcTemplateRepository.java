@@ -88,19 +88,19 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     @Override
     public Review add(Review review) {
         final String sql = "insert into review " +
-                "(review_id, rating, comment, review_date, user_id, recipe_id) " +
+                "(rating, comment, review_date, user_id, recipe_id) " +
                 "values " +
-                "(?, ?, ?, ?, ?, ?);";
+                "(?, ?, ?, ?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, review.getReviewId());
-            ps.setInt(2, review.getRating());
-            ps.setString(3, review.getComment());
-            ps.setDate(4, Date.valueOf(review.getDate()));
-            ps.setInt(5, review.getUserId());
-            ps.setInt(6, review.getRecipeId());
+//            ps.setInt(1, review.getReviewId());
+            ps.setInt(1, review.getRating());
+            ps.setString(2, review.getComment());
+            ps.setObject(3, review.getDate());
+            ps.setInt(4, review.getUserId());
+            ps.setInt(5, review.getRecipeId());
             return ps;
         }, keyHolder);
 
