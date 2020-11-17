@@ -90,6 +90,8 @@ export default function Recipe() {
 
     const addReview = (event) => {
         event.preventDefault();
+
+        fetch()
     };
 
     const setComment = (text) => {

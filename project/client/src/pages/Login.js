@@ -11,7 +11,7 @@ export default function Login() {
     const [errors, setErrors] = useState([]);
     
     const auth = useContext(AuthContext);
-    // const history = useHistory();
+    const history = useHistory();
 
     useEffect( () => {
         setPassword();
@@ -35,13 +35,15 @@ export default function Login() {
 
         if (response.status === 200) {
             const { jwt_token } = await response.json();
-            console.log(jwt_token)
+            console.log(jwt_token);
             auth.login(jwt_token);
-        } else if (response.status ===403) {
+            history.push("/");
+        } else if (response.status === 403) {
             setErrors(["Could not find that user name and password combination"]);
             setTimeout(() => {setErrors([])}, 3000);
         } else {
             setErrors(["Unknown Error."]);
+            setTimeout(() => {setErrors([])}, 3000);
         }
     };
 
