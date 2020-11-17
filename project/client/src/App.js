@@ -90,7 +90,7 @@ export default function App() {
             <Route path="/signup" component={SignUp}/>
             <Route path="/recipe" component={Recipe}/>
             <Route path="/results" component={Results}/>
-            <Route path="/user" component={UserProfile}/>
+            <Route path="/user" component={user ? UserProfile : Login}/>
             <Route path="/notfound" component={NotFound}/>
             <Route path="/about" component={AboutUs}/>
             <Route path="/privacy" component={Privacy}/>

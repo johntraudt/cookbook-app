@@ -49,8 +49,6 @@ export default function Cookbook() {
         return (<h1 className="container text-center">Recipes Not Found</h1>);
     }
 
-
-
     return (
         <div className="container full-body">
             <div className="mt-4">

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -20,6 +20,7 @@ export default function UserProfile() {
     const [recipes, setRecipes] = useState([]);
 
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     useEffect(()=>{
         const getCookBooks = () => {
@@ -42,12 +43,23 @@ export default function UserProfile() {
         getCookBooks();
     },[]);
 
-    const removeFromCookBook = () => {
-
+    const removeFromCookBook = (book, recipe) => {
+        console.log('book:')
+        console.log(book)
+        console.log('recipe:')
+        console.log(recipe)
+        fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
+            method: 'delete'})
+            
+            .then((response) => {
+                if (response.status >= 400) {
+                    history.push("/notfound");
+                } 
+            });
     }
 
     const deleteCookBook = (cookbookId) => {
-        
+
     }
 
     useEffect(() => {
@@ -61,6 +73,8 @@ export default function UserProfile() {
         console.log(lastName),
         console.log(cookBook),
         console.log(userName)]);    
+
+
 
     return (
         <div className="container full-body">
@@ -156,7 +170,7 @@ export default function UserProfile() {
                                                     </Link>
                                                 </div>
                                                 <div className="col-4">
-                                                <button className="btn btn-danger" onClick={() => removeFromCookBook()}>X</button>
+                                                <button className="btn btn-danger" onClick={() => removeFromCookBook(book, recipe)}>X</button>
                                                 </div>
                                             </div>
                                         ))
