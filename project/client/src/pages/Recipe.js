@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import AuthContext from '../page-elements/AuthContext';
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import DownloadButton from '../page-elements/DownloadButton';
 
 
 export default function Recipe() {
@@ -112,8 +114,125 @@ export default function Recipe() {
         console.log(review.comment);
     }
 
+    const styles = StyleSheet.create({
+        page: {
+          flexDirection: 'row',
+          backgroundColor: '#E4E4E4'
+        },
+        section: {
+          margin: 10,
+          padding: 10,
+          flexGrow: 1
+        }
+      });
+
+    
+        // <Document className="center">
+        //     <Page size="A4" style={styles.page}>
+        //         <div className="container full-body text-center">
+        //             <div>
+        //                 <PDFDownloadLink className="dark" document={<MyDocument />} fileName="somename.pdf">
+        //                     {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download this recipe as a pdf')}
+        //                 </PDFDownloadLink>
+
+        //             </div>
+        //             <div className="mt-4">
+        //                 <h2 className="display-3">{recipe.name}</h2>
+        //                 <Rating detailed={true} reviews={recipe.reviews}/>
+        //                 <div className="row">
+        //                     <div className="col-lg-2 col-sm-0"></div>
+        //                     <div className="col-lg-8 col-sm-12">
+        //                         <div className="row justify-content-md-center m-2">
+        //                             <div className="mr-2 ml-2">User: {`${recipe.user.firstName} ${recipe.user.lastName}`}</div>
+        //                             <div className="mr-2 ml-2">{recipe.wasUpdated ? 'Posted': 'Edited'}: {recipe.date}</div>
+        //                             <div className="mr-2 ml-2">Prep Time: {recipe.prepTimeInMinutes}</div>
+        //                             <div className="mr-2 ml-2">Cook Time: {recipe.cookTimeInMinutes}</div>
+        //                             <div className="mr-2 ml-2">Servings: {recipe.servings}</div>
+
+        //                             {
+        //                             recipe.tags !== null && (
+        //                                 <div className="mr-2 ml-2">{`Tags:
+        //                                     ${
+        //                                         recipe.tags.map((tag) => {return (` ${tag.name}`).toLowerCase()})
+        //                                     }`}
+        //                                 </div>
+        //                             )}
+        //                         </div>
+
+        //                         <div className="card border-white">
+        //                             <img className="card-img-top p-2" src={recipe.imageLink} alt={`${recipe.name}`}></img>
+        //                             <div className="card-body p-0">
+        //                                 <form className="m-2">
+        //                                     {auth.user && (
+        //                                     <div className="col m-2">
+        //                                         <select className="p-1" name="myCookbooks" id="myCookbooks">
+        //                                             <option value="">--Add To Cookbook--</option>
+        //                                             <option value="Dessert Book">Dessert Book</option>
+        //                                             <option value="Mexican Food">Mexican Food</option>
+        //                                         </select>
+        //                                         <button className="btn btn-light btn-outline-dark btn-sm">Add Recipe</button>
+        //                                     </div>
+        //                                     )}
+        //                                     {/* <div className="col">
+        //                                         <lable className="text-secondary">Desired Servings: </lable>
+        //                                         <input type="number"  placeholder="Set Serving Size #..."></input>
+        //                                     </div> */}
+        //                                 </form>
+        //                                 <div className="text-left">
+        //                                     <h4>Ingredients</h4>
+        //                                     <ul>
+        //                                         {
+        //                                             recipe.ingredients.map((ingredient) => {
+        //                                                 return <li>{ingredient.quantity ? ingredient.quantity : ''} {ingredient.measurementUnit.measurementUnitId !== 0 && ingredient.measurementUnit.measurementUnitId !== 5 ? ingredient.measurementUnit.name : ''} {ingredient.ingredient.name}</li>
+        //                                             })
+        //                                         }
+        //                                     </ul>
+        //                                     <h4>Directions</h4>
+        //                                     <ol>
+        //                                         {
+        //                                             recipe.directions.map((direction) => {
+        //                                                 return <li>{direction.text}</li>
+        //                                             })
+        //                                         }
+        //                                     </ol>
+        //                                 </div>
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //                 <div className="col-lg-2 col-sm-0"></div>
+        //             </div>
+        //         </div>
+        //         <PDFDownloadLink className="dark" document={<MyDocument />} fileName="somename.pdf">
+        //             {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download this recipe as a pdf')}
+        //         </PDFDownloadLink>
+        //     </Page>
+        // </Document>
+    // const MyDocument = () => (
+    //     <Document className="center">
+    //         <Page size="A4" style={styles.page}>
+    //             <View style={styles.section}>
+    //                 <Text>Section #1</Text>
+    //             </View>
+    //             <View style={styles.section}>
+    //                 <Text>Section #2</Text>
+    //             </View>
+    //         </Page>
+    //     </Document>
+    // );
+
+    // if (!MyDocument) {
+    //     return null;
+    // }
+
     return (
         <div className="container full-body text-center">
+            {/* <div>
+                <MyDocument/>
+            </div> */}
+
+            {/* <DownloadButton/> */}
+
             <div className="mt-4">
                 <h2 className="display-3">{recipe.name}</h2>
                 <Rating detailed={true} reviews={recipe.reviews}/>
