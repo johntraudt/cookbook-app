@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import { Link } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -39,6 +40,10 @@ export default function UserProfile() {
         // };
         getCookBooks();
     },[]);
+
+    const removeFromCookBook = () => {
+
+    }
 
     useEffect(() => {
         setEmail();
@@ -118,40 +123,49 @@ export default function UserProfile() {
 
                 <Accordion defaultActiveKey="0">
                     <h3 className="m-2">Your Cookbooks:</h3>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            Cookbook 1's name
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="0">
-                        <Card.Body>
-                            <div>A list of cookbook 1's recipes with clickable links</div>
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <a className="btn btn-info ml-auto">View</a>
-                                <a className="btn btn-secondary ml-auto mr-auto">Export</a>
-                                <a className="btn btn-danger mr-auto">Delete</a>
-                            </div>
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            Cookbook 2's name
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>
-                            <div>A list of cookbook 2's recipes with clickable links</div>
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <a className="btn btn-info ml-auto">View</a>
-                                <a className="btn btn-secondary ml-auto mr-auto">Edit</a>
-                                <a className="btn btn-danger mr-auto">Delete</a>
-                            </div>
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
+                    {
+                        cookBooks.map((book) => (
+                            <Card>
+                                <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    {book.title}
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                <Card.Body>
+                                    {
+                                        
+
+                                        book.recipes.map((recipe) => (
+                                            <div className="row">
+                                            
+                                                <div className="col-3">
+                                                    <Link className="dark" to={`/recipe/${recipe.recipeId}`}>
+                                                        <img src={recipe.imageLink} height='75'></img>
+                                                    </Link>
+                                                </div>
+                                                <div className="col-5">
+                                                    <Link className="dark" to={`/recipe/${recipe.recipeId}`}>
+                                                        {recipe.name}
+                                                    </Link>
+                                                </div>
+                                                <div className="col-4">
+                                                <button className="btn btn-danger" onClick={() => removeFromCookBook()}>X</button>
+                                                </div>
+                                                {/* <Link className="dark" to={`/recipe/${recipe.recipeId}`}><div className="col-3"><img src={recipe.imageLink} height='75'></img></div><div className="col-9">{recipe.name}</div></Link>
+                                                <button className="btn btn-secondary" onClick={() => removeFromCookBook()}>Remove</button> */}
+                                            </div>
+                                        ))
+                                    }
+                                    <div className="d-flex flex-wrap justify-content-center">
+                                        <a className="btn btn-info ml-auto mr-auto">View</a>
+                                        <a className="btn btn-danger ml-auto mr-auto">Delete</a>
+                                    </div>
+                                </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        ))
+                    }
 
                 </Accordion>
                 <Button className="btn-secondary m-2" onClick={() => setOpen(!open)} aria-controls="collapse-form" aria-expanded={open}>Create Cookbook</Button>
