@@ -64,10 +64,13 @@ export default function Recipe() {
                 .then((response) => {
                     if (response.status >= 400) {
                         history.push("/notfound");
-                    } else{
-                        (response) => response.json()
+                    } else {
+                        response.json()
+                            .then((data) => setRecipe(data));
                     }
                 })
+
+
                 // .then(response => response.json())
                 // .then((data) => {
                 //     setRecipe(data);
