@@ -8,6 +8,15 @@ import java.sql.SQLException;
 
 public class AppUserMapper implements RowMapper<AppUser> {
 
+    private boolean includeLogin;
+
+    public AppUserMapper() {
+    }
+
+    public AppUserMapper(boolean includeLogin) {
+        this.includeLogin = includeLogin;
+    }
+
     @Override
     public AppUser mapRow(ResultSet resultSet, int i) throws SQLException {
         AppUser user = new AppUser();
@@ -17,7 +26,14 @@ public class AppUserMapper implements RowMapper<AppUser> {
         user.setEmail(resultSet.getString("email"));
         user.setActive(resultSet.getBoolean("is_active"));
         user.setUserRoleId(resultSet.getInt("user_role_id"));
+
+//        if (includeLogin) {
+//            user.setUserName(resultSet.getString("user_name"));
+//            user.setPasswordHash(resultSet.getString("password_hash"));
+//        }
         return user;
     }
+
+
 
 }

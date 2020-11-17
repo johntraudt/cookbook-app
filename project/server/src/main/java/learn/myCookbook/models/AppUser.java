@@ -42,8 +42,6 @@ public class AppUser {
     @Max(value = UserRole.NUMBER_OF_USER_ROLES, message = "invalid user role id.")
     private int userRoleId;
 
-    List<UserRole> roles = new ArrayList<>();
-
     public int getUserId() {
         return userId;
     }
@@ -116,11 +114,8 @@ public class AppUser {
         this.userRoleId = userRoleId;
     }
 
-    public List<UserRole> getRoles() {
-        return roles;
+    public List<String> getRoles() {
+        return List.of(this.role.getName());
     }
 
-    public void setRoles(List<UserRole> roles) {
-        this.roles = roles;
-    }
 }

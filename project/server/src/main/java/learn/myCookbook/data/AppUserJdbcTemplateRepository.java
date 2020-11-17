@@ -42,7 +42,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 .findFirst().orElse(null);
 
         if (user != null) {
-            setLogin(user);
+            setLogin(user, false);
             setRole(user);
         }
 
@@ -56,11 +56,11 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 "join login l on u.user_id = l.user_id " +
                 "where l.user_name = ?;";
 
-        AppUser user = jdbcTemplate.query(sql, new AppUserMapper(), userName).stream()
+        AppUser user = jdbcTemplate.query(sql, new AppUserMapper(true), userName).stream()
                 .findFirst().orElse(null);
 
         if (user != null) {
-            setLogin(user);
+            setLogin(user, true);
             setRole(user);
         }
 
@@ -77,7 +77,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 .findFirst().orElse(null);
 
         if (user != null) {
-            setLogin(user);
+            setLogin(user, false);
             setRole(user);
         }
 
@@ -96,6 +96,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     }
 
     @Override
+    @Transactional
     public AppUser add(AppUser user) {
         final String sql = "insert into `user` (first_name, last_name, email, user_role_id) "
                 + "values (?,?,?,?);";
@@ -114,7 +115,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         }
         user.setUserId(keyHolder.getKey().intValue());
         addLogin(user);
-        //updateRoles(user);
+        addRoles(user);
 
         return user;
     }
@@ -169,7 +170,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         user.setRole(userRole);
     }
 
-    private void setLogin(AppUser user) {
+    private void setLogin(AppUser user, boolean includePassword) {
         final String sql = "select l.user_id, l.user_name, l.password_hash " +
                 "from login l " +
                 "join user u on u.user_id = l.user_id " +
@@ -179,6 +180,9 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 .stream()
                 .findFirst().orElse(null);
         user.setUserName(login.getUserName());
+        if (includePassword) {
+            user.setPasswordHash(login.getPasswordHash());
+        }
     }
 
     private boolean addLogin(AppUser user) {
@@ -186,5 +190,9 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 "values (?,?,?);";
 
         return jdbcTemplate.update(sql, user.getUserId(), user.getUserName(), user.getPasswordHash()) > 0;
+    }
+
+    private void addRoles(AppUser user) {
+
     }
 }
