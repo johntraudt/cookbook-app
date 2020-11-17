@@ -61,12 +61,21 @@ export default function Recipe() {
     useEffect(() => {
         const getRecipe = () => {
             fetch(`http://localhost:8080/api${location.pathname}`)
-                .then
-                .then(response => response.json())
-                .then((data) => {
-                    setRecipe(data);
-                    console.log(data);
-                });
+                .then((response) => {
+                    if (response.status >= 400) {
+                        history.push("/notfound");
+                    } else {
+                        response.json()
+                            .then((data) => setRecipe(data));
+                    }
+                })
+
+
+                // .then(response => response.json())
+                // .then((data) => {
+                //     setRecipe(data);
+                //     console.log(data);
+                // });
         }
         getRecipe();
     }, [location.pathname]);

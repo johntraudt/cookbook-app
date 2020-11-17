@@ -28,8 +28,13 @@ public class RecipeController {
     }
 
     @GetMapping("/{recipeId}")
-    public Recipe findById(@PathVariable int recipeId) {
-        return service.findById(recipeId);
+    public ResponseEntity<Recipe> findById(@PathVariable int recipeId) {
+        Result<Recipe> result = new Result();
+        result.setPayload(service.findById(recipeId));
+        if (result.getPayload() == null) {
+            return new ResponseEntity<Recipe>(result.getPayload(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Recipe>(result.getPayload(), HttpStatus.OK);
     }
 
     @GetMapping("/search/{recipeName}")
