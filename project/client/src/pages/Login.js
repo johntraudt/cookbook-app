@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
 
 import AuthContext from '../page-elements/AuthContext';
@@ -58,7 +59,17 @@ export default function Login() {
                 <div className="col-lg-4 col-md-2 col-sm-0"></div>
             </div> */}
 
-            
+            <Form  onSubmit={(event) => handleSubmit(event)} >
+                <Form.Row>
+                    <Form.Group className="mr-2" controlId="validationCustom02">
+                        <Form.Control onChange={event => setUsername(event.target.value)} type="text" placeholder="Username" />
+                    </Form.Group>
+                    <Form.Group controlId="">
+                        <Form.Control onChange={event => setPassword(event.target.value)} type="password" placeholder="Password" />
+                        <p></p>
+                    </Form.Group>
+                </Form.Row>
+            </Form>
 
             <div className="mt-4">
                 <div className="text-center m-5">
