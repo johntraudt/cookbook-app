@@ -2,9 +2,9 @@ POST http://localhost:8080/api/user/create_account HTTP/1.1
 Content-Type: application/json
 
 {
-    "userName": "john.traudt100",
-    "passwordHash": "super100",
-    "email": "jt100@streets.edu",
+    "userName": "john.traudt1910",
+    "passwordHash": "12345678901234567890",
+    "email": "jt1990@streets.edu",
     "firstName": "John",
     "lastName": "B Traudt",
     "userRoleId": "1"
@@ -16,6 +16,6 @@ POST http://localhost:8080/api/user/authenticate HTTP/1.1
 Content-Type: application/json
 
 {
-    "userName": "john.traudt100",
+    "userName": "john.traudt1900",
     "passwordHash": "super100"
 }

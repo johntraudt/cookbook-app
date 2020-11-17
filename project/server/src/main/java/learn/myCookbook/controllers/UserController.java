@@ -46,7 +46,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/create_account")
+    @PostMapping
     public ResponseEntity<Object> add(@RequestBody AppUser user) {
         UserRole role = new UserRole();
 
