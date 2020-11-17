@@ -48,7 +48,6 @@ public class UserController {
 
     @PostMapping("/create_account")
     public ResponseEntity<Object> add(@RequestBody AppUser user) {
-//        user.getRoles().add("USER");
         UserRole role = new UserRole();
 
         role.setName("USER");
@@ -61,6 +60,7 @@ public class UserController {
             map.put("appUserId", String.valueOf(user.getUserId()));
             return new ResponseEntity<>(map, HttpStatus.CREATED);
         }
+        
         return ErrorResponse.build(result);
     }
 

@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mycookbook_test`.`login` (
   `user_id` INT NOT NULL,
   `user_name` VARCHAR(45) NOT NULL,
-  `password_hash` VARCHAR(45) NOT NULL,
+  `password_hash` VARCHAR(255) NOT NULL,
   UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC) VISIBLE,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `FK_user_login`
