@@ -3,7 +3,6 @@ package learn.myCookbook.controllers;
 import learn.myCookbook.domain.DirectionService;
 import learn.myCookbook.domain.Result;
 import learn.myCookbook.models.Direction;
-import learn.myCookbook.models.Ingredient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
