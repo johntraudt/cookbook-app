@@ -13,8 +13,7 @@ import ScrollToTop from './ScrollToTop';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
 import Cookbook from './pages/Cookbook';
-import Tag from './pages/Tag';
-// import MyDoument from './pages/PdfExport';
+import Tag from "./pages/Tag";
 
 import AuthContext from './page-elements/AuthContext';
 
@@ -28,33 +27,32 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   const login = (token) => {
-    const {sub: userName, authorities} = jwt_decode(token);
-
-    // Split the authorities into an array of roles.
-  
-  useEffect(()=>{
-    fetch('') 
-            .then(response => response.json())
-            .then((data) => {
-                setRecipes(data);
-            });
-  })
+    const { sub: userName, authorities: role} = jwt_decode(token);  
 
     const user = {
-      userId: parseInt(appUserId, 10),
       userName,
-      email,
-      firstName,
-      lastName,
-      roles: authorities,
-      userRoleId,
-      active,
+      // firstName,
+      // lastName,
+      role,
+      // userRoleId,
+      // active,
       token,
-      hasRole(role) {
-        return this.roles.includes(role);
-      }
     };
     console.log(user);
+
+    const findUserByUserName = () => {
+      if (userName) {
+            fetch(`http://localhost:8080/api/user/name/${userName}`) 
+            .then(response => response.json())
+            .then((data) => {
+              setUser({
+                userName: userName,
+                firstName: data.userName,
+                lastName: data.lastName,
+                role: role,
+                userRoleId: data.
+              });
+            });
 
     setUser(user);
 
@@ -70,6 +68,12 @@ export default function App() {
     login,
     logout
   };
+
+
+
+
+
+
 
   return (
     <AuthContext.Provider value={auth}>
@@ -91,7 +95,6 @@ export default function App() {
             <Route path="/post" component={user ? Login : PostRecipe}/>
             <Route path="/cookbook" component={Cookbook}/>
             <Route path="/recipe-tag" component={Tag}/>
-            {/* <Route path="/pdf-export" component={MyDocument}/> */}
           </Switch>
           <Footer />
         </div>
