@@ -29,6 +29,9 @@ export default function App() {
   const login = (token) => {
     const { sub: userName, authorities: role} = jwt_decode(token);  
 
+    console.log('here')
+    console.log(userName)
+
     const user = {
       userName,
       // firstName,
@@ -40,23 +43,31 @@ export default function App() {
     };
     console.log(user);
 
-    const findUserByUserName = () => {
-      if (userName) {
-            fetch(`http://localhost:8080/api/user/name/${userName}`) 
-            .then(response => response.json())
-            .then((data) => {
-              setUser({
-                userName: userName,
-                firstName: data.userName,
-                lastName: data.lastName,
-                role: role,
-                userRoleId: data.
-              });
-            });
 
+
+    // // console.log(user);
+
+    // // return user;
+    //   }
+    // };
     setUser(user);
 
     return user;
+  }
+
+  const findUserByUserName = () => {
+    fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
+    .then(response => response.json())
+    .then((data) => {
+      setUser({
+        userName: user.userName,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        role: user.role,
+        token: user.token,
+      });
+    });
   };
 
   const logout = () => {
@@ -68,12 +79,6 @@ export default function App() {
     login,
     logout
   };
-
-
-
-
-
-
 
   return (
     <AuthContext.Provider value={auth}>
@@ -102,3 +107,4 @@ export default function App() {
     </AuthContext.Provider>
   );
 }
+

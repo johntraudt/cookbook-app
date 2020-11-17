@@ -4,12 +4,12 @@ import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../page-elements/AuthContext';
 
 
-function Login() {
+export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     
     const auth = useContext(AuthContext);
-    const history = useHistory();
+    // const history = useHistory();
 
     useEffect( () => {
         setPassword();
@@ -29,9 +29,11 @@ function Login() {
                 passwordHash: password,
             })
         });
-        
+        console.log(response)
+
         if (response.status === 200) {
             const { jwt_token } = await response.json();
+            console.log(jwt_token)
             auth.login(jwt_token);
         } 
         // else if (response.status === 403) {
@@ -42,7 +44,6 @@ function Login() {
       };
 
     return (
-        
         <div className="container full-body">
             <div className="mt-4">
                 <div className="text-center m-5">
@@ -80,8 +81,5 @@ function Login() {
                 </div>
             </div>
         </div>
-
     );
 }
-  
-export default Login;
