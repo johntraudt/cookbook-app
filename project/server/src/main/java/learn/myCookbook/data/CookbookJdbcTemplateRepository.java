@@ -65,7 +65,15 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
                 "join user u on c.user_id = u.user_id " +
                 "where c.user_id = ?;";
 
-        return jdbcTemplate.query(sql, new CookbookMapper(), userId);
+        List<Cookbook> cookbooks = jdbcTemplate.query(sql, new CookbookMapper(), userId);
+        for (Cookbook cookbook : cookbooks) {
+            if (cookbook != null) {
+                cookbook.setUser(appUserRepository.findById(cookbook.getUserId()));
+                cookbook.setRecipes(recipeRepository.findByCookbookId(cookbook.getCookbookId()));
+            }
+        }
+
+        return cookbooks;
     }
 
     @Override
@@ -76,7 +84,15 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
                 "where c.user_id = ? " +
                 "and c.is_private = ?;";
 
-        return jdbcTemplate.query(sql, new CookbookMapper(), userId, 0);
+        List<Cookbook> cookbooks = jdbcTemplate.query(sql, new CookbookMapper(), userId, 0);
+        for (Cookbook cookbook : cookbooks) {
+            if (cookbook != null) {
+                cookbook.setUser(appUserRepository.findById(cookbook.getUserId()));
+                cookbook.setRecipes(recipeRepository.findByCookbookId(cookbook.getCookbookId()));
+            }
+        }
+
+        return cookbooks;
     }
 
     @Override
