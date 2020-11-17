@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import AuthContext from '../page-elements/AuthContext';
-import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-import DownloadButton from '../page-elements/DownloadButton';
+// import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+// import DownloadButton from '../page-elements/DownloadButton';
 
 
 export default function Recipe() {
@@ -114,17 +114,17 @@ export default function Recipe() {
         console.log(review.comment);
     }
 
-    const styles = StyleSheet.create({
-        page: {
-          flexDirection: 'row',
-          backgroundColor: '#E4E4E4'
-        },
-        section: {
-          margin: 10,
-          padding: 10,
-          flexGrow: 1
-        }
-      });
+    // const styles = StyleSheet.create({
+    //     page: {
+    //       flexDirection: 'row',
+    //       backgroundColor: '#E4E4E4'
+    //     },
+    //     section: {
+    //       margin: 10,
+    //       padding: 10,
+    //       flexGrow: 1
+    //     }
+    //   });
 
     
         // <Document className="center">

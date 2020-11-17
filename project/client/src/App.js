@@ -12,6 +12,8 @@ import AboutUs from './pages/AboutUs';
 import ScrollToTop from './ScrollToTop';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
+import Cookbook from './pages/Cookbook';
+import Tag from './pages/Tag';
 
 import AuthContext from './page-elements/AuthContext';
 
