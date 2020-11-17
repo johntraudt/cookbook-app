@@ -19,7 +19,7 @@ public class Cookbook {
     @Min(value = 0, message = "User id must not be negative.")
     private int userId;
 
-    private User user;
+    private AppUser user;
     private List<Recipe> recipes;
 
 
@@ -56,11 +56,11 @@ public class Cookbook {
         this.userId = userId;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 

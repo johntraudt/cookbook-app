@@ -1,6 +1,6 @@
 package learn.myCookbook.data;
 
-import learn.myCookbook.models.User;
+import learn.myCookbook.models.AppUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserJdbcTemplateRepositoryTest {
 
     @Autowired
-    UserJdbcTemplateRepository repository;
+    AppUserJdbcTemplateRepository repository;
 
     @Autowired
     KnownGoodState knownGoodState;
@@ -26,11 +26,11 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindAll() {
-        List<User> users = repository.findAll();
+        List<AppUser> users = repository.findAll();
 
         assertNotNull(users);
 
-        for (User user : users) {
+        for (AppUser user : users) {
             System.out.println(user.getUserId() + user.getFirstName());
         }
 
@@ -40,7 +40,7 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindById() {
-        User user = repository.findById(1);
+        AppUser user = repository.findById(1);
 
         assertEquals(1, user.getUserId());
         assertEquals("John", user.getFirstName());
@@ -48,14 +48,14 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByUserName() {
-        User user = repository.findByUserName("john.traudt");
+        AppUser user = repository.findByUserName("john.traudt");
         assertNotNull(user);
         assertEquals("John", user.getFirstName());
     }
 
     @Test
     void shouldFindByEmail() {
-        User user = repository.findByEmail("john@traudt.com");
+        AppUser user = repository.findByEmail("john@traudt.com");
         assertNotNull(user);
         assertEquals("John", user.getFirstName());
     }
@@ -80,9 +80,9 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAdd() {
-        User user = makeUser();
+        AppUser user = makeUser();
         user.setEmail("new email");
-        User actual = repository.add(user);
+        AppUser actual = repository.add(user);
 
         assertNotNull(actual);
         System.out.println(actual.getUserId());
@@ -92,7 +92,7 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdate() {
-        User user = makeUser();
+        AppUser user = makeUser();
         user.setUserId(2);
 
         assertTrue(repository.update(user));
@@ -100,7 +100,7 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldNotUpdateMissing() {
-        User user = makeUser();
+        AppUser user = makeUser();
         user.setUserId(200);
 
         assertFalse(repository.update(user));
@@ -112,8 +112,8 @@ class UserJdbcTemplateRepositoryTest {
         assertFalse(repository.findById(2).isActive());
     }
 
-    private User makeUser() {
-        User user = new User();
+    private AppUser makeUser() {
+        AppUser user = new AppUser();
         user.setUserId(0);
         user.setFirstName("Test");
         user.setLastName("Testerson");

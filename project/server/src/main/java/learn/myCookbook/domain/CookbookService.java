@@ -2,10 +2,10 @@ package learn.myCookbook.domain;
 
 import learn.myCookbook.data.CookbookRepository;
 import learn.myCookbook.data.RecipeRepository;
-import learn.myCookbook.data.UserRepository;
+import learn.myCookbook.data.AppUserRepository;
 import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Recipe;
-import learn.myCookbook.models.User;
+import learn.myCookbook.models.AppUser;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -18,12 +18,12 @@ import java.util.Set;
 @Service
 public class CookbookService {
     private final CookbookRepository repository;
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
     private final RecipeRepository recipeRepository;
 
-    public CookbookService(CookbookRepository repository, UserRepository userRepository, RecipeRepository recipeRepository) {
+    public CookbookService(CookbookRepository repository, AppUserRepository appUserRepository, RecipeRepository recipeRepository) {
         this.repository = repository;
-        this.userRepository = userRepository;
+        this.appUserRepository = appUserRepository;
         this.recipeRepository = recipeRepository;
     }
 
@@ -146,7 +146,7 @@ public class CookbookService {
             }
         }
 
-        if (userRepository.findById(cookbook.getUserId()) == null) {
+        if (appUserRepository.findById(cookbook.getUserId()) == null) {
             result.addMessage("Could not find that user.", ResultType.NOT_FOUND);
         }
 

@@ -1,10 +1,10 @@
 package learn.myCookbook.data;
 
 import learn.myCookbook.data.mappers.LoginMapper;
-import learn.myCookbook.data.mappers.UserMapper;
+import learn.myCookbook.data.mappers.AppUserMapper;
 import learn.myCookbook.data.mappers.UserRoleMapper;
+import learn.myCookbook.models.AppUser;
 import learn.myCookbook.models.Login;
-import learn.myCookbook.models.User;
 import learn.myCookbook.models.UserRole;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -17,32 +17,32 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class UserJdbcTemplateRepository implements UserRepository {
+public class AppUserJdbcTemplateRepository implements AppUserRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public UserJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
+    public AppUserJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<AppUser> findAll() {
         final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
                 + "from user limit 1000";
-        return jdbcTemplate.query(sql, new UserMapper());
+        return jdbcTemplate.query(sql, new AppUserMapper());
     }
 
     @Override
-    public User findById(int userId) {
+    public AppUser findById(int userId) {
         final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
                 + "from user "
                 + "where user_id = ?;";
 
-        User user = jdbcTemplate.query(sql, new UserMapper(), userId).stream()
+        AppUser user = jdbcTemplate.query(sql, new AppUserMapper(), userId).stream()
                 .findFirst().orElse(null);
 
         if (user != null) {
-            setLogin(user);
+            setLogin(user, false);
             setRole(user);
         }
 
@@ -50,17 +50,17 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
-    public User findByUserName(String userName) {
+    public AppUser findByUserName(String userName) {
         final String sql = "select u.user_id, u.first_name, u.last_name, u.email, u.is_active, u.user_role_id " +
                 "from user u " +
                 "join login l on u.user_id = l.user_id " +
                 "where l.user_name = ?;";
 
-        User user = jdbcTemplate.query(sql, new UserMapper(), userName).stream()
+        AppUser user = jdbcTemplate.query(sql, new AppUserMapper(true), userName).stream()
                 .findFirst().orElse(null);
 
         if (user != null) {
-            setLogin(user);
+            setLogin(user, true);
             setRole(user);
         }
 
@@ -68,16 +68,16 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public AppUser findByEmail(String email) {
         final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
                 + "from user "
                 + "where email = ?;";
 
-        User user = jdbcTemplate.query(sql, new UserMapper(), email).stream()
+        AppUser user = jdbcTemplate.query(sql, new AppUserMapper(), email).stream()
                 .findFirst().orElse(null);
 
         if (user != null) {
-            setLogin(user);
+            setLogin(user, false);
             setRole(user);
         }
 
@@ -96,7 +96,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
-    public User add(User user) {
+    @Transactional
+    public AppUser add(AppUser user) {
         final String sql = "insert into `user` (first_name, last_name, email, user_role_id) "
                 + "values (?,?,?,?);";
 
@@ -114,12 +115,13 @@ public class UserJdbcTemplateRepository implements UserRepository {
         }
         user.setUserId(keyHolder.getKey().intValue());
         addLogin(user);
+        addRoles(user);
 
         return user;
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(AppUser user) {
         final String sql = "update user set " +
                 "first_name = ?, " +
                 "last_name = ?, " +
@@ -156,7 +158,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
         return jdbcTemplate.update(sql, 0, userId) > 0;
     }
 
-    private void setRole(User user) {
+    private void setRole(AppUser user) {
         final String sql = "select ur.user_role_id, ur.user_role_name " +
                 "from user_role ur " +
                 "join user u on u.user_role_id = ur.user_role_id " +
@@ -168,7 +170,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
         user.setRole(userRole);
     }
 
-    private void setLogin(User user) {
+    private void setLogin(AppUser user, boolean includePassword) {
         final String sql = "select l.user_id, l.user_name, l.password_hash " +
                 "from login l " +
                 "join user u on u.user_id = l.user_id " +
@@ -178,12 +180,19 @@ public class UserJdbcTemplateRepository implements UserRepository {
                 .stream()
                 .findFirst().orElse(null);
         user.setUserName(login.getUserName());
+        if (includePassword) {
+            user.setPasswordHash(login.getPasswordHash());
+        }
     }
 
-    private boolean addLogin(User user) {
+    private boolean addLogin(AppUser user) {
         final String sql = "insert into login (user_id, user_name, password_hash) " +
                 "values (?,?,?);";
 
         return jdbcTemplate.update(sql, user.getUserId(), user.getUserName(), user.getPasswordHash()) > 0;
+    }
+
+    private void addRoles(AppUser user) {
+
     }
 }

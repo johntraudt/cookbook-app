@@ -9,7 +9,7 @@ public class Recipe {
 
     @NotNull(message = "Recipe must have a user.")
     private int userId;
-    private User user;
+    private AppUser user;
 
     @NotNull
     @NotBlank(message = "Recipe must have a name.")
@@ -60,11 +60,11 @@ public class Recipe {
         this.userId = userId;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 

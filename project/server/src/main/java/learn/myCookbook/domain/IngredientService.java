@@ -2,8 +2,6 @@ package learn.myCookbook.domain;
 
 import learn.myCookbook.data.IngredientRepository;
 import learn.myCookbook.models.Ingredient;
-import learn.myCookbook.models.User;
-import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
