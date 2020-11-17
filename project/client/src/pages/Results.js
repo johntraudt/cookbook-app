@@ -34,7 +34,7 @@ export default function Results() {
 
     if (recipes.length === 0) {
         return (
-            <div className="container full-body">
+            <div className="container full-body mt-4">
                 <h1>No results were found for: {searchTerm}</h1>
             </div>
         )

@@ -1,7 +1,8 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
-import Loading from '../resources/loading-2.gif'
+// import Loading from '../resources/loading-2.gif';
+import Success from '../page-elements/Success'
 
 class SignUp extends React.Component {
   constructor() {
@@ -163,10 +164,7 @@ class SignUp extends React.Component {
           )}
 
           {isSuccess && (
-            <div className="text-center">
-              <h3>Success! Redirecting...</h3>
-              <img src={Loading}></img>
-            </div>
+            <Success message='Success! Redirecting....'/>
           )}
         </div>
 

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Success from '../page-elements/Success' 
 import {Redirect} from 'react-router-dom';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -71,17 +72,6 @@ export default function PostRecipe() {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
-                // userId: 2,
-                // name: "Yum yum",
-                // prepTimeInMinutes: 0, 
-                // cookTimeInMinutes: 25, 
-                // servings: 1, 
-                // date: "2020-11-02", 
-                // wasUpdated: 1, 
-                // isFeatured: 0, 
-                // calories: 50, 
-                // imageLink: "picture.jpg" 
-
                 recipeId: 0,
                 userId: 1,
                 name: title,
@@ -101,7 +91,7 @@ export default function PostRecipe() {
         .then(response => {
             if (response.status === 201) {
                 console.log('success!')
-                // response.json().then(data => console.log(data));
+                
             } else if (response.status === 400) {
                 console.log('errors!');
                 console.log(response);
@@ -316,7 +306,6 @@ export default function PostRecipe() {
                                             <td><input value={ingredient.ingredient.name} className="expand" onChange={event => changeIngredientName(event, ingredient.ingredientListIndex)} type="text" placeholder={`Ingredient ${ingredient.ingredientListIndex} here...`}></input></td>
                                             <td><input value={ingredient.quantity} onChange={event => changeIngredientQuantity(event, ingredient.ingredientListIndex)} type="text" placeholder="Quantity here..."></input></td>
                                             
-                                            
                                             <td>
                                                 <select onChange={(event) => {changeMeasurementUnitId(event, ingredient.ingredientListIndex)}}>
                                                 {
@@ -326,14 +315,6 @@ export default function PostRecipe() {
                                                 }
                                                 </select>
                                             </td>
-
-
-                                            {/* <DropdownButton  title={'fill me'} onSelect={console.log()}>
-                                                {measurementUnits.map((unit) => {
-                                                    return <Dropdown.Item eventKey={unit.measurementUnitId}>'test'</Dropdown.Item>
-                                                })}
-                                            </DropdownButton> */}
-
 
                                             <td><button onClick={() => handleDeleteIngredient(ingredient.ingredientListIndex)} className="btn btn-danger pt-1 pb-1">X</button></td>
                                         </tr>
