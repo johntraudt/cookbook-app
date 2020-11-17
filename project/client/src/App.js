@@ -20,7 +20,7 @@ import AuthContext from './page-elements/AuthContext';
 import './App.css'
 
 import jwt_decode from 'jwt-decode';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 export default function App() {
@@ -43,7 +43,25 @@ export default function App() {
     };
     console.log(user);
 
-
+    const findUserByUserName = () => {
+      if (user) {
+        fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
+        .then(response => response.json())
+        .then((data) => {
+          setUser({
+            userName: user.userName,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            role: user.role,
+            token: user.token,
+            active: data.active,
+          });
+        });
+      }
+    };
+    
+    findUserByUserName();
 
     // // console.log(user);
 
@@ -56,19 +74,26 @@ export default function App() {
   }
 
   const findUserByUserName = () => {
-    fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
-    .then(response => response.json())
-    .then((data) => {
-      setUser({
-        userName: user.userName,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        role: user.role,
-        token: user.token,
+    if (user) {
+      fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
+      .then(response => response.json())
+      .then((data) => {
+        setUser({
+          userName: user.userName,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          role: user.role,
+          token: user.token,
+          active: data.active,
+        });
       });
-    });
+    }
   };
+
+  useEffect(() => {
+    findUserByUserName()
+  }, [])
 
   const logout = () => {
     setUser(null);
@@ -97,7 +122,7 @@ export default function App() {
             <Route path="/notfound" component={NotFound}/>
             <Route path="/about" component={AboutUs}/>
             <Route path="/privacy" component={Privacy}/>
-            <Route path="/post" component={user ? Login : PostRecipe}/>
+            <Route path="/post" component={user ? PostRecipe : Login}/>
             <Route path="/cookbook" component={Cookbook}/>
             <Route path="/recipe-tag" component={Tag}/>
           </Switch>

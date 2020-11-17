@@ -64,8 +64,8 @@ function Header() {
                                 <Link className="dark mr-auto ml-auto" to='/user'>
                                     <div className='ml-5 mr-5'>My Profile</div>
                                 </Link>
-                                <Link className="dark mr-auto ml-auto" to='/cookbook'>
-                                    <div className='ml-5 mr-5'>MyCookbooks</div>
+                                <Link className="dark mr-auto ml-auto" to='/post'>
+                                    <div className='ml-5 mr-5'>Post a Recipe</div>
                                 </Link>
                             </>
                         )}
