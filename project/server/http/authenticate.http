@@ -1,0 +1,21 @@
+POST http://localhost:8080/api/user/create_account HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "john.traudt4",
+    "passwordHash": "super",
+    "email": "jt4@streets.edu",
+    "firstName": "John",
+    "lastName": "B Traudt",
+    "userRoleId": 1
+}
+
+###
+
+POST http://localhost:8080/api/user/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "john.traudt4",
+    "passwordHash": "super"
+}
