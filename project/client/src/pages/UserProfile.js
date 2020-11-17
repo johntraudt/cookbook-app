@@ -14,8 +14,31 @@ export default function UserProfile() {
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
     // const [user, setUser] = useState({});
+    const [cookBooks, setCookBooks] = useState([]);
+    const [recipes, setRecipes] = useState([]);
 
     const auth = useContext(AuthContext);
+
+    useEffect(()=>{
+        const getCookBooks = () => {
+            fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+                .then(response => response.json())
+                .then((data) => {
+                    setCookBooks(data);
+                    console.log('below')
+                    console.log(data)
+                })
+        };
+        // const getMeasurementUnits = () => {
+        //     fetch('http://localhost:8080/api/measurement-unit')
+        //         .then(response => response.json())
+        //         .then((data) => {
+        //             setMeasurementUnits(data);
+        //             console.log(data)
+        //         })
+        // };
+        getCookBooks();
+    },[]);
 
     useEffect(() => {
         setEmail();
