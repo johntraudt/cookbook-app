@@ -3,6 +3,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import banner from '../resources/home-banner.jpg';
 import SearchBar from '../page-elements/SearchBar';
 import SquareCard from '../page-elements/SquareCard';
+import CookbookCardTemp from '../page-elements/CookbookCardTemp';
 
 export default function Cookbook() {
 
@@ -47,11 +48,14 @@ export default function Cookbook() {
                 </div>
                 
                 <div className="d-flex flex-wrap justify-content-center">
-                {cookbook.recipes.map(recipe => (
-                    <div className="col-lg-4 col-md-6 col-sm-12" id={recipe.recipeId}>
-                        <SquareCard recipe={recipe} />
-                    </div>
-                ))}
+                    {cookbook.recipes.map(recipe => (
+                        <div className="col-lg-4 col-md-6 col-sm-12" id={recipe.recipeId}>
+                            <CookbookCardTemp recipe={recipe} />
+                            {/* <div className="text-center">
+                                <button>Press me</button>
+                            </div> */}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

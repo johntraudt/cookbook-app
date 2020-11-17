@@ -14,7 +14,7 @@ import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
 import Cookbook from './pages/Cookbook';
 import Tag from './pages/Tag';
-
+import CookbookCardTemp from './page-elements/CookbookCardTemp';
 import AuthContext from './page-elements/AuthContext';
 
 import './App.css'
