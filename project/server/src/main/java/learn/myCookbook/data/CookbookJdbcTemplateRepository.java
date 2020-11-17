@@ -19,12 +19,12 @@ import java.util.List;
 public class CookbookJdbcTemplateRepository implements CookbookRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
     private final RecipeRepository recipeRepository;
 
-    public CookbookJdbcTemplateRepository(JdbcTemplate jdbcTemplate, UserRepository userRepository, RecipeRepository recipeRepository) {
+    public CookbookJdbcTemplateRepository(JdbcTemplate jdbcTemplate, AppUserRepository appUserRepository, RecipeRepository recipeRepository) {
         this.jdbcTemplate = jdbcTemplate;
-        this.userRepository = userRepository;
+        this.appUserRepository = appUserRepository;
         this.recipeRepository = recipeRepository;
     }
 
@@ -50,9 +50,10 @@ public class CookbookJdbcTemplateRepository implements CookbookRepository {
                 .orElse(null);
 
         if (cookbook != null) {
-            cookbook.setUser(userRepository.findById(cookbook.getUserId()));
+            cookbook.setUser(appUserRepository.findById(cookbook.getUserId()));
             cookbook.setRecipes(recipeRepository.findByCookbookId(cookbookId));
         }
+
 
         return cookbook;
     }
