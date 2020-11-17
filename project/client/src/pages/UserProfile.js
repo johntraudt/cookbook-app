@@ -22,24 +22,17 @@ export default function UserProfile() {
     const auth = useContext(AuthContext);
     const history = useHistory();
 
+    const getCookBooks = () => {
+        fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+            .then(response => response.json())
+            .then((data) => {
+                setCookBooks(data);
+                console.log('below')
+                console.log(data)
+            });
+    };
+
     useEffect(()=>{
-        const getCookBooks = () => {
-            fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
-                .then(response => response.json())
-                .then((data) => {
-                    setCookBooks(data);
-                    console.log('below')
-                    console.log(data)
-                })
-        };
-        // const getMeasurementUnits = () => {
-        //     fetch('http://localhost:8080/api/measurement-unit')
-        //         .then(response => response.json())
-        //         .then((data) => {
-        //             setMeasurementUnits(data);
-        //             console.log(data)
-        //         })
-        // };
         getCookBooks();
     },[]);
 
@@ -54,13 +47,49 @@ export default function UserProfile() {
             .then((response) => {
                 if (response.status >= 400) {
                     history.push("/notfound");
-                } 
-            });
-    }
+                } else {
+                    getCookBooks();
+                }
+            }
+        );
+    };
 
-    const deleteCookBook = (cookbookId) => {
+    const deleteCookBook = (book) => {
+        fetch(`http://localhost:8080/api/cookbook/${auth.user.userId}`, {
+            method: 'delete'})
+            .then((response) => {
+                if (response.status >= 400) {
+                    history.push("/notfound");
+                } else {
+                    getCookBooks();
+                }
+            }
+        );
+    };
 
-    }
+    const createCookBook = (event) => {
+        event.preventDefault();
+        fetch(`http://localhost:8080/api/cookbook`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                cookbookId: 0,
+                title: cookBook,
+                "userId": auth.user.userId,
+                "user": null,
+                "recipes": null,
+                "private": false
+            })
+        }).then((response) => {
+            if (response.status === 201) {
+                getCookBooks()
+                console.log('success')
+            } else {
+                console.log(response)
+            }
+        });
+    };
+    
 
     useEffect(() => {
         setEmail();
@@ -73,7 +102,6 @@ export default function UserProfile() {
         console.log(lastName),
         console.log(cookBook),
         console.log(userName)]);    
-
 
 
     return (
@@ -179,7 +207,7 @@ export default function UserProfile() {
                                         <Link className="ml-auto mr-auto" to={`/cookbook/${book.cookbookId}`}>
                                             <button type="button" className="btn btn-info" >View Detailed</button>
                                         </Link>
-                                        <button type="button" onClick={(book) => deleteCookBook(book.cookbookId)} className="btn btn-danger ml-auto mr-auto">Delete</button>
+                                        <button type="button" onClick={() => deleteCookBook(book)} className="btn btn-danger ml-auto mr-auto">Delete</button>
                                     </div>
                                 </Card.Body>
                                 </Accordion.Collapse>
@@ -193,7 +221,7 @@ export default function UserProfile() {
                     <div className="m-2" id="collapse-form">
                         <form>
                             <input className="expand" type="text" onChange={event => setCookBook(event.target.value)}></input>
-                            <button className="btn btn-secondary ml-2" type="submit">Add Now!</button>
+                            <button className="btn btn-secondary ml-2" type="submit" onClick={event => createCookBook(event)}>Add Now!</button>
                         </form>
                     </div>
                 </Collapse>
