@@ -2,10 +2,7 @@ package learn.myCookbook.models;
 
 import learn.myCookbook.models.UserRole;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +23,7 @@ public class AppUser {
 
     @NotNull(message = "Password is required.")
     @NotBlank(message = "Password is required.")
+    @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters.")
     private String passwordHash;
 
     @NotNull(message = "First name is required.")

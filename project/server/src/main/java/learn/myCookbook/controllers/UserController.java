@@ -60,7 +60,7 @@ public class UserController {
             map.put("appUserId", String.valueOf(user.getUserId()));
             return new ResponseEntity<>(map, HttpStatus.CREATED);
         }
-        
+
         return ErrorResponse.build(result);
     }
 
