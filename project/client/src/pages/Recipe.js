@@ -61,16 +61,7 @@ export default function Recipe() {
     useEffect(() => {
         const getRecipe = () => {
             fetch(`http://localhost:8080/api${location.pathname}`)
-                // .then((response) => {
-                //     if (response.status >= 400) {
-                //         history.push("/notfound");
-                //     } else {
-                //         (response) => response.json()
-                //         .then((data) => {
-                //             setRecipe(data);
-                //             console.log(data);
-                //     }
-                // }) 
+                .then
                 .then(response => response.json())
                 .then((data) => {
                     setRecipe(data);

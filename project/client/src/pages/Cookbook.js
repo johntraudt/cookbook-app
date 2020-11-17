@@ -13,21 +13,34 @@ export default function Cookbook() {
 
     const cookbookId = history.location.pathname.replace('/cookbook/','');
 
-    const featuredRecipes = () => {
-        fetch(`http://localhost:8080/api/cookbook/${cookbookId}`) 
-            .then( (response) => {
-                if (response.status >= 400) {
-                    history.push("/notfound")
-                } else {
-                    response.json()
-                        .then((data) => setCookbook(data))
-                }
-            });
-    }
+    // const featuredRecipes = () => {
+    //     fetch(`http://localhost:8080/api/cookbook/${cookbookId}`) 
+    //         .then( (response) => {
+    //             if (response.status >= 400) {
+    //                 history.push("/notfound")
+    //             } else {
+    //                 response.json()
+    //                     .then((data) => setCookbook(data))
+    //             }
+    //         });
+    // }
     
     useEffect(() => {
+        const featuredRecipes = () => {
+            fetch(`http://localhost:8080/api/cookbook/${cookbookId}`) 
+                .then( (response) => {
+                    if (response.status >= 400) {
+                        history.push("/notfound")
+                    } else {
+                        response.json()
+                            .then((data) => setCookbook(data))
+                    }
+                });
+        }
+
         featuredRecipes();
-    }, []);
+
+    });
 
     if(!cookbook) {
         return (<h1 className="container text-center">Cookbook Not Found</h1>);
@@ -47,6 +60,8 @@ export default function Cookbook() {
                     {cookbook.title} by {cookbook.user ? cookbook.user.userName : ''}
                 </div>
                 
+                {cookbook.recipes.length === 0 ? <div className="text-center mt-3">This cookbook is currently empty. Return <Link to={`/`}><button className="btn btn-outline-secondary">home</button></Link></div> : ""}
+
                 <div className="d-flex flex-wrap justify-content-center">
                     {cookbook.recipes.map(recipe => (
                         <div className="col-lg-4 col-md-6 col-sm-12" id={recipe.recipeId}>
