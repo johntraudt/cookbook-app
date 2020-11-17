@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
         <div className="container full-body text-center">
             <div className="mt-4">
                 <h3>
-                    Your data is not shared with advertisers or 3rd party players.
+                    We'll never share your email or data with anyone else. Promise :)
                 </h3>
             </div>
 

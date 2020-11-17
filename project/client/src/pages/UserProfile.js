@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
+import AuthContext from '../page-elements/AuthContext';
 
 export default function UserProfile() {
     const [open, setOpen] = useState(false);
@@ -12,7 +13,9 @@ export default function UserProfile() {
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
+    // const [user, setUser] = useState({});
 
+    const auth = useContext(AuthContext);
 
     useEffect(() => {
         setEmail();
@@ -41,7 +44,7 @@ export default function UserProfile() {
                         <tr>
                             <th>UserName</th>
                             <td>
-                                {editUser===false ? 'Insert email' : 
+                                {editUser===false ? `${auth.user.userName}` : 
                                     <input type="text" placeholder="New UserName Here..." onChange={event => setUserName(event.target.value)}></input>
                                 }
                             </td>
@@ -49,7 +52,7 @@ export default function UserProfile() {
                         <tr>
                             <th>Email</th>
                             <td>
-                                {editUser===false ? 'Insert email' : 
+                                {editUser===false ? `${auth.user.email}` : 
                                     <input type="text" placeholder="New Email Here..." onChange={event => setEmail(event.target.value)}></input>
                                 }
                             </td>
@@ -57,7 +60,7 @@ export default function UserProfile() {
                         <tr>
                             <th>First Name</th>
                             <td>
-                                {editUser===false ? 'Insert firstName' : 
+                                {editUser===false ? `${auth.user.firstName}` : 
                                     <input type="text" placeholder="New First Name Here..." onChange={event => setFirstName(event.target.value)}></input>
                                 }
                             </td>
@@ -65,14 +68,14 @@ export default function UserProfile() {
                         <tr>
                             <th>Last Name</th>
                             <td>
-                                {editUser===false ? 'Insert lastName' : 
+                                {editUser===false ? `${auth.user.lastName}` : 
                                     <input type="text" placeholder="New Last Name Here..." onChange={event => setLastName(event.target.value)}></input>
                                 }
                             </td>
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <td>Insert role.name</td>
+                            <td>{!auth.user.status ? 'active': 'deactivated'}</td>
                         </tr>
                         <tr>
                             <td colspan={editUser === true ? 1 : 2} className="text-center">
