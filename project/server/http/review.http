@@ -14,7 +14,7 @@ Content-Type: application/json
   "comment": "Super delicious.", 
   "date": "2020-11-02", 
   "userId": 2, 
-  "recipeId": 2
+  "recipeId": 3
 }
 
 ###
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "reviewId": 8,
-  "rating": 4,
+  "rating": 1,
   "comment": "Super delicious. Not.", 
   "date": "2020-11-02", 
   "userId": 2, 
