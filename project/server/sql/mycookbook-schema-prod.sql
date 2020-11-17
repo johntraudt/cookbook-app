@@ -306,9 +306,9 @@ values
 insert into login
 	(user_id, user_name, password_hash)
 values 
-	(1, 'john.traudt', 'password'),
-    (2, 'devon.burwell', 'password'),
-    (3, 'noah.mitchelson', 'password');
+	(1, 'john.traudt', '$2a$10$9Yijg1jDZdENEQFz9jZBxO7CvHsRuz0L2s2X.3/tKKG3FFKwsTR9q'),
+    (2, 'devon.burwell', '$2a$10$9Yijg1jDZdENEQFz9jZBxO7CvHsRuz0L2s2X.3/tKKG3FFKwsTR9q'),
+    (3, 'noah.mitchelson', '$2a$10$9Yijg1jDZdENEQFz9jZBxO7CvHsRuz0L2s2X.3/tKKG3FFKwsTR9q');
     
 insert into recipe
 	(recipe_id, recipe_name, prep_time, cook_time, servings, `date`, was_updated, is_featured, calories, user_id, image_link)
