@@ -359,9 +359,14 @@ export default function PostRecipe() {
                         </table>
                         <button onClick={() => handleAddDirection()} className="btn btn-secondary mb-1">Add Another Direction</button>
                     </div>
-                    <div className="text-center col-4">
-                        <Errors errors={errors} />
+                    <div className="row mt-3">
+                        <div className="col-lg-4 col-md-2 col-sm-0"></div>
+                        <div className="justify-center col-lg-4 col-md-8 col-sm-12">
+                            <Errors errors={errors} />
+                        </div>
+                        <div className="col-lg-4 col-md-2 col-sm-0"></div>
                     </div>
+                   
                     <button onClick={(event) => SubmitButton(event)} className="btn btn-secondary btn-lg mt-3 mb-5">Submit Recipe</button>
                 </div>
             </div>

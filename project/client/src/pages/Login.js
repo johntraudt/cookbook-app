@@ -49,9 +49,17 @@ export default function Login() {
 
     return (
         <div className="container full-body">
-            <div>
-                <Errors errors={errors}/>
-            </div>
+
+            {/* <div className="row mt-3 float-right">
+                <div className="col-lg-4 col-md-2 col-sm-0"></div>
+                <div className="justify-center col-lg-4 col-md-8 col-sm-12">
+                    <Errors errors={errors} />
+                </div>
+                <div className="col-lg-4 col-md-2 col-sm-0"></div>
+            </div> */}
+
+            
+
             <div className="mt-4">
                 <div className="text-center m-5">
                     <h1 className="p-2">Login</h1>
