@@ -14,6 +14,8 @@ public class Review {
     @Min(value = 1, message = "rating must be at least 1.")
     @Max(value = 5, message = "rating cannot be greater than 5.")
     private int rating;
+
+    @NotNull(message = "review must have date.")
     private LocalDate date;
 
     public int getReviewId() {
