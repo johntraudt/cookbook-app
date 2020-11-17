@@ -13,7 +13,8 @@ import ScrollToTop from './ScrollToTop';
 import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
 import Cookbook from './pages/Cookbook';
-import Tag from "./pages/Tag";
+import Tag from './pages/Tag';
+// import MyDoument from './pages/PdfExport';
 
 import AuthContext from './page-elements/AuthContext';
 
@@ -83,6 +84,7 @@ export default function App() {
             <Route path="/post" component={user ? Login : PostRecipe}/>
             <Route path="/cookbook" component={Cookbook}/>
             <Route path="/recipe-tag" component={Tag}/>
+            {/* <Route path="/pdf-export" component={MyDocument}/> */}
           </Switch>
           <Footer />
         </div>
