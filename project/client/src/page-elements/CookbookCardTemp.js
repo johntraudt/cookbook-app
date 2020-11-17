@@ -33,6 +33,7 @@ function CookbookCardTemp({cookbookId, recipe}) {
                 <Link to={`/recipe/${recipe.recipeId}`}>
                     <p className="card-title text-dark">{recipe.name}</p>
                     <p className="card-text text-dark">Posted By: {recipe.user ? recipe.user.userName : ""}</p>
+                
                     <div>
                         <Rating detailed={true} reviews={recipe.reviews}/>
                     </div>

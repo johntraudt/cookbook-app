@@ -3,8 +3,9 @@ import Success from '../page-elements/Success'
 import {Redirect} from 'react-router-dom';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
-
+import Errors from './Errors';
 import AuthContext from '../page-elements/AuthContext';
+import {useHistory } from 'react-router-dom'
 
 export default function PostRecipe() {
     const [categories, setCategories] = useState([]);
@@ -27,7 +28,8 @@ export default function PostRecipe() {
     const [calories, setCalories] = useState(0);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [image, setImage] = useState(''); 
-    const [measurementUnits, setMeasurementUnits] = useState([])
+    const [measurementUnits, setMeasurementUnits] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     useEffect(()=>{
         const getCategories = () => {
@@ -61,14 +63,14 @@ export default function PostRecipe() {
     })
 
     const auth = useContext(AuthContext);
-
+    const history = useHistory();
     const today = new Date();
 
     const SubmitButton = (event) => {
         event.preventDefault();
-        console.log('look here')
-        console.log(auth.user)
-        console.log('up above')
+        // console.log('look here')
+        // console.log(auth.user)
+        // console.log('up above')
 
 
         fetch('http://localhost:8080/api/recipe', {
@@ -93,16 +95,18 @@ export default function PostRecipe() {
         })
         .then(response => {
             if (response.status === 201) {
-                console.log('success!')
-                
-            } else if (response.status === 400) {
-                console.log('errors!');
-                console.log(response);
-            } else {
-                console.log('Oops... it broke');
-                console.log(response);
+                console.log('success!');
+                history.push("/");
+            } else if (response.status >= 400) {
+                response.json()
+                    .then((data) => {
+                        setErrors(data);
+                    }
+                )
             }
         })
+
+
     }
 
     const changeMeasurementUnitId = (event, ingredientListIndex) => {
@@ -238,7 +242,6 @@ export default function PostRecipe() {
         setSelectedCategories(tempCategories);
     }
 
-
     if (!auth || !auth.user) {
         return null;
     }
@@ -355,6 +358,9 @@ export default function PostRecipe() {
 
                         </table>
                         <button onClick={() => handleAddDirection()} className="btn btn-secondary mb-1">Add Another Direction</button>
+                    </div>
+                    <div className="text-center col-4">
+                        <Errors errors={errors} />
                     </div>
                     <button onClick={(event) => SubmitButton(event)} className="btn btn-secondary btn-lg mt-3 mb-5">Submit Recipe</button>
                 </div>

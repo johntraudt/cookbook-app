@@ -78,7 +78,7 @@ class SignUp extends React.Component {
           console.log("Something went wrong.");
           throw new Error(`Unexpected response: ${response}`);
       }
-  })
+    })
   }
   
   handleFirstName = (event) => {
