@@ -67,12 +67,12 @@ public class AppUserService implements UserDetailsService {
 
         if (repository.findByEmail(user.getEmail()) != null) {
             result.addMessage("That email is already taken.", ResultType.INVALID);
-            throw new ValidationException("That email is already taken.");
+//            throw new ValidationException("That email is already taken.");
         }
 
         if (repository.findByUserName(user.getUserName()) != null) {
             result.addMessage("That username is already taken.", ResultType.INVALID);
-            throw new ValidationException("That username is already taken.");
+//            throw new ValidationException("That username is already taken.");
         }
 
         if (!result.isSuccess()) {

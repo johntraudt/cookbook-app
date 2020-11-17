@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/user/authenticate").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/recipe", "/api/recipe/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/recipe").hasAnyRole("USER", "MODERATOR")
                 .antMatchers(HttpMethod.PUT, "/api/recipe/*").hasAnyRole("USER", "MODERATOR")

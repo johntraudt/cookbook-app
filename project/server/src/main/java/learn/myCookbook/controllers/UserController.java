@@ -3,24 +3,34 @@ package learn.myCookbook.controllers;
 import learn.myCookbook.domain.Result;
 import learn.myCookbook.domain.AppUserService;
 import learn.myCookbook.models.AppUser;
+import learn.myCookbook.security.JwtConverter;
 import learn.myCookbook.security.ValidationErrorResult;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ValidationException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api/user")
 public class UserController {
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtConverter converter;
     private final AppUserService service;
 
-    public UserController(AppUserService service) {
+    public UserController(AuthenticationManager authenticationManager, JwtConverter converter, AppUserService service) {
+        this.authenticationManager = authenticationManager;
+        this.converter = converter;
         this.service = service;
     }
 
@@ -35,11 +45,14 @@ public class UserController {
     }
 
 
-    @PostMapping
+    @PostMapping("/create_account")
     public ResponseEntity<Object> add(@RequestBody AppUser user) {
+        user.getRoles().add("USER");
         Result<AppUser> result = service.add(user);
         if (result.isSuccess()) {
-            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("appUserId", String.valueOf(user.getUserId()));
+            return new ResponseEntity<>(map, HttpStatus.CREATED);
         }
         return ErrorResponse.build(result);
     }
@@ -66,25 +79,41 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // TODO: Could this replace POST?
-    @PostMapping("/create_account")
-    public ResponseEntity<?> createAccount(@RequestBody AppUser appUser) {
+    @PostMapping("/authenticate")
+    public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
+
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(credentials.get("userName"), credentials.get("passwordHash"));
+
         try {
-//            appUser.getRoles().add("USER");
-            service.add(appUser);
-        } catch (ValidationException ex) {
-            ValidationErrorResult validationErrorResult = new ValidationErrorResult();
-            validationErrorResult.addMessage(ex.getMessage());
-            return new ResponseEntity<>(validationErrorResult, HttpStatus.BAD_REQUEST);
-        } catch (DuplicateKeyException ex) {
-            ValidationErrorResult validationErrorResult = new ValidationErrorResult();
-            validationErrorResult.addMessage("The provided username already exists");
-            return new ResponseEntity<>(validationErrorResult, HttpStatus.BAD_REQUEST);
+            Authentication authentication = authenticationManager.authenticate(authToken);
+
+            if (authentication.isAuthenticated()) {
+                User user = (User) authentication.getPrincipal();
+
+                String jwtToken = converter.getTokenFromUser(user);
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("jwt_token", jwtToken);
+
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+
+        } catch (AuthenticationException ex) {
+            System.out.println(ex);
         }
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("appUserId", String.valueOf(appUser.getUserId()));
-
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+
+//    @PostMapping("/refresh_token")
+//    public ResponseEntity<Map<String, String>> refreshToken(UsernamePasswordAuthenticationToken principal) {
+//        User user = new User(principal.getName(), principal.getName(), principal.getAuthorities());
+//        String jwtToken = converter.getTokenFromUser(user);
+//
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("jwt_token", jwtToken);
+//
+//        return new ResponseEntity<>(map, HttpStatus.OK);
+//    }
 }
