@@ -1,7 +1,6 @@
 package learn.myCookbook.domain;
 
 import learn.myCookbook.data.DirectionRepository;
-import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Direction;
 import org.springframework.stereotype.Service;
 
