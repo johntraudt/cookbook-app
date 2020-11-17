@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Rating from '../page-elements/Rating'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import AuthContext from '../page-elements/AuthContext';
@@ -53,14 +53,24 @@ export default function Recipe() {
     }) 
 
     const auth = useContext(AuthContext);
-    
+    const history = useHistory();
     const location = useLocation();
     console.log(location.pathname)
 
     
     useEffect(() => {
         const getRecipe = () => {
-            fetch(`http://localhost:8080/api${location.pathname}`) 
+            fetch(`http://localhost:8080/api${location.pathname}`)
+                // .then((response) => {
+                //     if (response.status >= 400) {
+                //         history.push("/notfound");
+                //     } else {
+                //         (response) => response.json()
+                //         .then((data) => {
+                //             setRecipe(data);
+                //             console.log(data);
+                //     }
+                // }) 
                 .then(response => response.json())
                 .then((data) => {
                     setRecipe(data);

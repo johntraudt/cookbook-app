@@ -86,7 +86,7 @@ export default function App() {
           <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/categories" exact component={Categories}/>
-            <Route path="/login" component={Login}/>
+            <Route path="/login" component={user ? Home : Login}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/recipe" component={Recipe}/>
             <Route path="/results" component={Results}/>
