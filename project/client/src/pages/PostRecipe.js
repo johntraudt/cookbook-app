@@ -102,7 +102,7 @@ export default function PostRecipe() {
                     .then((data) => {
                         setErrors(data);
                     }
-                )
+                );
             }
         })
 

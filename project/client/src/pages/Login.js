@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Errors from './Errors';
 
 import AuthContext from '../page-elements/AuthContext';
 
@@ -7,6 +8,7 @@ import AuthContext from '../page-elements/AuthContext';
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState([]);
     
     const auth = useContext(AuthContext);
     // const history = useHistory();
@@ -35,16 +37,19 @@ export default function Login() {
             const { jwt_token } = await response.json();
             console.log(jwt_token)
             auth.login(jwt_token);
-        } 
-        // else if (response.status === 403) {
-        // setErrors(['Login failed.']);
-        // } else {
-        // setErrors(['Unknown error.']);
-        // }
+        } else if (response.status ===403) {
+            setErrors(["Could not find that user name and password combination"]);
+            setTimeout(() => {setErrors([])}, 3000);
+        } else {
+            setErrors(["Unknown Error."]);
+        }
     };
 
     return (
         <div className="container full-body">
+            <div>
+                <Errors errors={errors}/>
+            </div>
             <div className="mt-4">
                 <div className="text-center m-5">
                     <h1 className="p-2">Login</h1>
