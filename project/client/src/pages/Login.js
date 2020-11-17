@@ -19,14 +19,14 @@ function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();
     
-        const response = await fetch('http://localhost:8080/api/authenticate', {
+        const response = await fetch('http://localhost:8080/api/user/authenticate', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 username,
-                password
+                passwordHash: password,
             })
         });
         

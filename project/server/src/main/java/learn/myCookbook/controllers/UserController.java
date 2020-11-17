@@ -3,6 +3,7 @@ package learn.myCookbook.controllers;
 import learn.myCookbook.domain.Result;
 import learn.myCookbook.domain.AppUserService;
 import learn.myCookbook.models.AppUser;
+import learn.myCookbook.models.UserRole;
 import learn.myCookbook.security.JwtConverter;
 import learn.myCookbook.security.ValidationErrorResult;
 import org.springframework.dao.DuplicateKeyException;
@@ -47,7 +48,13 @@ public class UserController {
 
     @PostMapping("/create_account")
     public ResponseEntity<Object> add(@RequestBody AppUser user) {
-        user.getRoles().add("USER");
+//        user.getRoles().add("USER");
+        UserRole role = new UserRole();
+
+        role.setName("USER");
+        role.setUserRoleId(1);
+        user.setRole(role);
+
         Result<AppUser> result = service.add(user);
         if (result.isSuccess()) {
             HashMap<String, String> map = new HashMap<>();

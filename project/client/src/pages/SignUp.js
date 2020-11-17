@@ -33,9 +33,9 @@ class SignUp extends React.Component {
       passwordHash,
       firstName,
       lastName,
-      role,
+      // role,
       userRoleId,
-      active
+      // active
     } = this.state;
 
     fetch('http://localhost:8080/api/user', {
@@ -49,9 +49,9 @@ class SignUp extends React.Component {
         passwordHash,
         firstName,
         lastName,
-        role,
+        // role,
         userRoleId,
-        active,
+        // active,
       })
     })
     .then((response) => {
