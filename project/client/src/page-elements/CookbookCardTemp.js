@@ -28,7 +28,6 @@ function CookbookCardTemp({cookbookId, recipe}) {
                     <img className="card-img-top" src={recipe.imageLink} alt={recipe.name}></img>
                 </div>
             </Link>
-            
 
             <div className="card-body">
                 <Link to={`/recipe/${recipe.recipeId}`}>

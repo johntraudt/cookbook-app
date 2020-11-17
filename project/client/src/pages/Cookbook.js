@@ -39,7 +39,6 @@ export default function Cookbook() {
         }
 
         featuredRecipes();
-
     });
 
     if(!cookbook) {
@@ -65,7 +64,7 @@ export default function Cookbook() {
                 <div className="d-flex flex-wrap justify-content-center">
                     {cookbook.recipes.map(recipe => (
                         <div className="col-lg-4 col-md-6 col-sm-12" id={recipe.recipeId}>
-                            <CookbookCardTemp cookbookId={cookbookId} recipe={recipe} />
+                            <CookbookCardTemp recipe={recipe} cookbookId={cookbookId}/>
                             {/* <div className="text-center">
                                 <button>Press me</button>
                             </div> */}
