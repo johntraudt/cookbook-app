@@ -187,7 +187,7 @@ export default function UserProfile() {
                             <th>UserName</th>
                             <td>
                                 {editUser===false ? `${user.userName}` : 
-                                    <input type="text" placeholder="New UserName Here..." onChange={event => setUserName(event.target.value)}></input>
+                                    <input type="text" placeholder={user.userName} onChange={event => setUserName(event.target.value)}></input>
                                 }
                             </td>
                         </tr>
@@ -195,7 +195,7 @@ export default function UserProfile() {
                             <th>Email</th>
                             <td>
                                 {editUser===false ? `${user.email}` : 
-                                    <input type="email" placeholder="New Email Here..." onChange={event => setEmail(event.target.value)}></input>
+                                    <input type="email" placeholder={user.email} onChange={event => setEmail(event.target.value)}></input>
                                 }
                             </td>
                         </tr>
@@ -203,7 +203,7 @@ export default function UserProfile() {
                             <th>First Name</th>
                             <td>
                                 {editUser===false ? `${user.firstName}` : 
-                                    <input type="text" placeholder="New First Name Here..." onChange={event => setFirstName(event.target.value)}></input>
+                                    <input type="text" placeholder={user.firstName} onChange={event => setFirstName(event.target.value)}></input>
                                 }
                             </td>
                         </tr>
@@ -211,7 +211,7 @@ export default function UserProfile() {
                             <th>Last Name</th>
                             <td>
                                 {editUser===false ? `${user.lastName}` : 
-                                    <input type="text" placeholder="New Last Name Here..." onChange={event => setLastName(event.target.value)}></input>
+                                    <input type="text" placeholder={user.lastName} onChange={event => setLastName(event.target.value)}></input>
                                 }
                             </td>
                         </tr>
@@ -240,7 +240,7 @@ export default function UserProfile() {
  
                         <tr>
                             <td colspan={editUser === true ? 1 : 2} className="text-center">
-                                <button className="btn btn-secondary" onClick={() => editUser===false ? setEditUser(true): setEditUser(false)}>{editUser===false ? 'Edit': 'Cancel'}</button>
+                                <button className="btn btn-secondary" onClick={() => editUser===false ? setEditUser(true): setEditUser(false) && getUser()}>{editUser===false ? 'Edit': 'Cancel'}</button>
                             </td>
                             {editUser && (
                                 <td>
