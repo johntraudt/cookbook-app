@@ -80,7 +80,6 @@ class UserJdbcTemplateRepositoryTest {
     }
 
     @Test
-    @Disabled
     void shouldAdd() {
         AppUser user = makeUser();
         user.setEmail("new email");
