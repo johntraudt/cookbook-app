@@ -85,14 +85,13 @@ class UserJdbcTemplateRepositoryTest {
         AppUser actual = repository.add(user);
 
         assertNotNull(actual);
-        System.out.println(actual.getUserId());
         assertTrue(actual.getUserId() >= 4);
-        assertTrue(actual.getUserId() <= 5);
     }
 
     @Test
     void shouldUpdate() {
         AppUser user = makeUser();
+        user.setUserName("new user name");
         user.setUserId(2);
 
         assertTrue(repository.update(user));
