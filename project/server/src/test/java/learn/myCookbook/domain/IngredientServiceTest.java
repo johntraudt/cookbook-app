@@ -48,7 +48,6 @@ class IngredientServiceTest {
     Ingredient makeIngredient() {
         Ingredient ingredient = new Ingredient();
         ingredient.setName("Nirnroot");
-        return ingredient;
-    }
+
 
 }

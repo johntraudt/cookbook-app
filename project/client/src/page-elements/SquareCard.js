@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 function SquareCard({recipe}) {
 
-    console.log(recipe);
-
     return (
         <Link to={`/recipe/${recipe.recipeId}`}>
             <div className="card shadow custom-card border-white mt-5 mb-5">

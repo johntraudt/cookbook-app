@@ -73,12 +73,10 @@ public class AppUserService implements UserDetailsService {
 
         if (repository.findByEmail(user.getEmail()) != null) {
             result.addMessage("That email is already taken.", ResultType.INVALID);
-//            throw new ValidationException("That email is already taken.");
         }
 
         if (repository.findByUserName(user.getUserName()) != null) {
             result.addMessage("That username is already taken.", ResultType.INVALID);
-//            throw new ValidationException("That username is already taken.");
         }
 
         if (!result.isSuccess()) {
@@ -145,31 +143,18 @@ public class AppUserService implements UserDetailsService {
             return result;
         }
 
-        String email = repository.findById(user.getUserId()).getEmail();
-        String userName = repository.findById(user.getUserId()).getUserName();
-
-        if (!repository.setUserNameEmail(user.getUserId(), "RESERVED", "RESERVED")) {
-            String message =  String.format("User ID: %s not found.", user.getUserId());
-            result.addMessage(message, ResultType.NOT_FOUND);
-            return result;
+        if (user.getEmail() != repository.findById(user.getUserId()).getEmail()) {
+            if (repository.findByEmail(user.getEmail()) != null) {
+                result.addMessage("That email is already taken.", ResultType.INVALID);
+            }
         }
 
-        if (repository.findByEmail(user.getEmail()) != null) {
-            result.addMessage("That email is already taken.", ResultType.INVALID);
-        }
-
-        if (repository.findByUserName(user.getUserName()) != null) {
-            result.addMessage("That username is already taken.", ResultType.INVALID);
-        }
-
-        if (!result.isSuccess()) {
-            repository.setUserNameEmail(user.getUserId(), email, userName);
+        if (user.getUserName() != repository.findById(user.getUserId()).getUserName()) {
+            if (repository.findByUserName(user.getUserName()) != null) {
+                result.addMessage("That user name is already taken.", ResultType.INVALID);
+            }
         }
 
         return result;
-    }
-
-    private void validatePassword(AppUser user) {
-
     }
 }

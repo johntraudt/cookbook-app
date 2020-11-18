@@ -30,46 +30,52 @@ export default function App() {
 
   const login = (token) => {
     const { sub: userName, authorities: role} = jwt_decode(token);  
-
-    const user = {
-      userName,
-      role,
-      token,
-      hasRole(role) {
-        return this.roles.includes(role);
-      }
-    };
+    localStorage.setItem('token', token);
 
     const findUserByUserName = () => {
-      fetch(`http://localhost:8080/api/user/name/${user.userName}`) 
+      fetch(`http://localhost:8080/api/user/name/${userName}`) 
       .then(response => response.json())
       .then((data) => {
-        setUser({
-          userName: user.userName,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          role: user.role,
-          token: user.token,
-          active: data.active,
-          userId: data.userId,
-        });
+          const user = {
+            userName: userName,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            role: data.role,
+            token: token,
+            active: data.active,
+            userId: data.userId,
+          };
+        setUser(user);
+        return user;
       });
     };
-    
-    findUserByUserName();
-    setUser(user);
+        
+        return findUserByUserName();
+    }
 
-    return user;
-  }
 
-  useEffect(() => {
-    setUser();
-  },[])
+
+
 
   const logout = () => {
+    localStorage.removeItem('token');
     setUser(null);
   };
+
+  const restoreLogin = () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            login(token);
+        }
+  };
+
+ 
+
+    useEffect(() => {
+        //setUser();
+        restoreLogin();
+    },[])
 
   const auth = {
     user,
@@ -82,22 +88,22 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <div className="App">
-          <Header />
-          <Switch>
-            <Route path="/" exact component={Home}/>
-            <Route path="/categories" exact component={Categories}/>
-            <Route path="/login" component={user ? Home : Login}/>
-            <Route path="/signup" component={SignUp}/>
-            <Route path="/recipe" component={Recipe}/>
-            <Route path="/results" component={Results}/>
-            <Route path="/user" component={user ? UserProfile : Login}/>
-            <Route path="/notfound" component={NotFound}/>
-            <Route path="/about" component={AboutUs}/>
-            <Route path="/privacy" component={Privacy}/>
-            <Route path="/post" component={user ? PostRecipe : Login}/>
-            <Route path="/cookbook" component={Cookbook}/>
-            <Route path="/recipe-tag" component={Tag}/>
-          </Switch>
+          <Header/>
+            <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route path="/categories" exact component={Categories}/>
+                <Route path="/login" component={user ? Home : Login}/>
+                <Route path="/signup" component={SignUp}/>
+                <Route path="/recipe" component={Recipe}/>
+                <Route path="/results" component={Results}/>
+                <Route path="/user" component={user ? UserProfile : Login}/>
+                <Route path="/notfound" component={NotFound}/>
+                <Route path="/about" component={AboutUs}/>
+                <Route path="/privacy" component={Privacy}/>
+                <Route path="/post" component={user ? PostRecipe : Login}/>
+                <Route path="/cookbook" component={Cookbook}/>
+                <Route path="/recipe-tag" component={Tag}/>
+            </Switch>
           <Footer />
         </div>
       </Router>

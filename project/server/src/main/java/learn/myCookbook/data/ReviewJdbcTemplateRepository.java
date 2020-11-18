@@ -56,7 +56,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     public List<Review> findByRecipeId(int recipeId) {
         final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
-                "order by review_date desc;";
+                "order by review_id desc;";
 
         List<Review> reviews = jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
 
@@ -83,6 +83,18 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
                 "order by rating asc;";
 
         return jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
+    }
+
+    @Override
+    public Review findByUserIdAndRecipeId(int userId, int recipeId) {
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
+                "from review where user_id = ? " +
+                "and recipe_id = ?;";
+
+        return jdbcTemplate.query(sql, new ReviewMapper(), userId, recipeId)
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

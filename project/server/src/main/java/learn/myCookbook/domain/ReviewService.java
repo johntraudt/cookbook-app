@@ -56,6 +56,11 @@ public class ReviewService {
             return result;
         }
 
+        if (repository.findByUserIdAndRecipeId(review.getUserId(), review.getRecipeId()) != null) {
+            result.addMessage("You have already reviewed this recipe.", ResultType.INVALID);
+            return result;
+        }
+
         review = repository.add(review);
         result.setPayload(review);
         return result;

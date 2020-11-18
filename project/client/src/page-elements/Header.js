@@ -56,7 +56,7 @@ function Header() {
                             {
                                 !auth.user ? 
                                     <Link to='/login'><div className="right btn btn-outline-secondary p-2 pr-4 pl-4">LOG IN</div></Link> : 
-                                    <div className="right btn btn-outline-secondary p-2 pr-4 pl-4" onClick={() => logout()}>Sign Out</div>
+                                    <button className="right btn btn-outline-secondary p-2 pr-4 pl-4" onClick={() => logout()}>Sign Out</button>
                             }
                         </div>
                     </div>

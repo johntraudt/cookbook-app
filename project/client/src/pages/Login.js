@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Errors from './Errors';
 
 import AuthContext from '../page-elements/AuthContext';
 
@@ -7,9 +9,10 @@ import AuthContext from '../page-elements/AuthContext';
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState([]);
     
     const auth = useContext(AuthContext);
-    // const history = useHistory();
+    const history = useHistory();
 
     useEffect( () => {
         setPassword();
@@ -33,18 +36,41 @@ export default function Login() {
 
         if (response.status === 200) {
             const { jwt_token } = await response.json();
-            console.log(jwt_token)
+            console.log(jwt_token);
             auth.login(jwt_token);
-        } 
-        // else if (response.status === 403) {
-        // setErrors(['Login failed.']);
-        // } else {
-        // setErrors(['Unknown error.']);
-        // }
+            history.push("/");
+        } else if (response.status === 403) {
+            setErrors(["Could not find that user name and password combination"]);
+            setTimeout(() => {setErrors([])}, 3000);
+        } else {
+            setErrors(["Unknown Error."]);
+            setTimeout(() => {setErrors([])}, 3000);
+        }
     };
 
     return (
         <div className="container full-body">
+
+            {/* <div className="row mt-3 float-right">
+                <div className="col-lg-4 col-md-2 col-sm-0"></div>
+                <div className="justify-center col-lg-4 col-md-8 col-sm-12">
+                    <Errors errors={errors} />
+                </div>
+                <div className="col-lg-4 col-md-2 col-sm-0"></div>
+            </div> */}
+
+            <Form  onSubmit={(event) => handleSubmit(event)} >
+                <Form.Row>
+                    <Form.Group className="mr-2" controlId="validationCustom02">
+                        <Form.Control onChange={event => setUsername(event.target.value)} type="text" placeholder="Username" />
+                    </Form.Group>
+                    <Form.Group controlId="">
+                        <Form.Control onChange={event => setPassword(event.target.value)} type="password" placeholder="Password" />
+                        <p></p>
+                    </Form.Group>
+                </Form.Row>
+            </Form>
+
             <div className="mt-4">
                 <div className="text-center m-5">
                     <h1 className="p-2">Login</h1>
