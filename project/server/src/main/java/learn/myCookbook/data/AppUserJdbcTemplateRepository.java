@@ -46,6 +46,12 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
             setRole(user);
         }
 
+        if (!user.isActive()) {
+            user.setUserName("Deleted Account");
+            user.setFirstName("Deleted");
+            user.setLastName("Account");
+        }
+
         return user;
     }
 

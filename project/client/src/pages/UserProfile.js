@@ -139,6 +139,13 @@ export default function UserProfile() {
             if (response.status === 204) {
                 getUser();
                 setEditUser(false);
+                setErrors([]);
+
+                if (!isActive) {
+                    auth.logout();
+                    history.push("/");
+                }
+
             } else {
                 response.json()
                     .then((data) => {
@@ -165,11 +172,9 @@ export default function UserProfile() {
     };
 
     const deactivateUser = () => {
-        if (window.confirm("You are about to " + `${isActive ? "deactivate" : "activate"}` + " your account? Are you sure?")) {
+        if (window.confirm(`${isActive ? "Delete your account?\n\nOnce you hit submit the account is gone forever." : "Do you want to keep your account?"}` )) {
             if (isActive) {
                 setIsActive(false);
-                auth.logout();
-                history.push("/");
             } else {
                 setIsActive(true);
             }
@@ -273,7 +278,6 @@ export default function UserProfile() {
                                 <td>
                                     <button className="btn btn-info" type='submit' onClick={(event) => handleUserEditSubmit(event)}>Submit</button>
                                 </td>
-
                             )}
                         </tr>
                     </table>
