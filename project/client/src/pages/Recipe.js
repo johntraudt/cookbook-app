@@ -88,7 +88,7 @@ export default function Recipe() {
         }
         getCookBooks();
         getRecipe();
-    }, [location.pathname]);
+    }, []);
 
     useEffect(() => {
         let tempReview = review;
