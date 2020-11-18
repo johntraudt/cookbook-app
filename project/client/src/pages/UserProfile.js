@@ -117,7 +117,7 @@ export default function UserProfile() {
             lastName: `${lastName !== '' ? lastName : user.lastName}`,
             role: user.role,
             userRoleId: user.userRoleId,
-            active: true
+            active: true,
         };
         console.log(u)
         console.log(`http://localhost:8080/api/user/${user.userId}`)

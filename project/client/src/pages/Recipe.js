@@ -40,6 +40,7 @@ export default function Recipe() {
         userId: 0,
         wasUpdated: false
     });
+    const [cookbooks, setCookBooks] = useState([])
 
     const today = new Date();
     const [review, setReview] = useState({
@@ -59,6 +60,14 @@ export default function Recipe() {
 
     
     useEffect(() => {
+        const getCookBooks = () => {
+            fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+                .then(response => response.json())
+                .then((data) => {
+                    setCookBooks(data);
+                });
+        };
+
         const getRecipe = () => {
             fetch(`http://localhost:8080/api${location.pathname}`)
                 .then((response) => {
@@ -77,6 +86,7 @@ export default function Recipe() {
                 //     console.log(data);
                 // });
         }
+        getCookBooks();
         getRecipe();
     }, [location.pathname]);
 
@@ -274,6 +284,15 @@ export default function Recipe() {
                                 <form className="m-2">
                                     {auth.user && (
                                     <div className="col m-2">
+
+                                        <select>
+                                        {
+                                            cookbooks.map((book) => (
+                                                <option value={book.name}>{book.name}</option>
+                                            ))
+                                        }
+                                        </select>
+
                                         <select className="p-1" name="myCookbooks" id="myCookbooks">
                                             <option value="">--Add To Cookbook--</option>
                                             <option value="Dessert Book">Dessert Book</option>
