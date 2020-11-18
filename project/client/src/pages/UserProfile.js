@@ -15,6 +15,7 @@ export default function UserProfile() {
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
     const [user, setUser] = useState({});
     const [cookBooks, setCookBooks] = useState([]);
     const [recipes, setRecipes] = useState([]);
@@ -59,7 +60,6 @@ export default function UserProfile() {
         console.log(recipe)
         fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
             method: 'delete'})
-            
             .then((response) => {
                 if (response.status >= 400) {
                     history.push("/notfound");
@@ -108,21 +108,38 @@ export default function UserProfile() {
     };
 
     const handleUserEditSubmit = (event) => {
+        const u = {                
+            userId: user.userId,
+            userName: `${userName !== '' ? userName : user.userName}`,
+            email: `${email !== '' ? email : user.email}`,
+            passwordHash: password,
+            firstName: `${firstName !== '' ? firstName : user.firstName}`,
+            lastName: `${lastName !== '' ? lastName : user.lastName}`,
+            role: user.role,
+            userRoleId: user.userRoleId,
+            active: true
+        };
+        console.log(u)
+        console.log(`http://localhost:8080/api/user/${user.userId}`)
+
         event.preventDefault();
-        fetch(`http://localhost:8080/user/${auth.user.userId}`, {
+        fetch(`http://localhost:8080/api/user/${user.userId}`, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
-                cookbookId: 0,
-                title: cookBook,
-                "userId": auth.user.userId,
-                "user": null,
-                "recipes": null,
-                "private": false
+                userId: user.userId,
+                userName: `${userName !== '' ? userName : user.userName}`,
+                email: `${email !== '' ? email : user.email}`,
+                passwordHash: password,
+                firstName: `${firstName !== '' ? firstName : user.firstName}`,
+                lastName: `${lastName !== '' ? lastName : user.lastName}`,
+                role: user.role,
+                userRoleId: user.userRoleId,
+                active: true,
             })
         }).then((response) => {
-            if (response.status === 200) {
-                getCookBooks()
+            if (response.status === 204) {
+                getUser()
             } else {
                 console.log(response)
             }
@@ -140,7 +157,7 @@ export default function UserProfile() {
                 if (response.status >= 400) {
                     history.push("/notfound");
                 } else {
-                    getRecipes();
+                    getUser();
                 }
             }
         )};
@@ -169,7 +186,7 @@ export default function UserProfile() {
                         <tr>
                             <th>UserName</th>
                             <td>
-                                {editUser===false ? `${auth.user.userName}` : 
+                                {editUser===false ? `${user.userName}` : 
                                     <input type="text" placeholder="New UserName Here..." onChange={event => setUserName(event.target.value)}></input>
                                 }
                             </td>
@@ -177,15 +194,15 @@ export default function UserProfile() {
                         <tr>
                             <th>Email</th>
                             <td>
-                                {editUser===false ? `${auth.user.email}` : 
-                                    <input type="text" placeholder="New Email Here..." onChange={event => setEmail(event.target.value)}></input>
+                                {editUser===false ? `${user.email}` : 
+                                    <input type="email" placeholder="New Email Here..." onChange={event => setEmail(event.target.value)}></input>
                                 }
                             </td>
                         </tr>
                         <tr>
                             <th>First Name</th>
                             <td>
-                                {editUser===false ? `${auth.user.firstName}` : 
+                                {editUser===false ? `${user.firstName}` : 
                                     <input type="text" placeholder="New First Name Here..." onChange={event => setFirstName(event.target.value)}></input>
                                 }
                             </td>
@@ -193,7 +210,7 @@ export default function UserProfile() {
                         <tr>
                             <th>Last Name</th>
                             <td>
-                                {editUser===false ? `${auth.user.lastName}` : 
+                                {editUser===false ? `${user.lastName}` : 
                                     <input type="text" placeholder="New Last Name Here..." onChange={event => setLastName(event.target.value)}></input>
                                 }
                             </td>
@@ -202,13 +219,32 @@ export default function UserProfile() {
                             <th>Status</th>
                             <td>{!auth.user.status ? 'active': 'deactivated'}</td>
                         </tr>
+                        {
+                            editUser && (
+                                <tr>
+                                    <th colspan={2} className="text-center">Enter your password below to confirm:</th>
+                                </tr>
+                            )
+                        }
+                        {
+                            editUser && (
+                                <tr>
+                                    <th>Password</th>
+                                    <td clospan={2}>
+                                        <input type="password" placeholder="New Last Name Here..." onChange={event => setPassword(event.target.value)}></input>
+                                    </td>
+                                </tr>
+                            )
+                        }
+
+ 
                         <tr>
                             <td colspan={editUser === true ? 1 : 2} className="text-center">
                                 <button className="btn btn-secondary" onClick={() => editUser===false ? setEditUser(true): setEditUser(false)}>{editUser===false ? 'Edit': 'Cancel'}</button>
                             </td>
                             {editUser && (
                                 <td>
-                                    <button className="btn btn-info" type='submit'>Submit</button>
+                                    <button className="btn btn-info" type='submit' onClick={(event) => handleUserEditSubmit(event)}>Submit</button>
                                 </td>
 
                             )}
@@ -255,7 +291,7 @@ export default function UserProfile() {
                                         <Link className="ml-auto mr-auto" to={`/cookbook/${book.cookbookId}`}>
                                             <button type="button" className="btn btn-info" >View Detailed</button>
                                         </Link>
-                                        <button type="button" onClick={() => deleteCookBook(book)} className="btn btn-danger ml-auto mr-auto">Delete Cookbook</button>
+                                        <button type="button" onClick={(event) => deleteCookBook(book)} className="btn btn-danger ml-auto mr-auto">Delete Cookbook</button>
                                     </div>
                                 </Card.Body>
                                 </Accordion.Collapse>
