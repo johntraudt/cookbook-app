@@ -42,6 +42,21 @@ public class RecipeJdbcTemplateRepository implements RecipeRepository {
     }
 
     @Override
+    public List<Recipe> findFeatured() {
+        final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +
+                "from recipe where is_featured = ?;";
+
+        List<Recipe> featured = jdbcTemplate.query(sql, new RecipeMapper(), 1);
+
+        for (Recipe recipe : featured) {
+            recipe.setUser(userRepository.findById(recipe.getUserId()));
+            addReviews(recipe);
+        }
+
+        return featured;
+    }
+
+    @Override
     public Recipe findById(int recipeId) {
 
         final String sql = "select recipe_id, recipe_name, prep_time, cook_time, servings, date, was_updated, is_featured, calories, image_link, user_id " +

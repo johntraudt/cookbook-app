@@ -9,6 +9,8 @@ import java.util.List;
 public interface RecipeRepository {
     List<Recipe> findAll();
 
+    List<Recipe> findFeatured();
+
     Recipe findById(int recipeId);
 
     List<Recipe> findByName(String recipeName);
