@@ -86,6 +86,18 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     }
 
     @Override
+    public Review findByUserIdAndRecipeId(int userId, int recipeId) {
+        final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
+                "from review where user_id = ? " +
+                "and recipe_id = ?;";
+
+        return jdbcTemplate.query(sql, new ReviewMapper(), userId, recipeId)
+                .stream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public Review add(Review review) {
         final String sql = "insert into review " +
                 "(rating, comment, review_date, user_id, recipe_id) " +
