@@ -59,6 +59,18 @@ export default function Recipe() {
     const auth = useContext(AuthContext);
     const history = useHistory();
     const location = useLocation();
+
+    const getRecipe = () => {
+        fetch(`http://localhost:8080/api${location.pathname}`)
+            .then((response) => {
+                if (response.status >= 400) {
+                    history.push("/notfound");
+                } else {
+                    response.json()
+                        .then((data) => setRecipe(data));
+                }
+            })
+    }
     
     useEffect(() => {
         const getCookBooks = () => {
@@ -69,24 +81,19 @@ export default function Recipe() {
                 });
         };
 
-        const getRecipe = () => {
-            fetch(`http://localhost:8080/api${location.pathname}`)
-                .then((response) => {
-                    if (response.status >= 400) {
-                        history.push("/notfound");
-                    } else {
-                        response.json()
-                            .then((data) => setRecipe(data));
-                    }
-                })
-        }
+
         getCookBooks();
         getRecipe();
     }, []);
+    
+    if (!auth) {
+        return null;
+    }
 
-    useEffect(() => {
-        let tempReview = review;
-    });
+
+    // useEffect(() => {
+    //     let tempReview = review;
+    // });
 
     if(!recipe) {
         return null;
@@ -109,6 +116,8 @@ export default function Recipe() {
         }).then((response) => {
             if (response.status >= 400) {
                 setErrors(['You have already reviewed this recipe']);
+            } else {
+                getRecipe();
             }
         })
 
@@ -371,7 +380,6 @@ export default function Recipe() {
                                             </td>
                                         </tr>
                                     </>
-                                    
                                 )}
                                 <table className="table">
                                     {recipe.reviews.map((review) => {
