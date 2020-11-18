@@ -29,7 +29,22 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     public List<AppUser> findAll() {
         final String sql = "select user_id, first_name, last_name, email, is_active, user_role_id "
                 + "from user limit 1000";
-        return jdbcTemplate.query(sql, new AppUserMapper());
+        List<AppUser> all = jdbcTemplate.query(sql, new AppUserMapper());
+
+        for (AppUser user : all) {
+            if (user != null) {
+                setLogin(user, false);
+                setRole(user);
+            }
+
+            if (user != null && !user.isActive()) {
+                user.setUserName("Deleted Account");
+                user.setFirstName("Deleted");
+                user.setLastName("Account");
+            }
+        }
+
+        return all;
     }
 
     @Override
