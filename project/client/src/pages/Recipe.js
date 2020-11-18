@@ -71,17 +71,19 @@ export default function Recipe() {
                 }
             })
     }
+
+    const getCookBooks = () => {
+        if (!auth.user) {
+            return null;
+        }
+        fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+            .then(response => response.json())
+            .then((data) => {
+                setCookBooks(data);
+            });
+    };
     
     useEffect(() => {
-        const getCookBooks = () => {
-            fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
-                .then(response => response.json())
-                .then((data) => {
-                    setCookBooks(data);
-                });
-        };
-
-
         getCookBooks();
         getRecipe();
     }, []);
@@ -89,11 +91,6 @@ export default function Recipe() {
     if (!auth) {
         return null;
     }
-
-
-    // useEffect(() => {
-    //     let tempReview = review;
-    // });
 
     if(!recipe) {
         return null;
