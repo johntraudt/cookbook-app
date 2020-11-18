@@ -65,6 +65,12 @@ public class AppUserService implements UserDetailsService {
             return result;
         }
 
+        if (user.getUserId() != 0) {
+            result.addMessage("userId cannot be set for `add` operation.", ResultType.INVALID);
+            return result;
+        }
+
+
         if (repository.findByEmail(user.getEmail()) != null) {
             result.addMessage("That email is already taken.", ResultType.INVALID);
 //            throw new ValidationException("That email is already taken.");
@@ -86,7 +92,6 @@ public class AppUserService implements UserDetailsService {
     }
 
     public Result<AppUser> update(AppUser user) {
-
         Result<AppUser> result = validate(user);
 
         if (!result.isSuccess()) {
@@ -113,10 +118,7 @@ public class AppUserService implements UserDetailsService {
         return repository.deactivateById(userId);
     }
 
-    //Helper methods
-
     private Result<AppUser> validate(AppUser user) {
-
         Result<AppUser> result = new Result<>();
         if (user == null) {
             result.addMessage("User cannot be null.", ResultType.INVALID);
@@ -138,6 +140,10 @@ public class AppUserService implements UserDetailsService {
 
     private Result<AppUser> checkDuplicateUserNameEmailOnUpdate(AppUser user) {
         Result<AppUser> result = new Result<>();
+        if (user == null) {
+            result.addMessage("User cannot be null.", ResultType.INVALID);
+            return result;
+        }
 
         String email = repository.findById(user.getUserId()).getEmail();
         String userName = repository.findById(user.getUserId()).getUserName();
