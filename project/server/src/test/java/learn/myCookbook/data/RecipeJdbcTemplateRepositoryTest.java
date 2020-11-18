@@ -69,8 +69,8 @@ class RecipeJdbcTemplateRepositoryTest {
 
     @Test
     void shouldDelete() {
-        assertTrue(repository.deleteById(2));
-        assertFalse(repository.deleteById(2));
+        assertTrue(repository.deleteById(4));
+        assertFalse(repository.deleteById(4));
     }
 
     private Recipe makeRecipe() {

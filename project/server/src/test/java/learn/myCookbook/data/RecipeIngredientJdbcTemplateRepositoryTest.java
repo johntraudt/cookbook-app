@@ -31,14 +31,14 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         for (RecipeIngredient ri : all) {
             System.out.println(ri.getRecipeIngredientId());
         }
-        assertTrue(all.size() >= 10);
+        assertTrue(all.size() >= 5);
     }
 
     @Test
     void shouldFindById() {
-        RecipeIngredient recipeIngredient = repository.findById(2);
+        RecipeIngredient recipeIngredient = repository.findById(9);
         assertNotNull(recipeIngredient);
-        assertEquals(2, recipeIngredient.getIngredientId());
+        assertEquals("8", recipeIngredient.getQuantity());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByRecipeId() {
-        List<RecipeIngredient> list = repository.findByRecipeId(2);
+        List<RecipeIngredient> list = repository.findByRecipeId(3);
         assertNotNull(list);
         assertTrue(list.size() >= 5);
     }
@@ -63,9 +63,8 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindByRecipeIdAndIndex() {
-        RecipeIngredient recipeIngredient = repository.findByRecipeIdAndIndex(2, 1);
+        RecipeIngredient recipeIngredient = repository.findByRecipeIdAndIndex(3, 2);
         assertNotNull(recipeIngredient);
-        assertEquals(2, recipeIngredient.getIngredientId());
     }
 
     @Test
@@ -81,7 +80,7 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setRecipeIngredientId(0);
         recipeIngredient.setIngredientListIndex(10);
-        recipeIngredient.setRecipeId(2);
+        recipeIngredient.setRecipeId(3);
         recipeIngredient.setIngredientId(3);
         recipeIngredient.setMeasurementUnitId(1);
 
@@ -93,14 +92,13 @@ public class RecipeIngredientJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdate() {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
-        recipeIngredient.setRecipeIngredientId(3);
+        recipeIngredient.setRecipeIngredientId(10);
         recipeIngredient.setIngredientListIndex(2);
-        recipeIngredient.setRecipeId(2);
+        recipeIngredient.setRecipeId(3);
         recipeIngredient.setIngredientId(3);
         recipeIngredient.setMeasurementUnitId(1);
 
         assertTrue(repository.update(recipeIngredient));
-//        assertTrue(repository.findById(3).getNumerator() > 2);
     }
 
     @Test
