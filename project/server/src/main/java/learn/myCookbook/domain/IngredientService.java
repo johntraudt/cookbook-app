@@ -34,6 +34,9 @@ public class IngredientService {
 
     public Result<Ingredient> add(Ingredient ingredient) {
         Result<Ingredient> result = validate(ingredient);
+        if (!result.isSuccess()) {
+            return result;
+        }
 
         if (ingredient.getIngredientId() != 0) {
             result.addMessage("Ingredient ID cannot be set for add operation", ResultType.INVALID);
