@@ -11,7 +11,7 @@ export default function Rating ({detailed, reviews}) {
     const averageCalculator = () => {
         let total = 0;
         reviews.map((review) => {return (total += review.rating)});
-        return (total/(reviews.length !== 0 ? reviews.length : 1));
+        return (Math.round(total/(reviews.length !== 0 ? reviews.length : 1)*10)/10);
     }
 
     const averageRating = averageCalculator();
