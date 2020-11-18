@@ -30,11 +30,6 @@ class UserJdbcTemplateRepositoryTest {
         List<AppUser> users = repository.findAll();
 
         assertNotNull(users);
-
-        for (AppUser user : users) {
-            System.out.println(user.getUserId() + user.getFirstName());
-        }
-
         assertTrue(users.size() >= 3);
         assertTrue(users.size() <= 5);
     }
