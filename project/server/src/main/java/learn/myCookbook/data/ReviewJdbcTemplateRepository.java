@@ -56,7 +56,7 @@ public class ReviewJdbcTemplateRepository implements ReviewRepository {
     public List<Review> findByRecipeId(int recipeId) {
         final String sql = "select review_id, rating, comment, review_date, user_id, recipe_id " +
                 "from review where recipe_id = ? " +
-                "order by review_date asc;";
+                "order by review_id desc;";
 
         List<Review> reviews = jdbcTemplate.query(sql, new ReviewMapper(), recipeId);
 
