@@ -19,7 +19,7 @@ Content-Type: application/json
   "userId": 0,
   "userName": "new.user",
   "email": "newuser@mail.com",
-  "passwordHash": "Hunter2",
+  "passwordHash": "Hunter1234",
   "firstName": "new",
   "lastName": "user",
   "role": {
@@ -39,7 +39,7 @@ Content-Type: application/json
   "userId": 4,
   "userName": "new.user",
   "email": "newuser@mail.com",
-  "passwordHash": "Hunter2",
+  "passwordHash": "Hunter1234",
   "firstName": "updated",
   "lastName": "user",
   "role": {
@@ -48,6 +48,27 @@ Content-Type: application/json
   },
   "userRoleId": 1,
   "active": true
+}
+
+
+###
+
+PUT {{url}}/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "active": true,
+  "email": "newuser@mail.com",
+  "firstName": "updated",
+  "lastName": "user",
+  "passwordHash": "Hunter1234",
+  "role": {
+    "userRoleId": 1,
+    "name": "USER"
+  },
+  "userId": 4,
+  "userName": "new.user",
+  "userRoleId": 1
 }
 
 ###
