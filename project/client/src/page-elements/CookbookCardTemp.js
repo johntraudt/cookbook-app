@@ -9,7 +9,7 @@ function CookbookCardTemp({cookbookId, recipe}) {
 
     const removeRecipe = () => {
         
-        fetch(`http://localhost:8080/api/cookbook/${cookbookId}/${recipe.recipeId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/${cookbookId}/${recipe.recipeId}`, {
             method: 'delete'})
             
             .then((response) => {

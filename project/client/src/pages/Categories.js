@@ -6,7 +6,7 @@ export default function Categories() {
     const [categories, setCategories] = useState([]);
 
     const getCategories = () => {
-        fetch('http://localhost:8080/api/recipe-tag') 
+        fetch(`${process.env.REACT_APP_URL}/api/recipe-tag`) 
             .then(response => response.json())
             .then((data) => {
                 setCategories(data);

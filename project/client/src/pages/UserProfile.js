@@ -27,7 +27,7 @@ export default function UserProfile() {
     const history = useHistory();
 
     const getCookBooks = () => {
-        fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/user/${auth.user.userId}/all`) 
             .then(response => response.json())
             .then((data) => {
                 setCookBooks(data);
@@ -35,7 +35,7 @@ export default function UserProfile() {
     };
 
     const getRecipes = () => {
-        fetch(`http://localhost:8080/api/recipe/user/${auth.user.userId}`) 
+        fetch(`${process.env.REACT_APP_URL}/api/recipe/user/${auth.user.userId}`) 
             .then(response => response.json())
             .then((data) => {
                 setRecipes(data);
@@ -43,7 +43,7 @@ export default function UserProfile() {
     };
 
     const getUser = () => {
-        fetch(`http://localhost:8080/api/user/${auth.user.userId}`)
+        fetch(`${process.env.REACT_APP_URL}/api/user/${auth.user.userId}`)
             .then(response => response.json())
             .then((data) => {
                 setUser(data);
@@ -57,7 +57,7 @@ export default function UserProfile() {
     },[]);
 
     const removeFromCookBook = (book, recipe) => {
-        fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
             method: 'delete'})
             .then((response) => {
                 if (response.status >= 400) {
@@ -71,7 +71,7 @@ export default function UserProfile() {
 
     const deleteCookBook = (book) => {
         if (window.confirm("You are about to delete a cookbook.  Are you sure?")) {
-        fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/${book.cookbookId}`, {
             method: 'delete'})
             .then((response) => {
                 if (response.status >= 400) {
@@ -85,7 +85,7 @@ export default function UserProfile() {
 
     const createCookBook = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:8080/api/cookbook`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook`, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -121,7 +121,7 @@ export default function UserProfile() {
         console.log(u);
 
         event.preventDefault();
-        fetch(`http://localhost:8080/api/user/${user.userId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/user/${user.userId}`, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -158,7 +158,7 @@ export default function UserProfile() {
 
     const deleteRecipe = (recipe) => {
         if (window.confirm("You are about to delete a recipe. Are you sure?")) {
-            fetch(`http://localhost:8080/api/recipe/${recipe.recipeId}`, {
+            fetch(`${process.env.REACT_APP_URL}/api/recipe/${recipe.recipeId}`, {
                 method: 'delete'})
                 .then((response) => {
                     if (response.status >= 400) {

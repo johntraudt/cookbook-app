@@ -33,7 +33,7 @@ export default function App() {
     localStorage.setItem('token', token);
 
     const findUserByUserName = () => {
-      fetch(`http://localhost:8080/api/user/name/${userName}`) 
+      fetch(`${process.env.REACT_APP_URL}/api/user/name/${userName}`) 
       .then(response => response.json())
       .then((data) => {
           const user = {
@@ -75,6 +75,7 @@ export default function App() {
     useEffect(() => {
         //setUser();
         restoreLogin();
+        console.log(`${process.env.REACT_APP_URL}`)
     },[])
 
   const auth = {

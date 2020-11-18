@@ -33,7 +33,7 @@ export default function PostRecipe() {
 
     useEffect(()=>{
         const getCategories = () => {
-            fetch('http://localhost:8080/api/recipe-tag') 
+            fetch(`${process.env.REACT_APP_URL}/api/recipe-tag`) 
                 .then(response => response.json())
                 .then((data) => {
                     setCategories(data);
@@ -41,7 +41,7 @@ export default function PostRecipe() {
                 })
         };
         const getMeasurementUnits = () => {
-            fetch('http://localhost:8080/api/measurement-unit')
+            fetch(`${process.env.REACT_APP_URL}/api/measurement-unit`)
                 .then(response => response.json())
                 .then((data) => {
                     setMeasurementUnits(data);
@@ -73,7 +73,7 @@ export default function PostRecipe() {
         // console.log('up above')
 
 
-        fetch('http://localhost:8080/api/recipe', {
+        fetch(`${process.env.REACT_APP_URL}/api/recipe`, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
