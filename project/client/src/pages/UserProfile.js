@@ -15,7 +15,7 @@ export default function UserProfile() {
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
-    // const [user, setUser] = useState({});
+    const [user, setUser] = useState({});
     const [cookBooks, setCookBooks] = useState([]);
     const [recipes, setRecipes] = useState([]);
 
@@ -27,13 +27,29 @@ export default function UserProfile() {
             .then(response => response.json())
             .then((data) => {
                 setCookBooks(data);
-                console.log('below')
-                console.log(data)
+            });
+    };
+
+    const getRecipes = () => {
+        fetch(`http://localhost:8080/api/recipe/user/${auth.user.userId}`) 
+            .then(response => response.json())
+            .then((data) => {
+                setRecipes(data);
+            });
+    };
+
+    const getUser = () => {
+        fetch(`http://localhost:8080/api/user/${auth.user.userId}`)
+            .then(response => response.json())
+            .then((data) => {
+                setUser(data);
             });
     };
 
     useEffect(()=>{
         getCookBooks();
+        getRecipes();
+        getUser();
     },[]);
 
     const removeFromCookBook = (book, recipe) => {
@@ -55,7 +71,8 @@ export default function UserProfile() {
     };
 
     const deleteCookBook = (book) => {
-        fetch(`http://localhost:8080/api/cookbook/${auth.user.userId}`, {
+        if (window.confirm("You are about to delete a cookbook.  Are you sure?")) {
+        fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}`, {
             method: 'delete'})
             .then((response) => {
                 if (response.status >= 400) {
@@ -64,7 +81,7 @@ export default function UserProfile() {
                     getCookBooks();
                 }
             }
-        );
+        )};
     };
 
     const createCookBook = (event) => {
@@ -89,20 +106,53 @@ export default function UserProfile() {
             }
         });
     };
+
+    const handleUserEditSubmit = (event) => {
+        event.preventDefault();
+        fetch(`http://localhost:8080/user/${auth.user.userId}`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                cookbookId: 0,
+                title: cookBook,
+                "userId": auth.user.userId,
+                "user": null,
+                "recipes": null,
+                "private": false
+            })
+        }).then((response) => {
+            if (response.status === 200) {
+                getCookBooks()
+            } else {
+                console.log(response)
+            }
+        });
+    }
+
+    const deleteRecipe = (recipe) => {
+        console.log(recipes)
+        console.log('recipe here')
+        console.log(recipe)
+        if (window.confirm("You are about to delete a recipe.  Are you sure?")) {
+        fetch(`http://localhost:8080/api/recipe/${recipe.recipeId}`, {
+            method: 'delete'})
+            .then((response) => {
+                if (response.status >= 400) {
+                    history.push("/notfound");
+                } else {
+                    getRecipes();
+                }
+            }
+        )};
+    };
     
-
-    useEffect(() => {
-        setEmail();
-        setFirstName();
-        setLastName();
-        setCookBook();
-        setUserName();
-    },[console.log(email),
-        console.log(firstName),
-        console.log(lastName),
-        console.log(cookBook),
-        console.log(userName)]);    
-
+    // useEffect(() => {
+    //     setEmail();
+    //     setFirstName();
+    //     setLastName();
+    //     setCookBook();
+    //     setUserName();
+    // });    
 
     return (
         <div className="container full-body">
@@ -158,7 +208,7 @@ export default function UserProfile() {
                             </td>
                             {editUser && (
                                 <td>
-                                    <button className="btn btn-secondary" type='submit'>Submit</button>
+                                    <button className="btn btn-info" type='submit'>Submit</button>
                                 </td>
 
                             )}
@@ -166,7 +216,7 @@ export default function UserProfile() {
                     </table>
                 </div>
 
-                <div className='col-lg-8 col-md-12 col-sm-12'>
+                <div className='col-lg-8 col-md-12 col-sm-12 mb-4'>
 
                 <Accordion defaultActiveKey="0">
                     <h3 className="m-2">Your Cookbooks:</h3>
@@ -181,8 +231,6 @@ export default function UserProfile() {
                                 <Accordion.Collapse eventKey="0">
                                 <Card.Body>
                                     {
-                                        
-
                                         book.recipes.map((recipe) => (
                                             <div className="row mb-4">
                                                 <div className="col-3">
@@ -198,7 +246,7 @@ export default function UserProfile() {
                                                     </Link>
                                                 </div>
                                                 <div className="col-4">
-                                                <button className="btn btn-danger" onClick={() => removeFromCookBook(book, recipe)}>X</button>
+                                                    <button className="btn btn-danger" onClick={() => removeFromCookBook(book, recipe)}>X</button>
                                                 </div>
                                             </div>
                                         ))
@@ -207,7 +255,7 @@ export default function UserProfile() {
                                         <Link className="ml-auto mr-auto" to={`/cookbook/${book.cookbookId}`}>
                                             <button type="button" className="btn btn-info" >View Detailed</button>
                                         </Link>
-                                        <button type="button" onClick={() => deleteCookBook(book)} className="btn btn-danger ml-auto mr-auto">Delete</button>
+                                        <button type="button" onClick={() => deleteCookBook(book)} className="btn btn-danger ml-auto mr-auto">Delete Cookbook</button>
                                     </div>
                                 </Card.Body>
                                 </Accordion.Collapse>
@@ -228,61 +276,46 @@ export default function UserProfile() {
 
 
 
-                <Accordion defaultActiveKey="0">
+                <Accordion className="mb-1 mt-4" defaultActiveKey="0">
                     <h3 className="m-2">Your Recipes:</h3>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            Recipe 1's name
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="0">
-                        <Card.Body>
-                            <div>Recipe 1's data (picture, directions, tags, ingredients) and a link to the recipe page</div>
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <a className="btn btn-info ml-auto">View</a>
-                                <a className="btn btn-secondary ml-auto mr-auto">Edit</a>
-                                <a className="btn btn-danger mr-auto">Delete</a>
-                            </div>
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            Recipe 2's name
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                        <Card.Body>
-                            <div>Recipe 2's data (picture, directions, tags, ingredients) and a link to the recipe page</div>
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <a className="btn btn-info  ml-auto">View</a>
-                                <a className="btn btn-secondary ml-auto mr-auto">Edit</a>
-                                <a className="btn btn-danger  mr-auto">Delete</a>
-                            </div>
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    <Card>
-                        <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                            Recipe 3's name
-                        </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="2">
-                        <Card.Body>
-                            <div>Recipe 3's data (picture, directions, tags, ingredients) and a link to the recipe page</div>
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <a className="btn btn-info  ml-auto">View</a>
-                                <a className="btn btn-secondary ml-auto mr-auto">Edit</a>
-                                <a className="btn btn-danger  mr-auto">Delete</a>
-                            </div>
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                    
+
+                    {
+                        recipes.map((recipe) => (
+                            <Card>
+                                <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    {recipe.name}
+                                </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                <Card.Body>
+                                    <div className="row mb-4">
+                                        <div className="col-3">
+                                            <Link className="dark" to={`/recipe/${recipe.recipeId}`}>
+                                                <img src={recipe.imageLink} height='75'></img>
+                                            </Link>
+                                        </div>
+                                        <div className="col-4">
+                                            <Link className="dark" to={`/recipe/${recipe.recipeId}`}>
+                                                <div>{recipe.name}</div>
+                                                <div>{<Rating detailed={false} reviews={recipe.reviews} />}</div>
+                                                
+                                            </Link>
+                                        </div>
+                                        <div className="col-4">
+                                            <Link to={`recipe/${recipe.recipeId}`}>
+                                                <button className="btn btn-info mr-2 ml-2">View</button>
+                                            </Link>
+                                            <button className="btn btn-danger ml-2 mr-2" onClick={() => deleteRecipe(recipe)}>Delete</button>
+                                        </div>
+                                    </div>
+                                </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        ))
+                    }
                 </Accordion>
+                    <Link to="/post"><button className="btn btn-secondary m-2">Create Recipe</button></Link>
                 </div>
             </div>
         </div>    
