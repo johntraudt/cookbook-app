@@ -8,7 +8,6 @@ export default function PrivacyPolicy() {
                     We'll never share your email or data with anyone else. Promise :)
                 </h3>
             </div>
-
         </div>
     );
 }

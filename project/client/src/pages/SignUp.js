@@ -33,9 +33,7 @@ class SignUp extends React.Component {
       passwordHash,
       firstName,
       lastName,
-      // role,
       userRoleId,
-      // active
     } = this.state;
 
     fetch(`${process.env.REACT_APP_URL}/api/user`, {
@@ -49,9 +47,7 @@ class SignUp extends React.Component {
         passwordHash,
         firstName,
         lastName,
-        // role,
         userRoleId,
-        // active,
       })
     })
     .then((response) => {
@@ -160,18 +156,14 @@ class SignUp extends React.Component {
 
             <button type="submit" className="float-right btn btn-primary btn-create">Create</button>
           </Form>
-
           )}
-
           {isSuccess && (
             <Success message='Success! Redirecting....'/>
           )}
         </div>
-
       </div>
     );
   }
-    
 }
 
 export default SignUp;

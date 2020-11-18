@@ -17,8 +17,6 @@ function CookbookCardTemp({cookbookId, recipe}) {
                     history.push("/notfound");
                 } 
             });
-            
-        //window.location.reload();
     }
 
     return (

@@ -146,7 +146,6 @@ export default function Recipe() {
                 getRecipe();
             }
         })
-
         setComment('');
     };
 
@@ -178,7 +177,6 @@ export default function Recipe() {
 
     return (
         <div className="container full-body text-center">
-
             <div className="mt-4">
                 <h2 className="display-3">{recipe.name}</h2>
                 <Rating detailed={true} reviews={recipe.reviews}/>

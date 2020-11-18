@@ -12,18 +12,6 @@ export default function Cookbook() {
     const history = useHistory(); 
 
     const cookbookId = history.location.pathname.replace('/cookbook/','');
-
-    // const featuredRecipes = () => {
-    //     fetch(`http://localhost:8080/api/cookbook/${cookbookId}`) 
-    //         .then( (response) => {
-    //             if (response.status >= 400) {
-    //                 history.push("/notfound")
-    //             } else {
-    //                 response.json()
-    //                     .then((data) => setCookbook(data))
-    //             }
-    //         });
-    // }
     
     useEffect(() => {
         const featuredRecipes = () => {

@@ -17,7 +17,7 @@ export default function Categories() {
         getCategories();
     }, []);
 
-    if(!categories) {
+    if(!categories[0]) {
         return (<h1 className="container text-center">Data Not Found</h1>);
     }
 

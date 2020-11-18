@@ -19,7 +19,6 @@ function Header() {
                 randomInt = data;
                 console.log(data);
             })
-            // .then(() => console.log(randomInt))
             .then(() => history.push(`/recipe/${randomInt}`));
     };
 

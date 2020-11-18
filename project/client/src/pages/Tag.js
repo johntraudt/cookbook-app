@@ -7,18 +7,9 @@ import SquareCard from '../page-elements/SquareCard';
 export default function Tag() {
 
     const [tag, setTag] = useState([]);
-
     const history = useHistory(); 
-
     const location = useLocation();
 
-    // const recipeTagId = history.location.pathname.replace('/recipe-tag/','');
-
-    console.log("LOOKIE HERE");
-    console.log(location.pathname);
-
-    
-    
     useEffect(() => {
         const featuredRecipes = () => {
             fetch(`${process.env.REACT_APP_URL}/api${location.pathname}`) 
@@ -37,7 +28,6 @@ export default function Tag() {
     if(!tag || !tag.recipes) {
         return (<h1 className="container text-center">Cookbook Not Found</h1>);
     }
-
 
 
     return (

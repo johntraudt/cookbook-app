@@ -16,7 +16,6 @@ export default function UserProfile() {
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
-    // const [password, setPassword] = useState('');
     const [user, setUser] = useState({});
     const [cookBooks, setCookBooks] = useState([]);
     const [recipes, setRecipes] = useState([]);
@@ -106,20 +105,6 @@ export default function UserProfile() {
     };
 
     const handleUserEditSubmit = (event) => {
-        const u = {                
-            userId: user.userId,
-            userName: `${userName ? userName : user.userName}`,
-            email: `${email ? email : user.email}`,
-            passwordHash: 'password',
-            firstName: `${firstName !== '' ? firstName : user.firstName}`,
-            lastName: `${lastName !== '' ? lastName : user.lastName}`,
-            role: user.role,
-            userRoleId: user.userRoleId,
-            active: `${isActive}`,
-        };
-
-        console.log(u);
-
         event.preventDefault();
         fetch(`${process.env.REACT_APP_URL}/api/user/${user.userId}`, {
             method: 'PUT',
@@ -171,7 +156,8 @@ export default function UserProfile() {
         };
     };
 
-    const deactivateUser = () => {
+    const deactivateUser = (event) => {
+        event.preventDefault();
         if (window.confirm(`${isActive ? "Delete your account?\n\nOnce you hit submit the account is gone forever." : "Do you want to keep your account?"}` )) {
             if (isActive) {
                 setIsActive(false);
@@ -180,14 +166,6 @@ export default function UserProfile() {
             }
         }
     }
-    
-    // useEffect(() => {
-    //     setEmail();
-    //     setFirstName();
-    //     setLastName();
-    //     setCookBook();
-    //     setUserName();
-    // });    
 
     return (
         <div className="container full-body">
@@ -203,7 +181,6 @@ export default function UserProfile() {
                         </thead>
                         <tr>
                             <th>UserName</th>
-                            {/* <td>{user.userName}</td> */}
                             <td>
                                 {editUser===false ? `${user.userName}` : 
                                     <input type="text" placeholder={user.userName} onChange={event => setUserName(event.target.value)}></input>
@@ -212,7 +189,6 @@ export default function UserProfile() {
                         </tr>
                         <tr>
                             <th>Email</th>
-                            {/* <td>{user.email}</td> */}
                             <td>
                                 {editUser===false ? `${user.email}` : 
                                     <input type="email" placeholder={user.email} onChange={event => setEmail(event.target.value)}></input>
@@ -237,10 +213,9 @@ export default function UserProfile() {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            {/* <td>{!auth.user.status ? 'active': 'deactivated'}</td> */}
                             <td>
                                 {editUser === false ? (isActive ? 'active' : 'deactivated') :
-                                    <button onClick={(event) => deactivateUser()}>
+                                    <button className="btn btn-danger" onClick={(event) => deactivateUser(event)}>
                                         {isActive ? 'Deactivate Account' : 'Activate Account'}
                                     </button>
                                 }
@@ -250,26 +225,7 @@ export default function UserProfile() {
                             <td colSpan={2}>
                                 <Errors errors={errors}/>
                             </td>
-                        </tr>
-                        {/* {
-                            editUser && (
-                                <tr>
-                                    <th colspan={2} className="text-center">Enter your password below to confirm:</th>
-                                </tr>
-                            )
-                        }
-                        {
-                            editUser && (
-                                <tr>
-                                    <th>Password</th>
-                                    <td clospan={2}>
-                                        <input type="password" placeholder="New Last Name Here..." onChange={event => setPassword(event.target.value)}></input>
-                                    </td>
-                                </tr>
-                            )
-                        } */}
-
- 
+                        </tr> 
                         <tr>
                             <td colspan={editUser === true ? 1 : 2} className="text-center">
                                 <button className="btn btn-secondary" onClick={() => editUser===false ? setEditUser(true): setEditUser(false) && getUser()}>{editUser===false ? 'Edit': 'Cancel'}</button>
@@ -341,11 +297,8 @@ export default function UserProfile() {
                     </div>
                 </Collapse>
 
-
-
                 <Accordion className="mb-1 mt-4" defaultActiveKey="0">
                     <h3 className="m-2">Your Recipes:</h3>
-
                     {
                         recipes.map((recipe) => (
                             <Card>

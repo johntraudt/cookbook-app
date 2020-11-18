@@ -6,11 +6,6 @@ function SearchBar() {
 
     const history = useHistory(); 
 
-    // const searchTerm = (event) => {
-    //     setSearch(event.target.value);
-    //     console.log(search);
-    // }
-
     useEffect(() => {
         setSearch()
     },[]);

@@ -9,7 +9,7 @@ export default function Home() {
     const [recipes, setRecipes] = useState([]);
 
     const featuredRecipes = () => {
-        fetch(`${process.env.REACT_APP_URL}/api/recipe/featured`) 
+        fetch(`${process.env.REACT_APP_URL}/api/recipe`) 
             .then(response => response.json())
             .then((data) => {
                 setRecipes(data);
@@ -20,8 +20,8 @@ export default function Home() {
         featuredRecipes();
     }, []);
 
-    if(!recipes) {
-        return (<h1 className="container text-center">Data Not Found</h1>);
+    if(!recipes[0]) {
+        return (<h1 className="container full-body text-center mt-3">Data Not Found</h1>);
     }
 
     return (

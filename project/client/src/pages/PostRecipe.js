@@ -50,17 +50,8 @@ export default function PostRecipe() {
         };
         getMeasurementUnits();
         getCategories();
-        setSelectedCategories();  //this might cause a problem 
-        // setDirections();
-        // setIngredients();
+        setSelectedCategories();
     },[]);
-
-    useEffect(() =>{
-        let garbage = categories;
-        garbage = measurementUnits;
-        garbage = selectedCategories;
-        garbage = ingredients;
-    })
 
     const auth = useContext(AuthContext);
     const history = useHistory();
@@ -68,10 +59,6 @@ export default function PostRecipe() {
 
     const SubmitButton = (event) => {
         event.preventDefault();
-        // console.log('look here')
-        // console.log(auth.user)
-        // console.log('up above')
-
 
         fetch(`${process.env.REACT_APP_URL}/api/recipe`, {
             method: 'POST',
@@ -105,8 +92,6 @@ export default function PostRecipe() {
                 );
             }
         })
-
-
     }
 
     const changeMeasurementUnitId = (event, ingredientListIndex) => {
@@ -197,8 +182,6 @@ export default function PostRecipe() {
 
         for (let i=1; i <= tempDirections.length; i++) {
             tempDirections[i-1].directionNumber=i;
-            // console.log(i)
-            // console.log(tempDirections)
         };
         setDirections(tempDirections);
 
@@ -218,11 +201,6 @@ export default function PostRecipe() {
         };
         setDirections(tempDirections);
     }
-
-    // function useForceUpdate(){
-    //     const [value, setValue] = useState(0);
-    //     return () => setValue(value => ++value); 
-    // }
 
     const toggleCategory = (category) => {
         let tempCategories = [];
