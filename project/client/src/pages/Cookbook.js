@@ -27,7 +27,7 @@ export default function Cookbook() {
     
     useEffect(() => {
         const featuredRecipes = () => {
-            fetch(`http://localhost:8080/api/cookbook/${cookbookId}`) 
+            fetch(`${process.env.REACT_APP_URL}/api/cookbook/${cookbookId}`) 
                 .then( (response) => {
                     if (response.status >= 400) {
                         history.push("/notfound")

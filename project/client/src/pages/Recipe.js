@@ -64,7 +64,7 @@ export default function Recipe() {
     const location = useLocation();
 
     const getRecipe = () => {
-        fetch(`http://localhost:8080/api${location.pathname}`)
+        fetch(`${process.env.REACT_APP_URL}/api${location.pathname}`)
             .then((response) => {
                 if (response.status >= 400) {
                     history.push("/notfound");
@@ -79,7 +79,7 @@ export default function Recipe() {
         if (!auth.user) {
             return null;
         }
-        fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/user/${auth.user.userId}/all`) 
             .then(response => response.json())
             .then((data) => {
                 setCookbooks(data);
@@ -93,7 +93,7 @@ export default function Recipe() {
         setRecipeAdded(false);
 
         if (cookbookId > 0) {
-            fetch(`http://localhost:8080/api/cookbook/${cookbookId}/${recipe.recipeId}`, {
+            fetch(`${process.env.REACT_APP_URL}/api/cookbook/${cookbookId}/${recipe.recipeId}`, {
                 method: 'PUT'
             })
             .then(response => {
@@ -127,7 +127,7 @@ export default function Recipe() {
 
     const addReview = () => {
 
-        fetch(`http://localhost:8080/api/review`,  {
+        fetch(`${process.env.REACT_APP_URL}/api/review`,  {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -293,7 +293,7 @@ export default function Recipe() {
                                 <table className="table">
                                     {recipe.reviews.map((review) => {
                                         return <div>
-                                            <th>{review.comment === null ? "" : review.user.firstName + review.user.lastName}</th>
+                                            <th>{review.comment === null ? "" : review.user.firstName +  " " + review.user.lastName}</th>
                                             <tr>
                                                 <div className="pl-5">{review.comment === null ? "" : review.comment}</div>
                                             </tr>

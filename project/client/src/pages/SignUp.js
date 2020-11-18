@@ -38,7 +38,7 @@ class SignUp extends React.Component {
       // active
     } = this.state;
 
-    fetch('http://localhost:8080/api/user', {
+    fetch(`${process.env.REACT_APP_URL}/api/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

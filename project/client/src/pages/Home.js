@@ -9,7 +9,7 @@ export default function Home() {
     const [recipes, setRecipes] = useState([]);
 
     const featuredRecipes = () => {
-        fetch('http://localhost:8080/api/recipe') 
+        fetch(`${process.env.REACT_APP_URL}/api/recipe/featured`) 
             .then(response => response.json())
             .then((data) => {
                 setRecipes(data);

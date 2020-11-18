@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 import AuthContext from '../page-elements/AuthContext';
 import Rating from '../page-elements/Rating';
+import Errors from './Errors';
 
 export default function UserProfile() {
     const [open, setOpen] = useState(false);
@@ -15,16 +16,18 @@ export default function UserProfile() {
     const [lastName, setLastName] = useState('');
     const [cookBook, setCookBook] = useState('');
     const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    // const [password, setPassword] = useState('');
     const [user, setUser] = useState({});
     const [cookBooks, setCookBooks] = useState([]);
     const [recipes, setRecipes] = useState([]);
+    const [isActive, setIsActive] = useState(true);
+    const [errors, setErrors] = useState([]);
 
     const auth = useContext(AuthContext);
     const history = useHistory();
 
     const getCookBooks = () => {
-        fetch(`http://localhost:8080/api/cookbook/user/${auth.user.userId}/all`) 
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/user/${auth.user.userId}/all`) 
             .then(response => response.json())
             .then((data) => {
                 setCookBooks(data);
@@ -32,7 +35,7 @@ export default function UserProfile() {
     };
 
     const getRecipes = () => {
-        fetch(`http://localhost:8080/api/recipe/user/${auth.user.userId}`) 
+        fetch(`${process.env.REACT_APP_URL}/api/recipe/user/${auth.user.userId}`) 
             .then(response => response.json())
             .then((data) => {
                 setRecipes(data);
@@ -40,7 +43,7 @@ export default function UserProfile() {
     };
 
     const getUser = () => {
-        fetch(`http://localhost:8080/api/user/${auth.user.userId}`)
+        fetch(`${process.env.REACT_APP_URL}/api/user/${auth.user.userId}`)
             .then(response => response.json())
             .then((data) => {
                 setUser(data);
@@ -54,11 +57,7 @@ export default function UserProfile() {
     },[]);
 
     const removeFromCookBook = (book, recipe) => {
-        console.log('book:')
-        console.log(book)
-        console.log('recipe:')
-        console.log(recipe)
-        fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
             method: 'delete'})
             .then((response) => {
                 if (response.status >= 400) {
@@ -72,7 +71,7 @@ export default function UserProfile() {
 
     const deleteCookBook = (book) => {
         if (window.confirm("You are about to delete a cookbook.  Are you sure?")) {
-        fetch(`http://localhost:8080/api/cookbook/${book.cookbookId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook/${book.cookbookId}`, {
             method: 'delete'})
             .then((response) => {
                 if (response.status >= 400) {
@@ -86,7 +85,7 @@ export default function UserProfile() {
 
     const createCookBook = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:8080/api/cookbook`, {
+        fetch(`${process.env.REACT_APP_URL}/api/cookbook`, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -100,7 +99,6 @@ export default function UserProfile() {
         }).then((response) => {
             if (response.status === 201) {
                 getCookBooks()
-                console.log('success')
             } else {
                 console.log(response)
             }
@@ -110,58 +108,78 @@ export default function UserProfile() {
     const handleUserEditSubmit = (event) => {
         const u = {                
             userId: user.userId,
-            userName: `${userName !== '' ? userName : user.userName}`,
-            email: `${email !== '' ? email : user.email}`,
-            passwordHash: password,
+            userName: `${userName ? userName : user.userName}`,
+            email: `${email ? email : user.email}`,
+            passwordHash: 'password',
             firstName: `${firstName !== '' ? firstName : user.firstName}`,
             lastName: `${lastName !== '' ? lastName : user.lastName}`,
             role: user.role,
             userRoleId: user.userRoleId,
-            active: true,
+            active: `${isActive}`,
         };
-        console.log(u)
-        console.log(`http://localhost:8080/api/user/${user.userId}`)
+
+        console.log(u);
 
         event.preventDefault();
-        fetch(`http://localhost:8080/api/user/${user.userId}`, {
+        fetch(`${process.env.REACT_APP_URL}/api/user/${user.userId}`, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 userId: user.userId,
                 userName: `${userName !== '' ? userName : user.userName}`,
                 email: `${email !== '' ? email : user.email}`,
-                passwordHash: password,
+                passwordHash: 'password',
                 firstName: `${firstName !== '' ? firstName : user.firstName}`,
                 lastName: `${lastName !== '' ? lastName : user.lastName}`,
                 role: user.role,
                 userRoleId: user.userRoleId,
-                active: true,
+                active: isActive,
             })
         }).then((response) => {
             if (response.status === 204) {
-                getUser()
+                getUser();
+                setEditUser(false);
+                setErrors([]);
+
+                if (!isActive) {
+                    auth.logout();
+                    history.push("/");
+                }
+
             } else {
-                console.log(response)
+                response.json()
+                    .then((data) => {
+                        setErrors(data);
+                    });
+                console.log(response);
             }
         });
     }
 
     const deleteRecipe = (recipe) => {
-        console.log(recipes)
-        console.log('recipe here')
-        console.log(recipe)
-        if (window.confirm("You are about to delete a recipe.  Are you sure?")) {
-        fetch(`http://localhost:8080/api/recipe/${recipe.recipeId}`, {
-            method: 'delete'})
-            .then((response) => {
-                if (response.status >= 400) {
-                    history.push("/notfound");
-                } else {
-                    getUser();
+        if (window.confirm("You are about to delete a recipe. Are you sure?")) {
+            fetch(`${process.env.REACT_APP_URL}/api/recipe/${recipe.recipeId}`, {
+                method: 'delete'})
+                .then((response) => {
+                    if (response.status >= 400) {
+                        history.push("/notfound");
+                    } else {
+                        getRecipes();
+                    }
                 }
-            }
-        )};
+            )
+        };
     };
+
+    const deactivateUser = () => {
+        if (window.confirm(`${isActive ? "Delete your account?\n\nOnce you hit submit the account is gone forever." : "Do you want to keep your account?"}` )) {
+            if (isActive) {
+                setIsActive(false);
+            } else {
+                setIsActive(true);
+            }
+        }
+    }
     
     // useEffect(() => {
     //     setEmail();
@@ -185,6 +203,7 @@ export default function UserProfile() {
                         </thead>
                         <tr>
                             <th>UserName</th>
+                            {/* <td>{user.userName}</td> */}
                             <td>
                                 {editUser===false ? `${user.userName}` : 
                                     <input type="text" placeholder={user.userName} onChange={event => setUserName(event.target.value)}></input>
@@ -193,6 +212,7 @@ export default function UserProfile() {
                         </tr>
                         <tr>
                             <th>Email</th>
+                            {/* <td>{user.email}</td> */}
                             <td>
                                 {editUser===false ? `${user.email}` : 
                                     <input type="email" placeholder={user.email} onChange={event => setEmail(event.target.value)}></input>
@@ -217,9 +237,21 @@ export default function UserProfile() {
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <td>{!auth.user.status ? 'active': 'deactivated'}</td>
+                            {/* <td>{!auth.user.status ? 'active': 'deactivated'}</td> */}
+                            <td>
+                                {editUser === false ? (isActive ? 'active' : 'deactivated') :
+                                    <button onClick={(event) => deactivateUser()}>
+                                        {isActive ? 'Deactivate Account' : 'Activate Account'}
+                                    </button>
+                                }
+                            </td>
                         </tr>
-                        {
+                        <tr>
+                            <td colSpan={2}>
+                                <Errors errors={errors}/>
+                            </td>
+                        </tr>
+                        {/* {
                             editUser && (
                                 <tr>
                                     <th colspan={2} className="text-center">Enter your password below to confirm:</th>
@@ -235,7 +267,7 @@ export default function UserProfile() {
                                     </td>
                                 </tr>
                             )
-                        }
+                        } */}
 
  
                         <tr>
@@ -246,7 +278,6 @@ export default function UserProfile() {
                                 <td>
                                     <button className="btn btn-info" type='submit' onClick={(event) => handleUserEditSubmit(event)}>Submit</button>
                                 </td>
-
                             )}
                         </tr>
                     </table>

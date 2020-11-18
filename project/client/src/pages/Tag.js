@@ -21,7 +21,7 @@ export default function Tag() {
     
     useEffect(() => {
         const featuredRecipes = () => {
-            fetch(`http://localhost:8080/api${location.pathname}`) 
+            fetch(`${process.env.REACT_APP_URL}/api${location.pathname}`) 
                 .then( (response) => {
                     if (response.status >= 400) {
                         history.push("/notfound")

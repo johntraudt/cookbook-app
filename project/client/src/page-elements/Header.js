@@ -13,7 +13,7 @@ function Header() {
     let randomInt = 0;
 
     const getRandomId = () => {
-        fetch('http://localhost:8080/api/recipe/random') 
+        fetch(`${process.env.REACT_APP_URL}/api/recipe/random`) 
             .then(response => response.json())
             .then((data) => {
                 randomInt = data;

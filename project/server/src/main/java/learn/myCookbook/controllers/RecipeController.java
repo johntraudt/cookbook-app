@@ -27,6 +27,11 @@ public class RecipeController {
         return service.findAll();
     }
 
+    @GetMapping("/featured")
+    public List<Recipe> findFeatured() {
+        return service.findFeatured();
+    }
+
     @GetMapping("/{recipeId}")
     public ResponseEntity<Recipe> findById(@PathVariable int recipeId) {
         Result<Recipe> result = new Result();

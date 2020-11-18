@@ -22,7 +22,7 @@ export default function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();
     
-        const response = await fetch('http://localhost:8080/api/user/authenticate', {
+        const response = await fetch(`${process.env.REACT_APP_URL}/api/user/authenticate`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -51,15 +51,9 @@ export default function Login() {
     return (
         <div className="container full-body">
 
-            {/* <div className="row mt-3 float-right">
-                <div className="col-lg-4 col-md-2 col-sm-0"></div>
-                <div className="justify-center col-lg-4 col-md-8 col-sm-12">
-                    <Errors errors={errors} />
-                </div>
-                <div className="col-lg-4 col-md-2 col-sm-0"></div>
-            </div> */}
+                            
 
-            <Form  onSubmit={(event) => handleSubmit(event)} >
+            {/* <Form  onSubmit={(event) => handleSubmit(event)} >
                 <Form.Row>
                     <Form.Group className="mr-2" controlId="validationCustom02">
                         <Form.Control onChange={event => setUsername(event.target.value)} type="text" placeholder="Username" />
@@ -69,13 +63,14 @@ export default function Login() {
                         <p></p>
                     </Form.Group>
                 </Form.Row>
-            </Form>
+            </Form> */}
 
             <div className="mt-4">
                 <div className="text-center m-5">
                     <h1 className="p-2">Login</h1>
                     <form onSubmit={(event) => handleSubmit(event)}>
                         <div className="center">
+
                             <div className="p-2">
                                 <div>
                                     <label className="pr-3">Username: </label>
@@ -99,10 +94,18 @@ export default function Login() {
                                 </Link>
                             </div>
 
+                            <div className="row mt-3">
+                                <div className="col-lg-4 col-md-2 col-sm-0"></div>
+                                <div className="justify-center col-lg-4 col-md-8 col-sm-12">
+                                    <Errors errors={errors} />
+                                </div>
+                                <div className="col-lg-4 col-md-2 col-sm-0"></div>
+                            </div>
+
                         </div>
                     </form>
                     <h4 className="m-5">
-                        Build A Cookbook: Your gateway to home cooking
+                        Build A Cookbook: Your gateway to great home cooking
                     </h4>  
                 </div>
             </div>
