@@ -90,7 +90,7 @@ export default function PostRecipe() {
                 ingredients: ingredients,
                 directions: directions,
                 tags: selectedCategories,
-                featured: false
+                featured: false,
             })
         })
         .then(response => {
@@ -320,7 +320,7 @@ export default function PostRecipe() {
                                             
                                             <td>
                                                 <select onChange={(event) => {changeMeasurementUnitId(event, ingredient.ingredientListIndex)}}>
-                                                {
+                                                {   
                                                     measurementUnits.map((unit) => {
                                                         return <option value={unit.measurementUnitId}>{unit.name}</option>
                                                     })
