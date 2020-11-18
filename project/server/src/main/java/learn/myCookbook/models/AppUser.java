@@ -1,9 +1,6 @@
 package learn.myCookbook.models;
 
-import learn.myCookbook.models.UserRole;
-
 import javax.validation.constraints.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AppUser {

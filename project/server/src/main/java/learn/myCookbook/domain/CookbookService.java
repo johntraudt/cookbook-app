@@ -5,7 +5,6 @@ import learn.myCookbook.data.RecipeRepository;
 import learn.myCookbook.data.AppUserRepository;
 import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Recipe;
-import learn.myCookbook.models.AppUser;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -63,6 +62,11 @@ public class CookbookService {
         Result<Cookbook> result = validate(cookbook);
 
         if (!result.isSuccess()) {
+            return result;
+        }
+
+        if (cookbook.getCookbookId() != 0) {
+            result.addMessage("cookbookId cannot be set for `add` operation.", ResultType.INVALID);
             return result;
         }
 
@@ -127,8 +131,6 @@ public class CookbookService {
         return repository.deleteById(cookbookId);
     }
 
-    //helper methods
-
     private Result<Cookbook> validate(Cookbook cookbook) {
         Result<Cookbook> result = new Result<>();
         if (cookbook == null) {
@@ -143,6 +145,7 @@ public class CookbookService {
         if (!violations.isEmpty()) {
             for (ConstraintViolation<Cookbook> violation : violations) {
                 result.addMessage(violation.getMessage(), ResultType.INVALID);
+                return result;
             }
         }
 

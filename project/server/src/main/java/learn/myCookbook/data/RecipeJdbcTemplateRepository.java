@@ -1,7 +1,6 @@
 package learn.myCookbook.data;
 
 import learn.myCookbook.data.mappers.*;
-import learn.myCookbook.models.Cookbook;
 import learn.myCookbook.models.Recipe;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
