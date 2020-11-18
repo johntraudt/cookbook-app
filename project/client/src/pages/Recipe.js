@@ -293,7 +293,7 @@ export default function Recipe() {
                                 <table className="table">
                                     {recipe.reviews.map((review) => {
                                         return <div>
-                                            <th>{review.comment === null ? "" : review.user.firstName + review.user.lastName}</th>
+                                            <th>{review.comment === null ? "" : review.user.firstName +  " " + review.user.lastName}</th>
                                             <tr>
                                                 <div className="pl-5">{review.comment === null ? "" : review.comment}</div>
                                             </tr>

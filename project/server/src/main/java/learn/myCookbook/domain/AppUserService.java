@@ -143,13 +143,13 @@ public class AppUserService implements UserDetailsService {
             return result;
         }
 
-        if (user.getEmail() != repository.findById(user.getUserId()).getEmail()) {
+        if (!user.getEmail().equals(repository.findById(user.getUserId()).getEmail())) {
             if (repository.findByEmail(user.getEmail()) != null) {
                 result.addMessage("That email is already taken.", ResultType.INVALID);
             }
         }
 
-        if (user.getUserName() != repository.findById(user.getUserId()).getUserName()) {
+        if (!user.getUserName().equals(repository.findById(user.getUserId()).getUserName())) {
             if (repository.findByUserName(user.getUserName()) != null) {
                 result.addMessage("That user name is already taken.", ResultType.INVALID);
             }

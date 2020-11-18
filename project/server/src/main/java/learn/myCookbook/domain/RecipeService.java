@@ -31,6 +31,10 @@ public class RecipeService {
         return repository.findAll();
     }
 
+    public List<Recipe> findFeatured() {
+        return repository.findFeatured();
+    }
+
     public Recipe findById(int recipeId) {
         return repository.findById(recipeId);
     }

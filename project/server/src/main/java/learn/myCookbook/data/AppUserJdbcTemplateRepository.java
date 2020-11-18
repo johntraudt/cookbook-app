@@ -46,6 +46,12 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
             setRole(user);
         }
 
+        if (!user.isActive()) {
+            user.setUserName("Deleted Account");
+            user.setFirstName("Deleted");
+            user.setLastName("Account");
+        }
+
         return user;
     }
 
@@ -121,14 +127,12 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     }
 
     @Override
+    @Transactional
     public boolean update(AppUser user) {
-        final String sql = "update user set " +
-                "first_name = ?, " +
-                "last_name = ?, " +
-                "email = ?, " +
-                "is_active = ? " +
+        final String sql = "update user set first_name = ?, last_name = ?, email = ?, is_active = ? " +
                 "where user_id = ?;";
 
+        jdbcTemplate.update("update login set user_name = ? where user_id = ?;", user.getUserName(), user.getUserId());
         return jdbcTemplate.update(sql,
                 user.getFirstName(),
                 user.getLastName(),
