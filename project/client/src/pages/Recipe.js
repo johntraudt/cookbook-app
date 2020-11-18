@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import AuthContext from '../page-elements/AuthContext';
 // import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 // import DownloadButton from '../page-elements/DownloadButton';
+import Errors from './Errors';
 
 
 export default function Recipe() {
@@ -53,11 +54,11 @@ export default function Recipe() {
         date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
     }) 
 
+    const [errors, setErrors] = useState([]);
+
     const auth = useContext(AuthContext);
     const history = useHistory();
     const location = useLocation();
-    console.log(location.pathname)
-
     
     useEffect(() => {
         const getCookBooks = () => {
@@ -78,13 +79,6 @@ export default function Recipe() {
                             .then((data) => setRecipe(data));
                     }
                 })
-
-
-                // .then(response => response.json())
-                // .then((data) => {
-                //     setRecipe(data);
-                //     console.log(data);
-                // });
         }
         getCookBooks();
         getRecipe();
@@ -98,10 +92,27 @@ export default function Recipe() {
         return null;
     }
 
-    const addReview = (event) => {
-        event.preventDefault();
+    const addReview = () => {
 
-        fetch()
+        fetch(`http://localhost:8080/api/review`,  {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                rating: review.rating,
+                comment: review.comment,
+                date: review.date,
+                userId: `${auth.user.userId}`,
+                recipeId: recipe.recipeId
+            })
+        }).then((response) => {
+            if (response.status >= 400) {
+                setErrors(['You have already reviewed this recipe']);
+            }
+        })
+
+        setComment('');
     };
 
     const setComment = (text) => {
@@ -115,12 +126,9 @@ export default function Recipe() {
             date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
         }
         setReview(tempReview);
-        console.log(review.rating);
-        console.log(review.comment);
     }
 
     const setRating = (score) => {
-        console.log(score);
         const tempReview = {
             reviewId: review.reviewId,
             recipeId: review.recipeId,
@@ -131,9 +139,6 @@ export default function Recipe() {
             date:  `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
         }
         setReview(tempReview);
-        console.log("LOOK HERE DUMMY");
-        console.log(review.rating);
-        console.log(review.comment);
     }
 
     // const styles = StyleSheet.create({
@@ -332,16 +337,16 @@ export default function Recipe() {
                                     <th colspan="2">Comments</th>
                                 </tr>
                                 { auth.user && (
-                                    <div>
+                                    <>
                                         <tr>
                                             <td colspan="2">
-                                                <form className="text-center" onSubmit={(event) => addReview(event)}>
+                                                <form className="text-center">
                                                     <textarea className="form-control" onChange={(event) => setComment(event.target.value)} value={review.comment}></textarea>
                                                 </form>
                                             </td>
                                         </tr>
                                         <tr className="text-center mr-3">
-                                            <td className="ml-auto">
+                                            <td>
                                                 <DropdownButton alignRight title={"⭐".repeat(review.rating) + "☆".repeat(5-review.rating)} id="dropdown-menu-align-right" onSelect={setRating}>
                                                     <Dropdown.Item eventKey={1}>⭐☆☆☆☆</Dropdown.Item>
                                                     <Dropdown.Item eventKey={2}>⭐⭐☆☆☆</Dropdown.Item>
@@ -350,11 +355,23 @@ export default function Recipe() {
                                                     <Dropdown.Item eventKey={5}>⭐⭐⭐⭐⭐</Dropdown.Item>
                                                 </DropdownButton>
                                             </td>
-                                            <td className="mr-auto">
-                                                <button className="btn btn-outline-secondary ml-3" type="submit">Post a Review</button>
+                                            <td>
+                                                <button className="btn btn-outline-secondary ml-3" onClick={() => addReview()}>Post a Review</button>
                                             </td>
                                         </tr>
-                                    </div>
+                                        <tr>
+                                            <td colSpan="2" className="text-center">
+                                                <div className="row">
+                                                    <div className="col-lg-2 col-md-0 col-sm-0"/>
+                                                    <div className="col-lg-8 col-md-12 col-sm-12">
+                                                        <Errors errors={errors} />
+                                                    </div>
+                                                    <div className="col-lg-2 col-md-0 col-sm-0"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </>
+                                    
                                 )}
                                 <table className="table">
                                     {recipe.reviews.map((review) => {

@@ -21,6 +21,9 @@ public interface ReviewRepository {
     //find by recipe sort by high
     List<Review> findByRecipeIdRatingAsc(int recipeId);
 
+    //Useful for preventing duplicate reviews by the same user on one recipe
+    Review findByUserIdAndRecipeId(int userId, int RecipeId);
+
     //add
     Review add(Review review);
 
