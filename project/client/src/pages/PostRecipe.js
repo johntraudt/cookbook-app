@@ -2,6 +2,8 @@ import React, {useState, useEffect, useContext} from 'react';
 import Errors from './Errors';
 import AuthContext from '../page-elements/AuthContext';
 import {useHistory } from 'react-router-dom'
+import Success from '../page-elements/Success'
+
 
 export default function PostRecipe() {
     const [categories, setCategories] = useState([]);
@@ -26,6 +28,7 @@ export default function PostRecipe() {
     const [image, setImage] = useState(''); 
     const [measurementUnits, setMeasurementUnits] = useState([]);
     const [errors, setErrors] = useState([]);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(()=>{
         const getCategories = () => {
@@ -81,8 +84,8 @@ export default function PostRecipe() {
         })
         .then(response => {
             if (response.status === 201) {
-                console.log('success!');
-                history.push("/");
+                setIsSuccess(true);
+                setTimeout(()=>{window.location.href = '/'}, 2500);
             } else if (response.status >= 400) {
                 response.json()
                     .then((data) => {
@@ -229,6 +232,7 @@ export default function PostRecipe() {
 
     return (
         <div className="container full-body text-center">
+            {!isSuccess && (  
             <div className="mt-4">
                 <div className="mt-4">
                     <h3 className="mb-3">
@@ -347,6 +351,10 @@ export default function PostRecipe() {
                     <button onClick={(event) => SubmitButton(event)} className="btn btn-secondary btn-lg mt-3 mb-5">Submit Recipe</button>
                 </div>
             </div>
+            )}
+            {isSuccess && (
+                <Success message='Your Recipe has been posted! Redirecting....'/>
+            )}
         </div>
     );
 }
