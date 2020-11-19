@@ -10,16 +10,13 @@ function Header() {
     const history = useHistory();
     const auth = useContext(AuthContext);
 
-    let randomInt = 0;
-
     const getRandomId = () => {
         fetch(`${process.env.REACT_APP_URL}/api/recipe/random`) 
             .then(response => response.json())
             .then((data) => {
-                randomInt = data;
-                console.log(data);
-            })
-            .then(() => history.push(`/recipe/${randomInt}`));
+                history.push(`/`)
+                history.push(`/recipe/${data}`)
+            });
     };
 
     const logout = () => {
