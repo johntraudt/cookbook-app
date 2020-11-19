@@ -267,11 +267,11 @@ export default function UserProfile() {
                         cookBooks.map((book) => (
                             <Card>
                                 <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                <Accordion.Toggle as={Button} variant="link" eventKey={book.cookbookId}>
                                     {book.title}
                                 </Accordion.Toggle>
                                 </Card.Header>
-                                <Accordion.Collapse eventKey="0">
+                                <Accordion.Collapse eventKey={book.cookbookId}>
                                 <Card.Body>
                                     {
                                         book.recipes.map((recipe) => (
@@ -323,11 +323,11 @@ export default function UserProfile() {
                         recipes.map((recipe) => (
                             <Card>
                                 <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                <Accordion.Toggle as={Button} variant="link" eventKey={recipe.recipeId}>
                                     {recipe.name}
                                 </Accordion.Toggle>
                                 </Card.Header>
-                                <Accordion.Collapse eventKey="0">
+                                <Accordion.Collapse eventKey={recipe.recipeId}>
                                 <Card.Body>
                                     <div className="row mb-4">
                                         <div className="col-3">
