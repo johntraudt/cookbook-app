@@ -1,7 +1,6 @@
 import React from 'react';
 import Rating from './Rating'
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import Cookbook from '../pages/Cookbook';
+import { Link, useHistory } from 'react-router-dom';
 
 function CookbookCardTemp({cookbookId, recipe}) {
 

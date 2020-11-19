@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
 
 import AuthContext from '../page-elements/AuthContext';

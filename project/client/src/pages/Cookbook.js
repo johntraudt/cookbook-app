@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import banner from '../resources/home-banner.jpg';
-import SearchBar from '../page-elements/SearchBar';
-import SquareCard from '../page-elements/SquareCard';
+import { Link, useHistory } from 'react-router-dom';
+
 import CookbookCardTemp from '../page-elements/CookbookCardTemp';
 
 export default function Cookbook() {

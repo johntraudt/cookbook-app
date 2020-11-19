@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import banner from '../resources/home-banner.jpg';
-import SearchBar from '../page-elements/SearchBar';
+import { useHistory, useLocation } from 'react-router-dom';
 import SquareCard from '../page-elements/SquareCard';
 
 export default function Tag() {

@@ -1,8 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import Success from '../page-elements/Success' 
-import {Redirect} from 'react-router-dom';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown'
 import Errors from './Errors';
 import AuthContext from '../page-elements/AuthContext';
 import {useHistory } from 'react-router-dom'

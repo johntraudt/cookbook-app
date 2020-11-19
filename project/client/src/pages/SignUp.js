@@ -1,7 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
-// import Loading from '../resources/loading-2.gif';
 import Success from '../page-elements/Success'
 
 class SignUp extends React.Component {

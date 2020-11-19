@@ -4,8 +4,6 @@ import { useLocation, useHistory } from 'react-router-dom'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 import AuthContext from '../page-elements/AuthContext';
-// import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-// import DownloadButton from '../page-elements/DownloadButton';
 import Errors from './Errors';
 
 

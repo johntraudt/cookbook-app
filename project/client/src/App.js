@@ -14,7 +14,6 @@ import Privacy from './pages/PrivacyPolicy';
 import PostRecipe from './pages/PostRecipe';
 import Cookbook from './pages/Cookbook';
 import Tag from './pages/Tag';
-import CookbookCardTemp from './page-elements/CookbookCardTemp';
 import AuthContext from './page-elements/AuthContext';
 
 import './App.css'
@@ -25,8 +24,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 export default function App() {
   const [user, setUser] = useState(null);
-
-
 
   const login = (token) => {
     const { sub: userName, authorities: role} = jwt_decode(token);  
@@ -54,10 +51,6 @@ export default function App() {
         return findUserByUserName();
     }
 
-
-
-
-
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
@@ -69,8 +62,6 @@ export default function App() {
             login(token);
         }
   };
-
- 
 
     useEffect(() => {
         //setUser();
