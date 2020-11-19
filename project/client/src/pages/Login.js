@@ -73,9 +73,7 @@ export default function Login() {
                                 </div>
 
                                 <Link to='/signup'>
-                                    <div>
-                                        <button type="button" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
-                                    </div>
+                                    <button type="button" className="btn btn-light btn-outline-dark m-2 expand btn-sm">Create an Account</button>
                                 </Link>
                             </div>
 
