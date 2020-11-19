@@ -58,7 +58,10 @@ export default function PostRecipe() {
 
         fetch(`${process.env.REACT_APP_URL}/api/recipe`, {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
+            },
             body: JSON.stringify({
                 recipeId: 0,
                 userId: `${auth.user.userId}`,

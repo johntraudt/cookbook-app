@@ -92,7 +92,11 @@ export default function Recipe() {
 
         if (cookbookId > 0) {
             fetch(`${process.env.REACT_APP_URL}/api/cookbook/${cookbookId}/${recipe.recipeId}`, {
-                method: 'PUT'
+                method: 'PUT',
+                headers: {
+                    'Content-Type':'application/json',
+                    "Authorization": "Bearer " + auth.user.token
+                }
             })
             .then(response => {
                 if (response.status < 400) {
@@ -128,7 +132,8 @@ export default function Recipe() {
         fetch(`${process.env.REACT_APP_URL}/api/review`,  {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
             },
             body: JSON.stringify({
                 rating: review.rating,

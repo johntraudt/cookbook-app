@@ -2,6 +2,8 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Errors from './Errors';
 import Success from '../page-elements/Success'
+import AuthContext from '../page-elements/AuthContext';
+
 
 class SignUp extends React.Component {
   constructor() {
@@ -38,7 +40,7 @@ class SignUp extends React.Component {
     fetch(`${process.env.REACT_APP_URL}/api/user`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type':'application/json'
       },
       body: JSON.stringify({
         userName,

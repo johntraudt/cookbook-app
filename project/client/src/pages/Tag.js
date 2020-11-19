@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import SquareCard from '../page-elements/SquareCard';
 
+
 export default function Tag() {
 
     const [tag, setTag] = useState([]);
     const history = useHistory(); 
     const location = useLocation();
+
 
     useEffect(() => {
         const featuredRecipes = () => {

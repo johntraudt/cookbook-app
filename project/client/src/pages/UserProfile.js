@@ -57,7 +57,12 @@ export default function UserProfile() {
 
     const removeFromCookBook = (book, recipe) => {
         fetch(`${process.env.REACT_APP_URL}/api/cookbook/${book.cookbookId}/${recipe.recipeId}`, {
-            method: 'delete'})
+            method: 'delete',
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
+            }
+        })
             .then((response) => {
                 if (response.status >= 400) {
                     history.push("/notfound");
@@ -71,7 +76,12 @@ export default function UserProfile() {
     const deleteCookBook = (book) => {
         if (window.confirm("You are about to delete a cookbook.  Are you sure?")) {
         fetch(`${process.env.REACT_APP_URL}/api/cookbook/${book.cookbookId}`, {
-            method: 'delete'})
+            method: 'delete',
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
+            }
+        })
             .then((response) => {
                 if (response.status >= 400) {
                     history.push("/notfound");
@@ -86,7 +96,10 @@ export default function UserProfile() {
         event.preventDefault();
         fetch(`${process.env.REACT_APP_URL}/api/cookbook`, {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
+        },
             body: JSON.stringify({
                 cookbookId: 0,
                 title: cookBook,
@@ -108,7 +121,10 @@ export default function UserProfile() {
         event.preventDefault();
         fetch(`${process.env.REACT_APP_URL}/api/user/${user.userId}`, {
             method: 'PUT',
-            headers: {'Content-Type':'application/json'},
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
+            },
             body: JSON.stringify({
                 userId: user.userId,
                 userName: `${userName !== '' ? userName : user.userName}`,
@@ -144,7 +160,11 @@ export default function UserProfile() {
     const deleteRecipe = (recipe) => {
         if (window.confirm("You are about to delete a recipe. Are you sure?")) {
             fetch(`${process.env.REACT_APP_URL}/api/recipe/${recipe.recipeId}`, {
-                method: 'delete'})
+                method: 'delete',
+                headers: {
+                    'Content-Type':'application/json',
+                    "Authorization": "Bearer " + auth.user.token}
+            })
                 .then((response) => {
                     if (response.status >= 400) {
                         history.push("/notfound");

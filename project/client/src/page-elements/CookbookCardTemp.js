@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Rating from './Rating'
 import { Link, useHistory } from 'react-router-dom';
+import AuthContext from './AuthContext';
 
 function CookbookCardTemp({cookbookId, recipe}) {
 
     const history = useHistory();
 
+    const auth = useContext(AuthContext)
+
     const removeRecipe = () => {
         
         fetch(`${process.env.REACT_APP_URL}/api/cookbook/${cookbookId}/${recipe.recipeId}`, {
-            method: 'delete'})
+            method: 'delete',
+            headers: {
+                'Content-Type':'application/json',
+                "Authorization": "Bearer " + auth.user.token
+            }
+        })
             
             .then((response) => {
                 if (response.status >= 400) {
