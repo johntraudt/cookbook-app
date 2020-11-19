@@ -202,9 +202,10 @@ export default function UserProfile() {
                         <tr>
                             <th>UserName</th>
                             <td>
-                                {editUser===false ? `${user.userName}` : 
+                                {user.userName}
+                                {/* {editUser===false ? `$` : 
                                     <input type="text" placeholder={user.userName} onChange={event => setUserName(event.target.value)}></input>
-                                }
+                                } */}
                             </td>
                         </tr>
                         <tr>
