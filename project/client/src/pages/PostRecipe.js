@@ -85,7 +85,7 @@ export default function PostRecipe() {
         .then(response => {
             if (response.status === 201) {
                 setIsSuccess(true);
-                setTimeout(()=>{window.location.href = '/'}, 2500);
+                setTimeout(()=>{history.push('/')}, 2500);
             } else if (response.status >= 400) {
                 response.json()
                     .then((data) => {
