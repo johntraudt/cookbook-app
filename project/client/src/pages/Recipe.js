@@ -129,6 +129,7 @@ export default function Recipe() {
 
     const addReview = () => {
 
+        console.log(auth.userId)
         fetch(`${process.env.REACT_APP_URL}/api/review`,  {
             method: 'post',
             headers: {

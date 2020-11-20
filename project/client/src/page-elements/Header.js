@@ -31,7 +31,7 @@ function Header() {
                     <div className={location.pathname !== '/' ? "row mr-auto ml-3": "row mr-auto ml-3"} >
                         <Link to='/' >
                             <div className="float-left">
-                                <img height="20px" width="20px" src={dino} alt="dino logo"></img>
+                                <img height="50px" width="50px" src={dino} alt="dino logo"></img>
                             </div>
                             <div className="float-right">
                                 <h1>BUILD A COOKBOOK</h1>
