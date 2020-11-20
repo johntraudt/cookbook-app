@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000/", "http://build-a-cookbook.s3.us-east-2.amazonaws.com/")
+                        .allowedOrigins("http://localhost:3000", "http://build-a-cookbook.s3.us-east-2.amazonaws.com")
                         .allowedMethods("*");
             }
         };
