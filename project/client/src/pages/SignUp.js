@@ -7,18 +7,18 @@ import { Link, useHistory } from 'react-router-dom';
 
 export default function  SignUp () {
   const [errors, setErrors] = useState([]);
-  const [userId, setUserId] = useState(0);
+  // const [userId, setUserId] = useState(0);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [passwordHash, setPasswordHash] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userRoleId, setUserRoleId] = useState(1);
-  const [role, setRole] = useState({
-    userRoleId: 1,
-    name: "USER",
-  });
-  const [active, setActive] = useState(true);
+  // const [role, setRole] = useState({
+  //   userRoleId: 1,
+  //   name: "USER",
+  // });
+  // const [active, setActive] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const history = useHistory();
@@ -51,6 +51,7 @@ export default function  SignUp () {
     .then((response) => {
       if (response.status === 201) {
         response.json().then(data => console.log(data));
+        setIsSuccess(true);
         setTimeout(()=>{history.pushState('/')}, 2500);
       } else if (response.status === 400) {
         response.json().then(data => {
