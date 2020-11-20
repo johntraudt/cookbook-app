@@ -52,7 +52,7 @@ export default function  SignUp () {
       if (response.status === 201) {
         response.json().then(data => console.log(data));
         setIsSuccess(true);
-        setTimeout(()=>{history.pushState('/')}, 2500);
+        setTimeout(()=>{history.push('/')}, 2500);
       } else if (response.status === 400) {
         response.json().then(data => {
           setErrors(data)
