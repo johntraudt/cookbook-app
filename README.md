@@ -10,7 +10,7 @@
 
 - Download and unzip Source Code
 - Open `Server` in IntelliJ
-  - Edit Configurations (App, JUnit, MavenRunner)
+  - Edit Configurations (App, JUnit, Maven)
     - MY_COOKBOOK_DB_URL 
     - MY_COOKBOOK_DB_USERNAME
     - MY_COOKBOOK_DB_PASSWORD
