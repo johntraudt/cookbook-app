@@ -20,7 +20,7 @@ import './App.css'
 
 import jwt_decode from 'jwt-decode';
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 export default function App() {
   const [user, setUser] = useState(null);
